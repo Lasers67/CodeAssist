@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>
+</title>
+<style type="text/css">
+	#Output{
+		width:300px;
+		height: 300px;
+		border:2px solid black;
+		overflow: auto;
+	}
+	#Chat-box{
+		position: absolute;
+		top:57%;
+		left:83%;
+	}	
+	#Workspace{
+		height: 60%;
+		width: 60%;
+		position: absolute;
+		top:10%;
+		border:1px solid black;
+		overflow: auto;	
+	}
+</style>																				
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<div id="Header">
+Welcome <span id="name"><%= Name%></span>
+</div>
+
+
+<div id="Chat-box">
+	<div id="Output">
+	</div>
+	<div id="typing"></div>
+	<input type="text" id="Message" placeholder="Message" />
+	<button id="send">Send</button>
+</div>
+
+<div id="Workspace">
+</div>
+<script src='/chat.js'></script>
+<script src='/code.js'></script>
+<!-- <script src="https://js.pusher.com/4.0/pusher.min.js"></script> -->
+
+
+
+
+</body>	
+</html>

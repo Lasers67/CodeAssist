@@ -2,8 +2,16 @@
 <head>
 <title>
 </title>
+<style type="text/css">
+	.Forum{
+		position: absolute;
+		left: 50%;
+		top:50%;
+	}	
+</style>
 </head>
 <body>
+<div class="Forum">
 <form method="POST" action="/signup">
 	Name:-<br>
 	<input type="text" name="Name" value="<%= Name %>"><br>
@@ -16,5 +24,6 @@
 	<input type="submit" value="Sign Up" name="Submit">
 </form>
 <br><a href="/signin">Or Sign In</a>
+</div>
 </body>	
 </html>
