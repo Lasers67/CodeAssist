@@ -48,48 +48,45 @@ app.post('/signin',urlencodeParser,function(req,res){
 		var name=req.body.Username;
 		var string = JSON.stringify(result);
 		var json=JSON.parse(string);
+		console.log(json[0].Password);
 		if(req.body.Pass==json[0].Password)
 		{
 			res.redirect('/?Name='+req.body.Username);
 		}
 	});
 });
-
 var io=socket(server);
 app.get('/',function(req,res){
 	// if(res.query.Name!='a')
-		console.log('asds '+req.query.Name);
 		if(req.query.Name){
-			io.on('connection',function(socket){
-				console.log('Connection Made by '+req.query.Name);
-				socket.on('chat',function(data){
-						console.log(data);
-						io.sockets.emit('chat',data);
-						// count++;
-				});
-				// count=0;
-				socket.on('typing',function(data){
-					socket.broadcast.emit('typing',data);
-				});
-				socket.on('error',function(err){
-					console.log('Error!',err);
-				});
-				socket.on('room',function(room){
-					socket.join(room);
-					console.log("aaa");
-				});
-				socket.on('disconnect',function(socket){
-					console.log('disconnected');
-				});
-			var room='room1';
-			   socket.on('client_character',function(msg){
-			       console.log('Data from client: '+msg.buffer);
-			       socket.in(room).broadcast.emit('server_character',msg.buffer);
-			       // socket["to"](room).broadcast.emit('server_character',msg.buffer);
-			   });
-			});
+			console.log('Connection');
 			res.render('mainpage',{Name:req.query.Name});
 		}
 		else
 			res.end('Starting Page');
+});
+io.on('connection',function(socket){
+	console.log('Connection Made');
+	socket.on('chat',function(data){
+			console.log(data);
+			io.sockets.emit('chat',data);
+	});
+	socket.on('typing',function(data){
+		socket.broadcast.emit('typing',data);
+	});
+	socket.on('error',function(err){
+		console.log('Error!',err);
+	});
+	socket.on('room',function(room){
+		socket.join(room);
+		console.log("aaa");
+	});
+	socket.on('disconnect',function(socket){
+		console.log('disconnected');
+	});
+	var room='room1';
+    socket.on('client_character',function(msg){
+    	console.log('Data from client: '+msg.buffer);
+   		socket.in(room).broadcast.emit('server_character',msg.buffer);
+   });
 });

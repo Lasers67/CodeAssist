@@ -5,21 +5,23 @@
 <style type="text/css">
 	#Output{
 		width:300px;
-		height: 300px;
+		height:300px;
 		border:2px solid black;
 		overflow: auto;
 	}
 	#Chat-box{
-		position: absolute;
+		position:absolute;
 		top:57%;
 		left:83%;
 	}	
 	#Workspace{
-		height: 60%;
-		width: 60%;
-		position: absolute;
+		font-size: 13px;
+		background: white;
+		height:60%;
+		width:60%;
+		position:absolute;
 		top:10%;
-		border:1px solid black;
+		/*border:0px solid black;*/
 		overflow: auto;	
 	}
 </style>																				
@@ -29,8 +31,6 @@
 <div id="Header">
 Welcome <span id="name"><%= Name%></span>
 </div>
-
-
 <div id="Chat-box">
 	<div id="Output">
 	</div>
@@ -38,15 +38,10 @@ Welcome <span id="name"><%= Name%></span>
 	<input type="text" id="Message" placeholder="Message" />
 	<button id="send">Send</button>
 </div>
-
-<div id="Workspace">
-</div>
+<code class="language-markup"><div id="Workspace">
+</div></code>
 <script src='/chat.js'></script>
 <script src='/code.js'></script>
 <!-- <script src="https://js.pusher.com/4.0/pusher.min.js"></script> -->
-
-
-
-
 </body>	
 </html>

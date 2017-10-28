@@ -1,4 +1,4 @@
-var socket=io.connect('http://localhost:3000');
+var socket=io.connect('http://10.8.18.76:3000');
 var Message=document.getElementById('Message');
 var Send_button=document.getElementById('send');
 var output=document.getElementById('Output');
@@ -17,8 +17,10 @@ Send_button.addEventListener('click',function(){
 	Message.value="";
 });
 //typing
-Message.addEventListener('keypress',function(){
-	socket.emit('typing',user.innerText);
+Message.addEventListener('keypress',function(event){
+	socket.emit('typing',user.innerHTML);
+	if(event.keyCode===13)
+		Send_button.click();
 });
 //Listen
 socket.on('chat',function(data){
@@ -27,5 +29,5 @@ socket.on('chat',function(data){
 });
 socket.on('typing',function(data){
 	type.innerHTML='<p>'+data+' is typing...</p>';
-	type.style.color='red';
+	// type.style.color='red';
 });
