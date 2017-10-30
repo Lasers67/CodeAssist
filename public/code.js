@@ -1,6 +1,4 @@
-// var socket=io.connect('http://10.8.18.76:3000');
 var Code=document.getElementById('Workspace');
-
 Code.contentEditable=true;
 Code.focus();
 var room='room1';
@@ -14,7 +12,6 @@ socket.on('server_character',function(content){
 	Code.innerHTML=content;
 });
 Code.addEventListener('keyup',function(){
-	var char=Code.innerHTML;
-	// console.log("emitting client_character " + char);			
+	var char=Code.innerHTML;			
 	socket.emit('client_character',{buffer:char});
 });

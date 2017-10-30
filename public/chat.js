@@ -26,6 +26,9 @@ Message.addEventListener('keypress',function(event){
 socket.on('chat',function(data){
 	type.innerHTML="";
 	output.innerHTML+='<p><strong>'+data.UserName+':</strong>'+data.Message+'</p>';
+	// var li=document.createElement("li");
+	// li.appendChild(document.createTextNode('<p><strong>'+data.UserName+':</strong>'+data.Message+'</p>'));
+	// ul.appendChild(li);
 });
 socket.on('typing',function(data){
 	type.innerHTML='<p>'+data+' is typing...</p>';

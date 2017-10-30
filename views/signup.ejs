@@ -2,7 +2,7 @@
 <head>
 <title>Sign up for collaborative coding</title>
 <style type="text/css">
-#form
+#frm
 {
 	margin-top:100px;
 	margin-left:400px;
@@ -14,14 +14,9 @@
 	font-size:30px;
 	border-radius:25px;
 	background-color:#999999;
-	font-family:Calibri;
+	/*font-family:Calibri;*/
 }
-input
-{
-	width:200px;
-	margin:15px;
-	font-size:20px;
-}
+
 input:active,input:hover
 {
 	border-bottom:3px solid #666666;
@@ -53,8 +48,9 @@ input:active,input:hover
 	transform:translateY(4px);
 }
 
-#signin
+#abc
 {
+	margin-left:600px;
 	padding:5px;
 	background-color:orange;
 	border-radius:15px;
@@ -68,13 +64,13 @@ input:active,input:hover
 	margin-top:50px;
 	transition:0.5s;
 }
-#signin:hover
+#abc:hover
 {
 	color:orange;
 	background-color:red;
 	transition:0.5s;
 }
-#signin:active
+#abc:active
 {
 	box-shadow: 0 5px #222;
 	transform:translateY(4px);
@@ -135,23 +131,13 @@ a:active {
 	left: 52.1%;
 	font-family: Trebuchet MS;
 }
- span{
-	position: fixed;
-	top:16px;
-    left:85%;
-    font-size: 18px;
-    color: black;
- }
 </style>
 </head>
 <body bgcolor='#dedbdb'>
 <div class="navbar">
-        <p><a href="#" id="ABOUT">ABOUT</a><a
-href="#" id="PROJECTS">PROJECTS</a><a href="#"
-id="CONTACT">CONTACT</a></p>
+        <p><a href="#" id="ABOUT">ABOUT</a><a href="#" id="PROJECTS">PROJECTS</a><a href="#" id="CONTACT">CONTACT</a></p>
 </div>
-<div id="form" align='center'>
-<form method="POST" action="/signup">
+<form method="POST" action="/signup" id="frm">
 	Name: 
 	<input type="text" name="Name" value="<%= Name %>" style='margin-left:160px;'><br>
 	Password: 
@@ -161,8 +147,8 @@ id="CONTACT">CONTACT</a></p>
 	Email: 
 	<input type="text" name="Email" value="<%= Email %>" style='margin-left:170px;'><br>
 	<input id='subbut' type="submit" value="Sign Up" name="Submit"><br>
-	<button href="/signin" id='signin'>Or Sign In</button>
 </form>
-</div>
+	<a href="/signin" id="abc">Or Sign In</a>
+
 </body>
 </html>

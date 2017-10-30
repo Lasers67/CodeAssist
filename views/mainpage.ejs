@@ -2,46 +2,155 @@
 <head>
 <title>
 </title>
-<style type="text/css">
-	#Output{
-		width:300px;
-		height:300px;
-		border:2px solid black;
-		overflow: auto;
+<style type="text/css">	
+	body{
+		font-family: Trebuchet;
 	}
-	#Chat-box{
-		position:absolute;
-		top:57%;
-		left:83%;
-	}	
+	strong{
+		color: #03b2d5;
+	}
 	#Workspace{
-		font-size: 13px;
+		font-size: 18px;
 		background: white;
 		height:60%;
-		width:60%;
+		width:80%;
 		position:absolute;
 		top:10%;
+		font-family: Trebuchet;
 		/*border:0px solid black;*/
 		overflow: auto;	
 	}
-</style>																				
+	#Workspace:focus{
+		outline: none;
+	}
+	a:link,a:visited {text-decoration: none;
+                                color: black;
+                                padding: 14px;
+                                background-color: white;
+                                }
+                a:hover {text-decoration: none;
+                                
+                                color: black;
+                                padding: 14px;
+                                border-bottom:2px solid black;
+                                box-shadow:0px 1px 0px black;
+                                background-color: white;
+
+                        }
+                a:active {text-decoration: none;
+                                color: black;
+                                box-shadow:0px 1px 1px black;
+                                background-color: #b6b8b4;
+                                opacity: 0.8;
+                        }
+                .navbar{background-color: white;
+                                padding:16px;
+                                position: fixed;
+                                width: 100%;    
+                                top:0;
+                                left: 0px;
+                                opacity: 1;
+                                }
+                #WELCOME {position: fixed;
+                                top:0px;
+                                left: 35%;
+                        font-family: Trebuchet}
+                #ABOUT {position: fixed;
+                                top:0px;
+                                left: 41.3%;
+                        font-family: Trebuchet}
+                #PROJECTS {position: fixed;
+                                top:0px;
+                                left: 46%;
+                        font-family: Trebuchet}
+                #CONTACT{position: fixed;
+                                top:0px;
+                                left: 52.1%;
+                        font-family: Trebuchet}
+                span{position: fixed;
+                        top:16px;
+                        left:85%;
+                        font-size: 18px;
+                        color: black;
+                }
+                #signout{
+                	position: fixed;
+                	top: 0px;
+                	padding: 12px;
+                	font-size: 16px;	
+                	left: 89%;
+                	font-family: Trebuchet;
+                }
+
+                #sidebar{
+                	height: 100%;
+                	color: white;
+                	background-color: #545454;
+                	width: 19%;
+                	position: fixed;
+                	top:5%;
+                	z-index: -1;
+                	left: 82%;
+                }
+                #Output{
+                	color: black;
+                	width:300px;
+                	height:300px;	
+                	/*border:2px solid black;*/
+                	overflow: auto;
+                }
+                #Chat-box{
+                	position:absolute;	
+                	bottom: 0;
+                	left:83%;
+                	background-color: #dedbdb;
+                }
+                #bottom-chat{
+                	width: 100%;
+                	height: 30px;
+                	background-color: white;
+                }
+                #message{
+                	border: none;
+                	padding: 2px;
+                	height: 30px;
+                	width: 75%;
+                }
+                #send{
+                	border: none;
+                	background-color: white;
+                	padding: 8px;
+                }
+                #send:hover{
+                	background-color: ;
+                }
+                </style>																				
 </head>
-<body>
+<body bgcolor="#dedbdb">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-<div id="Header">
-Welcome <span id="name"><%= Name%></span>
+<div class="navbar">
+        <p><a href="#" id="WELCOME">WELCOME</a><a href="#" id="ABOUT">ABOUT</a>
+        <a href="#" id="PROJECTS">PROJECTS</a><a href="#" id="CONTACT">CONTACT</a><span id="name"><%= Name%></span><a id="signout" href="/">
+        <img src="https://image.freepik.com/free-icon/logout_318-10026.jpg" width="22px" height="22px"></a></p>
+</div>
+</div>
+<code class="language-markup">
+<div id="Workspace" spellcheck="false">
+</div></code>
+<!-- <script src="https://js.pusher.com/4.0/pusher.min.js"></script> -->
+<div id="sidebar"> 
 </div>
 <div id="Chat-box">
+	<div id="chat-head">
+	</div>
 	<div id="Output">
 	</div>
-	<div id="typing"></div>
+	<strong><div id="typing"></div></strong>
+	<div id="bottom-chat">
 	<input type="text" id="Message" placeholder="Message" />
-	<button id="send">Send</button>
+	|<button id="send">Send</button></div>
 </div>
-<code class="language-markup"><div id="Workspace">
-</div></code>
 <script src='/chat.js'></script>
 <script src='/code.js'></script>
-<!-- <script src="https://js.pusher.com/4.0/pusher.min.js"></script> -->
 </body>	
 </html>
