@@ -1,29 +1,168 @@
 <html>
 <head>
-<title>
-</title>
+<title>Sign up for collaborative coding</title>
 <style type="text/css">
-	.Forum{
-		position: absolute;
-		left: 50%;
-		top:50%;
-	}	
+#form
+{
+	margin-top:100px;
+	margin-left:400px;
+	border-style:ridge solid;
+	border-color:white;
+	border-width:5px;
+	width:500px;
+	padding:20px 30px;
+	font-size:30px;
+	border-radius:25px;
+	background-color:#999999;
+	font-family:Calibri;
+}
+input
+{
+	width:200px;
+	margin:15px;
+	font-size:20px;
+}
+input:active,input:hover
+{
+	border-bottom:3px solid #666666;
+}
+#subbut
+{
+	padding:5px;
+	background-color:orange;
+	border-radius:15px;
+	box-shadow: 0 8px #666;
+	text-decoration:none;
+	text-align:center;
+	display:inline-block;
+	color:red;
+	font-size:24px;
+	font-weight:bold;
+	margin:20px 0px;
+	transition:0.5s;
+}
+#subbut:hover
+{
+	color:orange;
+	background-color:red;
+	transition:0.5s;
+}
+#subbut:active
+{
+	box-shadow: 0 5px #222;
+	transform:translateY(4px);
+}
+
+#signin
+{
+	padding:5px;
+	background-color:orange;
+	border-radius:15px;
+	box-shadow: 0 8px #666;
+	text-decoration:none;
+	text-align:center;
+	display:inline-block;
+	color:red;
+	font-size:24px;
+	font-weight:bold;
+	margin-top:50px;
+	transition:0.5s;
+}
+#signin:hover
+{
+	color:orange;
+	background-color:red;
+	transition:0.5s;
+}
+#signin:active
+{
+	box-shadow: 0 5px #222;
+	transform:translateY(4px);
+}
+
+a:link,a:visited
+{
+	text-decoration: none;
+	color: black;
+	padding: 14px;
+	background-color: white;  
+}
+a:hover{
+	text-decoration: none;  
+	color: black;
+	padding: 14px;
+	border-bottom:2px solid black;
+	box-shadow:0px 1px 0px black;
+	background-color: white;
+}
+a:active {
+	text-decoration: none;
+	color: black;
+	box-shadow:0px 1px 1px black;
+	background-color: #b6b8b4;
+	opacity: 0.8;
+}
+
+.navbar{
+	background-color: white;
+	padding:16px;
+	position: fixed;
+	width: 100%;    
+	top:0px;
+	left: 0px;
+}
+#WELCOME{
+	position: fixed;
+	top:0px;
+	left: 35%;
+    font-family: Trebuchet MS;
+}
+ #ABOUT {
+	position: fixed;
+	top:0px;
+	left: 41.3%;
+	font-family: Trebuchet MS;
+}
+ #PROJECTS {
+	position: fixed;
+	top:0px;
+	left: 46%;
+    font-family: Trebuchet MS;
+}
+ #CONTACT{
+	position: fixed;
+	top:0px;
+	left: 52.1%;
+	font-family: Trebuchet MS;
+}
+ span{
+	position: fixed;
+	top:16px;
+    left:85%;
+    font-size: 18px;
+    color: black;
+ }
 </style>
 </head>
-<body>
-<div class="Forum">
-<form method="POST" action="/signup">
-	Name:-<br>
-	<input type="text" name="Name" value="<%= Name %>"><br>
-	Password:-<br>
-	<input type="Password" name="Password" value="<%= Password %>"><br>
-	Re-enter Password:-<br>
-	<input type="Password" name="RePassword" value="<%= RePassword %>"><br>
-	Email:-<br>
-	<input type="text" name="Email" value="<%= Email %>"><br>
-	<input type="submit" value="Sign Up" name="Submit">
-</form>
-<br><a href="/signin">Or Sign In</a>
+<body bgcolor='#dedbdb'>
+<div class="navbar">
+        <p><a href="#" id="ABOUT">ABOUT</a><a
+href="#" id="PROJECTS">PROJECTS</a><a href="#"
+id="CONTACT">CONTACT</a></p>
 </div>
-</body>	
+<div id="form" align='center'>
+<form method="POST" action="/signup">
+	Name: 
+	<input type="text" name="Name" value="<%= Name %>" style='margin-left:160px;'><br>
+	Password: 
+	<input type="Password" name="Password" value="<%= Password %>" style='margin-left:120px;'><br>
+	Re-enter Password: 
+	<input type="Password" name="RePassword" value="<%= RePassword %>"><br>
+	Email: 
+	<input type="text" name="Email" value="<%= Email %>" style='margin-left:170px;'><br>
+	<input id='subbut' type="submit" value="Sign Up" name="Submit"><br>
+	<button href="/signin" id='signin'>Or Sign In</button>
+</form>
+</div>
+</body>
 </html>
