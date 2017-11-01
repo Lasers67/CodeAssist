@@ -1,5 +1,5 @@
 var Code=document.getElementById('Workspace');
-Code.contentEditable=true;
+// Code.contentEditable=true;
 Code.focus();
 var room='room1';
 socket.on('connect',function(){

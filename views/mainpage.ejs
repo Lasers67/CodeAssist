@@ -2,6 +2,10 @@
 <head>
 <title>
 </title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="styles/default.css">
+<script src="highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <style type="text/css">	
 	body{
 		font-family: Trebuchet;
@@ -54,20 +58,20 @@
                 #WELCOME {position: fixed;
                                 top:0px;
                                 left: 35%;
-                        font-family: Trebuchet}
+                        font-family: Trebuchet;}
                 #ABOUT {position: fixed;
                                 top:0px;
                                 left: 41.3%;
-                        font-family: Trebuchet}
+                        font-family: Trebuchet;}
                 #PROJECTS {position: fixed;
                                 top:0px;
                                 left: 46%;
-                        font-family: Trebuchet}
+                        font-family: Trebuchet;}
                 #CONTACT{position: fixed;
                                 top:0px;
                                 left: 52.1%;
-                        font-family: Trebuchet}
-                span{position: fixed;
+                        font-family: Trebuchet;}
+                #name{position: fixed;
                         top:16px;
                         left:85%;
                         font-size: 18px;
@@ -124,28 +128,35 @@
                 #send:hover{
                 	background-color: ;
                 }
-                </style>																				
+        		#my{
+        			color: red;
+        		}
+        		#her{
+        			color: blue;
+        		}
+                </style>
+																		
 </head>
-<body bgcolor="#dedbdb">
+<body bgcolor="#dedbdb" >
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <div class="navbar">
         <p><a href="#" id="WELCOME">WELCOME</a><a href="#" id="ABOUT">ABOUT</a>
-        <a href="#" id="PROJECTS">PROJECTS</a><a href="#" id="CONTACT">CONTACT</a><span id="name"><%= Name%></span><a id="signout" href="/">
+        <a href="#" id="PROJECTS">PROJECTS</a><a href="#" id="CONTACT">CONTACT</a><span id="name"><%= Name%></span><a id="signout" href="http://10.8.18.76:3000/">
         <img src="https://image.freepik.com/free-icon/logout_318-10026.jpg" width="22px" height="22px"></a></p>
 </div>
 </div>
-<code class="language-markup">
-<div id="Workspace" spellcheck="false">
-</div></code>
-<!-- <script src="https://js.pusher.com/4.0/pusher.min.js"></script> -->
+<pre>
+<code class="python" contenteditable="true" id="Workspace">
+</code></pre>
 <div id="sidebar"> 
+
 </div>
 <div id="Chat-box">
 	<div id="chat-head">
-	</div>
-	<div id="Output">
-	</div>
 	<strong><div id="typing"></div></strong>
+	</div>
+	<ul id="Output" type="none">
+	</ul>
 	<div id="bottom-chat">
 	<input type="text" id="Message" placeholder="Message" />
 	|<button id="send">Send</button></div>
