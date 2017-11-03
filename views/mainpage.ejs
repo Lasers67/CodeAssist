@@ -95,11 +95,13 @@
                 	top:5%;
                 	z-index: -1;
                 	left: 82%;
+                        overflow: auto;
                 }
                 #Output{
                 	color: black;
                 	width:300px;
                 	height:300px;	
+                        display: none;
                 	/*border:2px solid black;*/
                 	overflow: auto;
                 }
@@ -108,6 +110,7 @@
                 	bottom: 0;
                 	left:83%;
                 	background-color: #dedbdb;
+                        /*display: none;*/
                 }
                 #bottom-chat{
                 	width: 100%;
@@ -141,7 +144,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <div class="navbar">
         <p><a href="#" id="WELCOME">WELCOME</a><a href="#" id="ABOUT">ABOUT</a>
-        <a href="#" id="PROJECTS">PROJECTS</a><a href="#" id="CONTACT">CONTACT</a><span id="name"><%= Name%></span><a id="signout" href="http://10.8.18.76:3000/">
+        <a href="#" id="PROJECTS">PROJECTS</a><a href="#" id="CONTACT">CONTACT</a><span id="name"><%= Name%></span><a id="signout" href="http://localhost:3000/">
         <img src="https://image.freepik.com/free-icon/logout_318-10026.jpg" width="22px" height="22px"></a></p>
 </div>
 </div>

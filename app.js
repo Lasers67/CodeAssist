@@ -6,8 +6,8 @@ var socket=require('socket.io');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"2,4,6Trinitrophenol",
-	database:"Test"
+	password:"palakgupta889",
+	database:"adp"
 });
 con.connect(function(err){
 	if(err) throw err;
@@ -54,30 +54,39 @@ app.post('/signin',urlencodeParser,function(req,res){
 	});
 });
 var io=socket(server);
+
 var NAME='';
 app.get('/',function(req,res){
 	// if(res.query.Name!='a')
 		NAME=req.query.Name;
 		if(req.query.Name){
+			NAME=req.query.Name;
 			console.log('Connection Made by '+NAME);
 			res.render('mainpage',{Name:req.query.Name});
 		}
 		else
 			res.render('first');
 });
+
+var users={};
 var Online_Users='';
 io.on('connection',function(socket){
+	socket.name=NAME;
 	console.log('Connection Made by '+NAME);
 	var session='UPDATE User SET SessionID=? where Name=?';
 	con.query(session,[socket.id,NAME]);
+	users[socket.name]=socket;
 	var sql='UPDATE User SET Online=1 where SessionID=?';
 	var sql2='UPDATE User SET Online=0 where SessionID=?';
 	var online_users="select Name from User where Online=1";
 	con.query(sql,[socket.id],function(err){
 		if(err) throw err;
 	});
+
+	console.log(users);
 	
 	socket.on('Online',function(){
+		console.log(111);
 		con.query(online_users,function(err,result){
 		if(err) throw err;
 		// console.log(result);
@@ -91,8 +100,10 @@ io.on('connection',function(socket){
 		// console.log(data);
 		socket.broadcast.emit('Online',Online_Users);
 	});
+
 	socket.on('chat',function(data){
-			socket.broadcast.emit('chat',data);
+		// console.log(typeof(data.to));
+		users[data.to].emit('chat',data);
 	});
 	socket.on('typing',function(data){
 		socket.broadcast.emit('typing',data);
