@@ -15,8 +15,8 @@ function Onliner(){
 setInterval(Onliner, 3000);
 function function1(data,ID) {
  	 var li = document.createElement("div");
-	li.id=ID;
-	li.innerHTML='<p><strong>'+data.UserName+':</strong>'+data.Message+'</p>';
+	 li.id=ID;
+	 li.innerHTML='<p><strong>'+data.UserName+':</strong>'+data.Message+'</p>';
  	 output.appendChild(li);
 	}
 
@@ -44,9 +44,16 @@ function fun(data,ID)
 {
 	var newbutton = document.createElement("button");
 	newbutton.id=ID;
+	newbutton.className='chatButton';
 	newbutton.innerHTML = ID;
 	newbutton.onclick=function(){receiver=data.Name;output.style.display='block';};
 	sidebar.appendChild(newbutton);
+	var newbutton2 = document.createElement("button");
+	newbutton2.id=ID;
+	newbutton2.className = 'inviteButton';
+	newbutton2.innerHTML = 'Code Together';
+	newbutton2.onclick=function(){codeTogether(newbutton2);};
+	sidebar.appendChild(newbutton2);
 }
 
 socket.on('Online',function(data){
@@ -79,5 +86,3 @@ socket.on('chat',function(data){
 	var val='<p><strong>'+data.UserName+':</strong>'+data.Message+'</p>';
 	function1(data,'her');
 });
-
-

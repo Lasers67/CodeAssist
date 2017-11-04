@@ -3,11 +3,12 @@ var express=require('express');
 var bodyParser=require('body-parser');
 var mysql=require('mysql');
 var socket=require('socket.io');
+var fs=require('fs');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"palakgupta889",
-	database:"adp"
+	password:"shshwt.grg",
+	database:"Test"
 });
 con.connect(function(err){
 	if(err) throw err;
@@ -54,7 +55,6 @@ app.post('/signin',urlencodeParser,function(req,res){
 	});
 });
 var io=socket(server);
-
 var NAME='';
 app.get('/',function(req,res){
 	// if(res.query.Name!='a')
@@ -67,7 +67,6 @@ app.get('/',function(req,res){
 		else
 			res.render('first');
 });
-
 var users={};
 var Online_Users='';
 io.on('connection',function(socket){
@@ -82,11 +81,9 @@ io.on('connection',function(socket){
 	con.query(sql,[socket.id],function(err){
 		if(err) throw err;
 	});
-
-	console.log(users);
-	
+	//console.log(users);
 	socket.on('Online',function(){
-		console.log(111);
+		//console.log(111);
 		con.query(online_users,function(err,result){
 		if(err) throw err;
 		// console.log(result);
@@ -100,7 +97,6 @@ io.on('connection',function(socket){
 		// console.log(data);
 		socket.broadcast.emit('Online',Online_Users);
 	});
-
 	socket.on('chat',function(data){
 		// console.log(typeof(data.to));
 		users[data.to].emit('chat',data);
@@ -126,5 +122,11 @@ io.on('connection',function(socket){
     socket.on('client_character',function(msg){
     	// console.log('Data from client: '+msg.buffer);
    		socket.in(room).broadcast.emit('server_character',msg.buffer);
+   });
+	socket.on('saveFile',function(data){
+		fs.writeFileSync(__dirname+'\\codes\\'+data.fileName+'.txt',data.code);
+   });
+   socket.on('codeTogether',function(data){
+		users[data.otherUser].emit('codeTogether',data);
    });
 });
