@@ -22,7 +22,7 @@ function function1(data,ID) {
 Message.addEventListener('keypress',function(event){
 	if(event.keyCode===13)
 		Send_button.click();
-});
+});	
 Message.addEventListener('keydown',function(event){
 	socket.emit('typing',user.innerHTML);
 });

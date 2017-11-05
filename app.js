@@ -7,8 +7,8 @@ var fs=require('fs');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"2,4,6Trinitrophenol",
-	database:"Test"
+	password:"palakgupta889",
+	database:"adp"
 });
 con.connect(function(err){
 	if(err) throw err;
@@ -102,7 +102,11 @@ io.on('connection',function(socket){
 		console.log('Error!',err);
 	});
 	socket.on('room',function(room){
-		socket.join(room);
+		users[room.to].join(room.Room);
+		users[room.from].join(room.Room);
+	});
+	socket.on('joinroom',function(data){
+		socket.join(data);
 	});
 	socket.on('disconnect',function(sock){
 		con.query(sql2,[socket.id]);
@@ -110,10 +114,9 @@ io.on('connection',function(socket){
 		io.sockets.emit('Online',Object.keys(users));
 		console.log(socket.id+' disconnected');
 	});
-	var room='room1';
+	
     socket.on('client_character',function(msg){
-    	// console.log('Data from client: '+msg.buffer);
-   		socket.in(room).broadcast.emit('server_character',msg.buffer);
+   		socket.in(msg.Room).broadcast.emit('server_character',msg.buffer);
    });
 	socket.on('saveFile',function(data){
 		fs.writeFileSync(__dirname+'\\codes\\'+data.fileName+'.txt',data.code);
