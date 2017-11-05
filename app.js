@@ -7,7 +7,7 @@ var fs=require('fs');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"shshwt.grg",
+	password:"2,4,6Trinitrophenol",
 	database:"Test"
 });
 con.connect(function(err){
@@ -74,29 +74,20 @@ io.on('connection',function(socket){
 	console.log('Connection Made by '+NAME);
 	var session='UPDATE User SET SessionID=? where Name=?';
 	con.query(session,[socket.id,NAME]);
-	users[socket.name]=socket;
+	if(socket.Name!='')
+		users[socket.name]=socket;
 	var sql='UPDATE User SET Online=1 where SessionID=?';
 	var sql2='UPDATE User SET Online=0 where SessionID=?';
-	var online_users="select Name from User where Online=1";
+	// var online_users="select Name from User where Online=1";
+	io.sockets.emit('Online',Object.keys(users));
+	console.log(Object.keys(users));
 	con.query(sql,[socket.id],function(err){
 		if(err) throw err;
 	});
 	//console.log(users);
-	socket.on('Online',function(){
-		//console.log(111);
-		con.query(online_users,function(err,result){
-		if(err) throw err;
-		// console.log(result);
-		// var name=req.body.Username;
-		var string = JSON.stringify(result);
-		Online_Users=JSON.parse(string);
-		Online_Users.forEach(function(item){
-			// console.log(item.Name);
-		});
-	});
-		// console.log(data);
-		socket.broadcast.emit('Online',Online_Users);
-	});
+	// socket.on('Online',function(){
+	// 	socket.broadcast.emit('Online',Object.keys(users));
+	// });
 	socket.on('chat',function(data){
 		// console.log(typeof(data.to));
 		users[data.to].emit('chat',data);
@@ -115,7 +106,8 @@ io.on('connection',function(socket){
 	});
 	socket.on('disconnect',function(sock){
 		con.query(sql2,[socket.id]);
-		socket.broadcast.emit('Online',Online_Users);
+		delete users[socket.name];
+		io.sockets.emit('Online',Object.keys(users));
 		console.log(socket.id+' disconnected');
 	});
 	var room='room1';

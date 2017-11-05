@@ -3,7 +3,6 @@ var Code=document.getElementById('Workspace');
 Code.focus();
 var codingTogetherFlag=false;
 var codingTogetherHost=false;
-
 var room='room1';
 socket.on('connect',function(){
 	console.log('working');

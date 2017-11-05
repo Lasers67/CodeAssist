@@ -8,13 +8,11 @@ var code=document.getElementById('Code-space');
 var sidebar=document.getElementById('sidebar');
 var chat_box=document.getElementById('Chat-box');
 //Emit
-function Onliner(){
-	// alert('Loaded');
-	socket.emit('Online');
-};
-setInterval(Onliner, 3000);
+
+// setInterval(Onliner, 3000);
 function function1(data,ID) {
  	 var li = document.createElement("div");
+ 	 // var br=document.createElement("br");
 	 li.id=ID;
 	 li.innerHTML='<p><strong>'+data.UserName+':</strong>'+data.Message+'</p>';
  	 output.appendChild(li);
@@ -46,7 +44,7 @@ function fun(data,ID)
 	newbutton.id=ID;
 	newbutton.className='chatButton';
 	newbutton.innerHTML = ID;
-	newbutton.onclick=function(){receiver=data.Name;output.style.display='block';};
+	newbutton.onclick=function(){receiver=data;output.style.display='block';};
 	sidebar.appendChild(newbutton);
 	var newbutton2 = document.createElement("button");
 	newbutton2.id=ID;
@@ -59,16 +57,12 @@ function fun(data,ID)
 socket.on('Online',function(data){
 	sidebar.innerHTML='';
 	data.forEach(function(item){
-		if(item.Name!=user.innerHTML){
-			fun(item,item.Name);
+		if(item!=user.innerHTML){
+			fun(item,item);
 		}
 	});
 });
-Send_button.addEventListener('click',function(){
-	//send text
-	// alert(receiver);
-	// chat_box.style.display=block;
-	
+Send_button.addEventListener('click',function(){	
 	socket.emit('chat',{
 		to: receiver,
 		Message:Message.value,
