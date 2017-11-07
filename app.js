@@ -89,7 +89,7 @@ io.on('connection',function(socket){
 	// 	socket.broadcast.emit('Online',Object.keys(users));
 	// });
 	socket.on('chat',function(data){
-		console.log(typeof(data.to));
+		// console.log(typeof(data.to));
 		users[data.to].emit('chat',data);
 	});
 	socket.on('typing',function(data){

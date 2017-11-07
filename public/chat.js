@@ -7,15 +7,19 @@ var type=document.getElementById('typing');
 var code=document.getElementById('Code-space');
 var sidebar=document.getElementById('sidebar');
 var chat_box=document.getElementById('Chat-box');
+var bottom_chat=document.getElementById('bottom-chat');
+var Chatting=document.getElementById('ChattingArea');
 //Emit
-
 // setInterval(Onliner, 3000);
-function function1(data,ID) {
- 	 var li = document.createElement("div");
+function function1(data,ID,Apple) {
+ 	 var li = document.createElement("input");
+ 	 li.type="text";
  	 // var br=document.createElement("br");
 	 li.id=ID;
-	 li.innerHTML='<p><strong>'+data.UserName+':</strong>'+data.Message+'</p>';
- 	 output.appendChild(li);
+	 li.value=data.Message;
+	 li.readOnly=true;
+ 	 var ele=document.getElementById(Apple+"2");
+ 	 ele.appendChild(li);
 	}
 
 //typing
@@ -29,8 +33,6 @@ Message.addEventListener('keydown',function(event){
 Message.addEventListener('keyup',function(event){
 	socket.emit('clear_text');
 });
-
-
 socket.on('typing',function(data){
 	type.innerHTML='<p>'+data+' is typing...</p>';
 });
@@ -44,16 +46,61 @@ function fun(data,ID)
 	newbutton.id=ID;
 	newbutton.className='chatButton';
 	newbutton.innerHTML = ID;
-	newbutton.onclick=function(){receiver=data;output.style.display='block';};
+	newbutton.onclick=function(){receiver=data;create_chatbox(ID);};
 	sidebar.appendChild(newbutton);
 	var newbutton2 = document.createElement("button");
 	newbutton2.id=ID;
 	newbutton2.className = 'inviteButton';
 	newbutton2.innerHTML = 'Code Together';
-	newbutton2.onclick=function(){codeTogether(newbutton2);};
+	newbutton2.onclick=function(){
+		codeTogether(newbutton2);
+	};
 	sidebar.appendChild(newbutton2);
 }
-
+function create_chatbox(Name)
+{
+	var A=document.getElementById(Name+"2");
+	if(A==null)
+	{
+		var New_Chatbox=document.createElement("div");
+		var Name_box=Name+"2";
+		New_Chatbox.id=Name_box;
+		New_Chatbox.style.height="300px";
+		New_Chatbox.style.width="300px";
+		New_Chatbox.style.color="white";
+		New_Chatbox.style.border="1px solid red";
+		var Chat_head=document.createElement("div");
+		New_Chatbox.appendChild(Chat_head);
+		Chat_head.innerHTML=Name;
+		var Chat_bottom=document.createElement("div");
+		New_Chatbox.appendChild(Chat_bottom);
+		var New_Message=document.createElement("input");
+		New_Message.type="text";
+		New_Message.placeholder="Message";
+		Chat_bottom.appendChild(New_Message);
+		var SEND=document.createElement("button");
+		New_Message.id=Name+"3";
+		SEND.id=Name+"4";
+		SEND.innerHTML="Send";
+		Chat_bottom.appendChild(SEND);
+		SEND.onclick=function(){
+			var string=this.id;
+			var name=string.substr(0,string.length-1);
+			var to_send=document.getElementById(name+"3").value;
+			socket.emit("chat",{to:name,Message:to_send,UserName:user.innerHTML});
+			var data={to:name,Message:to_send,UserName:user.innerHTML};
+			var Apple=name;
+			function1(data,"my",Apple);
+			New_Message.value="";
+		};
+		New_Message.addEventListener('keypress',function(event){
+			if(event.keyCode==13)
+				SEND.click();
+		});
+		New_Chatbox.style.float="left";
+		Chatting.appendChild(New_Chatbox);}
+		// New_Message.style.position="relative";
+}
 socket.on('Online',function(data){
 	sidebar.innerHTML='';
 	data.forEach(function(item){
@@ -62,23 +109,11 @@ socket.on('Online',function(data){
 		}
 	});
 });
-Send_button.addEventListener('click',function(){	
-	socket.emit('chat',{
-		to: receiver,
-		Message:Message.value,
-		UserName:user.innerText
-	});
-	var data={to: receiver,Message:Message.value,UserName:user.innerText};
-	function1(data,'my');
-	//clear input box after sending text
-	Message.value="";
-});
 
 //Listen
 socket.on('chat',function(data){
 	type.innerHTML="";
-	output.style.display='block';
-	receiver=data.UserName;
-	var val='<p><strong>'+data.UserName+':</strong>'+data.Message+'</p>';
-	function1(data,'her');
+	var Apple=data.UserName;
+	create_chatbox(Apple);
+	function1(data,'her',Apple);
 });
