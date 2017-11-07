@@ -89,7 +89,7 @@ io.on('connection',function(socket){
 	// 	socket.broadcast.emit('Online',Object.keys(users));
 	// });
 	socket.on('chat',function(data){
-		// console.log(typeof(data.to));
+		console.log(typeof(data.to));
 		users[data.to].emit('chat',data);
 	});
 	socket.on('typing',function(data){
@@ -102,8 +102,14 @@ io.on('connection',function(socket){
 		console.log('Error!',err);
 	});
 	socket.on('room',function(room){
+		try{
 		users[room.to].join(room.Room);
 		users[room.from].join(room.Room);
+	}
+	catch(err)
+	{
+		console.log("BHK!!");
+	}
 	});
 	socket.on('joinroom',function(data){
 		socket.join(data);
@@ -116,12 +122,24 @@ io.on('connection',function(socket){
 	});
 	
     socket.on('client_character',function(msg){
-   		socket.in(msg.Room).broadcast.emit('server_character',msg.buffer);
+   		socket.in(msg.Room).broadcast.emit('server_character',msg);
    });
 	socket.on('saveFile',function(data){
 		fs.writeFileSync(__dirname+'\\codes\\'+data.fileName+'.txt',data.code);
    });
    socket.on('codeTogether',function(data){
-		users[data.otherUser].emit('codeTogether',data);
+   		console.log(data);
+		var origCode=fs.readFileSync(__dirname+'\\codes\\'+data.fileName+'.txt','utf8');
+		var dat={
+			fileName:data.fileName,
+			otherUser:data.otherUser,
+			code:origCode
+		};
+		users[data.otherUser].emit('codeTogether',dat);
+   });
+   socket.on('takefilename',function(data){
+   		console.log(data);
+   		var text=fs.readFileSync(__dirname+'\\codes\\'+data.filen+'.txt','utf8');
+   		socket.emit("takefilename",text);
    });
 });

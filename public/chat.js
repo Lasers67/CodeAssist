@@ -1,4 +1,4 @@
-var socket=io.connect('localhost:3000');
+var socket=io.connect('10.8.17.80:3000');
 var Message=document.getElementById('Message');
 var Send_button=document.getElementById('send');
 var output=document.getElementById('Output');
@@ -77,6 +77,8 @@ Send_button.addEventListener('click',function(){
 //Listen
 socket.on('chat',function(data){
 	type.innerHTML="";
+	output.style.display='block';
+	receiver=data.UserName;
 	var val='<p><strong>'+data.UserName+':</strong>'+data.Message+'</p>';
 	function1(data,'her');
 });
