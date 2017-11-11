@@ -1,4 +1,4 @@
-var socket=io.connect('10.8.17.80:3000');
+var socket=io.connect('http://localhost:3000');
 var Message=document.getElementById('Message');
 var Send_button=document.getElementById('send');
 var output=document.getElementById('Output');
@@ -21,7 +21,6 @@ function function1(data,ID,Apple) {
  	 var ele=document.getElementById(Apple+"2");
  	 ele.appendChild(li);
 	}
-
 //typing
 Message.addEventListener('keypress',function(event){
 	if(event.keyCode===13)
@@ -53,7 +52,7 @@ function fun(data,ID)
 	newbutton2.className = 'inviteButton';
 	newbutton2.innerHTML = 'Code Together';
 	newbutton2.onclick=function(){
-		codeTogether(newbutton2);
+		codeTogether(this);
 	};
 	sidebar.appendChild(newbutton2);
 }
@@ -67,7 +66,7 @@ function create_chatbox(Name)
 		New_Chatbox.id=Name_box;
 		New_Chatbox.style.height="300px";
 		New_Chatbox.style.width="300px";
-		New_Chatbox.style.color="white";
+		New_Chatbox.style.color="black";
 		New_Chatbox.style.border="1px solid red";
 		var Chat_head=document.createElement("div");
 		New_Chatbox.appendChild(Chat_head);
@@ -97,7 +96,9 @@ function create_chatbox(Name)
 			if(event.keyCode==13)
 				SEND.click();
 		});
-		New_Chatbox.style.float="left";
+		New_Chatbox.style.float="right";
+		New_Chatbox.style.overflow="auto";
+		New_Chatbox.style.backgroundColor="white";
 		Chatting.appendChild(New_Chatbox);}
 		// New_Message.style.position="relative";
 }
@@ -109,7 +110,6 @@ socket.on('Online',function(data){
 		}
 	});
 });
-
 //Listen
 socket.on('chat',function(data){
 	type.innerHTML="";

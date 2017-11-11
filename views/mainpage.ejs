@@ -1,119 +1,199 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>
-<%= Name %>
-</title>
- <meta charset="utf-8">
+  <title><%= Name %></title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="styles/default.css">
-<script src="highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<style type="text/css"> 
-    body{
-        font-family: Trebuchet;
-    }
-    strong{
-        color: #03b2d5;
-    }
-    #Workspace{
-        font-size: 18px;
-        background: white;
-        height:60%;
-        width:80%;
-        position:absolute;
-        top:10%;
-        font-family: Trebuchet;
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="styles/default.css">
+<!--<script src="highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>-->
+  <style type="text/css">
+    .btn-arrow-right   {
+   position: relative;
+   padding-right: 20px;
+   padding-left: 25px;
+} 
+
+.btn-arrow-right:before,
+.btn-arrow-right:after   { 
+   content: "";
+   position: absolute;
+   top: 5px;
+   width: 22px;
+   height: 22px;
+   background: inherit;
+   border: inherit;
+   border-left-color: transparent;
+   border-bottom-color: transparent;
+   border-radius: 0px 4px 0px 0px;  
+   -webkit-border-radius: 0px 4px 0px 0px;
+   -moz-border-radius: 0px 4px 0px 0px;
+}
+.btn-arrow-right:before,
+.btn-arrow-right:after {
+   transform: rotate(45deg);
+   -webkit-transform: rotate(45deg);
+   -moz-transform: rotate(45deg);
+   -o-transform: rotate(45deg);
+   -ms-transform: rotate(45deg);
+}
+.btn-arrow-right:before  {
+   left: -11px;
+ background-color: white;
+}
+.btn-arrow-right:after {
+   right: -11px;
+    z-index: 1;
+} 
+#Tabs{
+  margin-top: -14px;
+  margin-bottom: 0px;
+  margin-left: -20px;
+}
+#Workspace{
+    float : left;
+        position: relative;
+    /*top: 15px;   */
+    margin-left: 10px; 
         /*border:0px solid black;*/
-        overflow: auto; 
-    }
-    #Workspace:focus{
-        outline: none;
-    }
-    a:link,a:visited {text-decoration: none;
-                                color: black;
-                                padding: 14px;
-                                background-color: white;
-                                }
-                a:hover {text-decoration: none;
-                                
-                                color: black;
-                                padding: 14px;
-                                border-bottom:2px solid black;
-                                box-shadow:0px 1px 0px black;
-                                background-color: white;
+        /*font-size: 18;*/
+        resize: none;
+        overflow: auto;
+        height: 55vh;
+        width: 75vw;
+        /*z-index: -1;*/
+}
 
-                        }
-                a:active {text-decoration: none;
-                                color: black;
-                                box-shadow:0px 1px 1px black;
-                                background-color: #b6b8b4;
-                                opacity: 0.8;
-                        }
-                .navbar{background-color: white;
-                                padding:16px;
-                                position: fixed;
-                                width: 100%;    
-                                top:0;
-                                left: 0px;
-                                opacity: 1;
-                                }
-                #WELCOME {position: fixed;
-                                top:0px;
-                                left: 35%;
-                        font-family: Trebuchet;}
-                #ABOUT {position: fixed;
-                                top:0px;
-                                left: 41.3%;
-                        font-family: Trebuchet;}
-                #PROJECTS {position: fixed;
-                                top:0px;
-                                left: 46%;
-                        font-family: Trebuchet;}
-                #CONTACT{position: fixed;
-                                top:0px;
-                                left: 52.1%;
-                        font-family: Trebuchet;}
-                #name{position: fixed;
-                        top:16px;
-                        left:85%;
-                        font-size: 18px;
-                        color: black;
-                }
-                #signout{
-                    position: fixed;
-                    top: 0px;
-                    padding: 12px;
-                    font-size: 16px;    
-                    left: 89%;
-                    font-family: Trebuchet;
-                }
+.vertical-menu {
+    width: 100px;
+    position: absolute; 
+    left:75vw;
+    margin-left: 10px;
+    margin-top:-13px;/* Set a width if you like */
+}
 
-                #sidebar{
+.vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+    background-color: #4CAF50; /* Add a green color to the "active/current" link */
+    color: white;
+}
+@media (max-width: 768px){
+  #Workspace{
+    width: 95%;
+  margin-left: 10px;
+  }
+
+}
+@media (max-width: 992px){
+  #Input,#codeOutput{
+    /*margin-right: 12px; */
+  }
+}
+#Exit_room{
+  margin-top: -3px;
+}
+#Online_users{
+  margin-top: -5px;
+}
+#button-and-usersinroom{
+  margin-left: -3%;
+  position: absolute;
+  left: 78vw;
+  height: 55vh;
+  /*background-color: red;*/
+  /*width: 100%;*/
+  /*float: right;*/
+}
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+#Leave{
+  position: absolute;
+  bottom: 0px;
+}
+.table-responsive{
+  margin-top: -11px;
+  margin-bottom: 5px;
+  max-height: 74%;
+}
+#Input,#codeOutput{
+  position: relative;
+  height: 28vh;
+}
+#Input1,#codeOutput1{
+  position: relative;
+  height: 28vh;
+}
+.vertical-menu {
+    width: 200px;
+    height: 150px;
+    overflow-y: auto;
+}
+
+.vertical-menu a {
+    background-color: #eee;
+    color: black;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+}
+
+#sidebar{
                     height: 100%;
                     color: white;
                     background-color: #545454;
-                    width: 19%;
+                    width: 16%;
                     position: fixed;
-                    top:5%;
-                    z-index: -1;
-                    left: 82%;
+                    top:20%;
+                    /*z-index: -1;*/
+                    left: 86%;
                         overflow: auto;
                 }
-                #Output{
-                    color: black;
-                    width:300px;
-                    height:300px;   
-                        display: none;
-                    /*border:2px solid black;*/
+#ChattingArea{
+                    width:100%;
+                    height: 260px;
+                    position: absolute;
+                    top:75%;
                     overflow: auto;
+                    /*background-color:red;*/
                 }
-                #Chat-box{
+#Chat-box{
                     position:absolute;  
                     bottom: 0;
                     left:83%;
                     background-color: #dedbdb;
                         /*display: none;*/
+                }
+.inviteButton{
+                    width:50%;
+                    padding:20px;
+                    font-size:20px;
+                    color:#3333ff;
+                    background-color:white;
+                    border: 1px solid #00004d;
                 }
                 #bottom-chat{
                     width: 100%;
@@ -154,60 +234,144 @@
                     background-color:white;
                     border: 1px solid #006600;
                 }
-                .inviteButton{
-                    width:50%;
-                    padding:20px;
-                    font-size:20px;
-                    color:#3333ff;
-                    background-color:white;
-                    border: 1px solid #00004d;
-                }
-                #tabs{
-                    /*background-color: blue;*/
-                    width: 80%;
-                    position: absolute;
-                    top:5%;
-                    height: 5%;
-                    z-index: -1;
-                }
-                #ChattingArea{
-                    width:100%;
-                    height: 260px;
-                    position: absolute;
-                    top:75%;
-                    /*background-color:red;*/
-                }
-                </style>
-																		
-</head>
-<body bgcolor="#dedbdb" >
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-<div class="navbar">
-        <p><a href="#" id="WELCOME">WELCOME</a><a href="#" id="ABOUT">ABOUT</a>
-        <a href="#" id="PROJECTS">PROJECTS</a><a href="#" id="CONTACT">CONTACT</a><span id="name"><%= Name%></span><a id="signout" href="http://localhost:3000/" onclick='saveCode()'>
-        <img src="https://image.freepik.com/free-icon/logout_318-10026.jpg" width="22px" height="22px"></a></p>
-</div>
-</div>
-<div id="tabs">
-    <button id="my_name"><%= Name %></button>    
-</div>
 
-<pre>
-<code class="python" contenteditable="true" id="Workspace">
-</code></pre>
-<div id="sidebar"> </div>
-<div id="ChattingArea"></div>
+  </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
+  <!-- Nav Bar -->
+  
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">CodeAssist</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="#">About</a></li>
+        <li >
+          <a  href="#">Apple </a>
+        </li>
+        <li>
+          <a href="#">Ball</a>
+        </li>
+        <li>
+          <a href="#">Cat</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="#"><strong><span id="name"><%= Name%></span></strong></a>
+        </li>
+        <li >
+          <a id="signout"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Nav Bar Over-->
+<!-- Tabs -->
+<div class="container-fluid" id="Apple" style="margin-top: -1.72vh; margin-bottom: 0.7166667vh; margin-left: -1.41vw;">
+  <div class="col-sm-10 col-md-10 hidden-xs col-lg-10" id="tabs">
+    <button type="button" id="my_name" class="btn btn-default btn-arrow-right">Me</button>
+
+  </div>
+  <div class="hidden-sm hidden-md hidden-lg col-xs-12" id="Tabs">
+    <div class="btn-group">
+      <div class="dropdown btn-group">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">My Rooms
+          <span class="caret"></span>
+        </button>
+            <ul class="dropdown-menu" id="tabs_M">
+              <li><a href="#" id="my_name2">Me</a></li>
+        
+            </ul>
+      </div>
+      <div class="dropdown btn-group">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">In Room
+          <span class="caret"></span></button>
+        <ul class="dropdown-menu" id="users_in_room_M">
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<script type="text/javascript">
+  //****************************************** set all outline None*****************************
+  var a=document.getElementById('apple');
+  a.onclick=function(){
+    this.style.outline="none";
+  };
+</script>-->
+<!-- Tabs Over -->
+<!-- Main Area -->
+<div>
+  <textarea class="form-control" rows="20" id="Workspace" ></textarea>
+</div>
+<script type="text/javascript">
+  document.getElementById("Workspace").onfocus=function(){
+    this.style.outline="none";
+  };
+</script>
+<!-- Main Area Over -->
+<!-- button and usersinroom are -->
+<div class="hidden-xs">
+  <div class="row ">
+    <div class="col-md-8"></div>
+      <div class="col-md-1" id="button-and-usersinroom">
+        <ul class="list-group">
+          <li class="list-group-item active" id="Compile">Compile</li>
+        </ul>
+        <div class="table table-responsive" >          
+          <table class="table">
+            <tbody id="users_in_room">
+            </tbody>
+          </table>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item active" id="leave_room" style="display: none;">Exit Room</li>
+        </ul>
+      </div>
+</div>
+</div>
+<!-- button and usersinroom are over -->
+<!-- Compile Area -->
+<div class="hidden-lg hidden-md hidden-sm" style="margin-left: 10px;">
+  <ul class="list-group btn-group">
+      <li class="btn btn-warning" id="Compile2" style="z-index: 201;"><center>Compile</center></li>
+      <li class="btn btn-info" id="leave_room" style="display: none;"><center>Exit Room</center></li>
+  </ul>
+</div>
+<div >
+  <div class="container-fluid">
+  <div class="row">
+<textarea class="col-sm-5 col-lg-5 col-md-5 well" style="margin-left: 10px; z-index: 200;" placeholder="Write Input Here..." id="Input"></textarea>
+  <textarea readonly class="col-sm-5 col-lg-5 col-md-5 well" style="margin-left: 10px; z-index: 200;" placeholder="Output" id="codeOutput"></textarea>
+    </div>
+  </div>
+</div>
+</div>
+<div id="sidebar"></div>
+<div id="ChattingArea" style="z-index: 2000"></div>
 <div id="Chat-box">
-	<div id="chat-head">
-	<strong><div id="typing"></div></strong>
-	</div>
-	<ul id="Output" type="none">
-	</ul>
-	<div id="bottom-chat">
-	<input type="text" id="Message" placeholder="Message" />
-	|<button id="send">Send</button></div>
+  <div id="chat-head">
+  <strong><div id="typing"></div></strong>
+  </div>
+  <ul id="Output" type="none">
+  </ul>
+  <div id="bottom-chat">
+  <input type="text" id="Message" placeholder="Message" />
+  <button id="send">Send</button></div>
 </div>
 <script src='/chat.js'></script>
 <script src='/code.js'></script>
-</body>	
+<!-- compile Area Over -->
+</body>
 </html>

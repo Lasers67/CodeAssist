@@ -1,0 +1,234 @@
+<html>
+<head>
+<title>
+<%= Name %>
+</title>
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="styles/default.css">
+<script src="highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<style type="text/css"> 
+    body{
+        font-family: Trebuchet;
+    }
+    strong{
+        color: #03b2d5;
+    }
+    #Workspace{
+        font-size: 18px;
+        background: white;
+        height:60%;
+        width:80%;
+        position:absolute;
+        top:10%;
+        font-family: Trebuchet;
+        /*border:0px solid black;*/
+        overflow: auto; 
+    }
+    #Workspace:focus{
+        outline: none;
+    }
+    a:link,a:visited {text-decoration: none;
+                                color: black;
+                                padding: 14px;
+                                background-color: white;
+                                }
+                a:hover {text-decoration: none;
+                                
+                                color: black;
+                                padding: 14px;
+                                border-bottom:2px solid black;
+                                box-shadow:0px 1px 0px black;
+                                background-color: white;
+
+                        }
+                a:active {text-decoration: none;
+                                color: black;
+                                box-shadow:0px 1px 1px black;
+                                background-color: #b6b8b4;
+                                opacity: 0.8;
+                        }
+                .navbar{background-color: white;
+                                padding:16px;
+                                position: fixed;
+                                width: 100%;    
+                                top:0;
+                                left: 0px;
+                                opacity: 1;
+                                }
+                #WELCOME {position: fixed;
+                                top:0px;
+                                left: 35%;
+                        font-family: Trebuchet;}
+                #ABOUT {position: fixed;
+                                top:0px;
+                                left: 41.3%;
+                        font-family: Trebuchet;}
+                #PROJECTS {position: fixed;
+                                top:0px;
+                                left: 46%;
+                        font-family: Trebuchet;}
+                #CONTACT{position: fixed;
+                                top:0px;
+                                left: 52.1%;
+                        font-family: Trebuchet;}
+                #name{position: fixed;
+                        top:16px;
+                        left:85%;
+                        font-size: 18px;
+                        color: black;
+                }
+                #signout{
+                    position: fixed;
+                    top: 0px;
+                    padding: 12px;
+                    font-size: 16px;    
+                    left: 89%;
+                    font-family: Trebuchet;
+                }
+
+                #sidebar{
+                    height: 100%;
+                    color: white;
+                    background-color: #545454;
+                    width: 19%;
+                    position: fixed;
+                    top:5%;
+                    z-index: -1;
+                    left: 82%;
+                        overflow: auto;
+                }
+                #Output{
+                    color: black;
+                    width:300px;
+                    height:300px;   
+                        display: none;
+                    /*border:2px solid black;*/
+                    overflow: auto;
+                }
+                #Chat-box{
+                    position:absolute;  
+                    bottom: 0;
+                    left:83%;
+                    background-color: #dedbdb;
+                        /*display: none;*/
+                }
+                #bottom-chat{
+                    width: 100%;
+                    height: 30px;
+                    background-color: white;
+                    display: none;
+                }
+                #message{
+                    border: none;
+                    padding: 2px;
+                    height: 30px;
+                    width: 75%;
+                }
+                #send{
+                    border: none;
+                    background-color: white;
+                    padding: 8px;
+                }
+                #send:hover{
+                    background-color: black;
+                    color:white;
+                }
+                #my{
+                    float:right;
+                                        display: inline;
+                                color: red;
+                    margin-right:20px;
+                }
+                #her{   
+                    clear:right;
+                    color: blue;
+                }
+                .chatButton{
+                    width:50%;
+                    padding:20px;
+                    font-size:20px;
+                    color:#00ff00;
+                    background-color:white;
+                    border: 1px solid #006600;
+                }
+                .inviteButton{
+                    width:50%;
+                    padding:20px;
+                    font-size:20px;
+                    color:#3333ff;
+                    background-color:white;
+                    border: 1px solid #00004d;
+                }
+                #tabs{
+                    /*background-color: blue;*/
+                    width: 80%;
+                    position: absolute;
+                    top:5%;
+                    height: 5%;
+                    z-index: -1;
+                }
+                #ChattingArea{
+                    width:100%;
+                    height: 260px;
+                    position: absolute;
+                    top:75%;
+                    overflow: auto;
+                    /*background-color:red;*/
+                }
+                #users_in_room{
+                    position: absolute;
+                    height: 100px;
+                    width: 100px;
+                    top: 300px;
+                    left: 600px;
+                    background-color: black;
+                    color: white;
+                }
+                #leave_room{
+                    display: none;
+                    position: absolute;
+                    top:200px;
+                    left: 700px;
+                    padding:20px;
+
+                }
+                </style>
+																		
+</head>
+<body bgcolor="#dedbdb" >
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<div class="navbar">
+        <p><a href="#" id="WELCOME">WELCOME</a><a href="#" id="ABOUT">ABOUT</a>
+        <a href="#" id="PROJECTS">PROJECTS</a><a href="#" id="CONTACT">CONTACT</a><span id="name"><%= Name%></span>
+        <a id="signout">
+        <img src="https://image.freepik.com/free-icon/logout_318-10026.jpg" width="22px" height="22px"></a></p>
+</div>
+</div>
+<div id="tabs">
+    <button id="my_name"><%= Name %></button>    
+</div>
+
+<pre>
+<code class="python" contenteditable="true" id="Workspace">
+</code></pre>
+<button id=leave_room>Leave Room</button>
+<div id="users_in_room"></div>
+<div id="sidebar"> </div>
+<div id="ChattingArea"></div>
+<div id="Chat-box">
+	<div id="chat-head">
+	<strong><div id="typing"></div></strong>
+	</div>
+	<ul id="Output" type="none">
+	</ul>
+	<div id="bottom-chat">
+	<input type="text" id="Message" placeholder="Message" />
+	|<button id="send">Send</button></div>
+</div>
+<script src='/chat.js'></script>
+<script src='/code.js'></script>
+</body>	
+</html>
