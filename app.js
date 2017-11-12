@@ -5,11 +5,12 @@ var bodyParser=require('body-parser');
 var mysql=require('mysql');
 var socket=require('socket.io');
 var fs=require('fs');
+var utf8=require('utf8');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"palakgupta889",
-	database:"adp"
+	password:"shshwt.grg",
+	database:"Test"
 });
 con.connect(function(err){
 	if(err) throw err;
@@ -81,7 +82,7 @@ io.on('connection',function(socket){
 	console.log('Connection Made by '+NAME);
 	var session='UPDATE User SET SessionID=? where Name=?';
 	con.query(session,[socket.id,NAME]);
-	if(socket.Name!='')
+	if(socket.Name!=='')
 	{
 		users[socket.name]=socket;
 		var text=fs.readFileSync(__dirname+'\\codes\\'+socket.name+'.txt','utf8');
@@ -266,7 +267,13 @@ io.on('connection',function(socket){
    });
    socket.on('takefilename',function(data){
    		console.log(data);
-   		var text=fs.readFileSync(__dirname+'\\codes\\'+data.filen+'.txt','utf8');
+		var text='';
+		try{
+			text=fs.readFileSync(__dirname+'\\codes\\'+data.filen+'.txt','utf8');
+		}
+		catch(err){
+			console.log(err);
+		}
    		socket.emit("takefilename",text);
    });
    socket.on('left',function(data){
@@ -317,13 +324,14 @@ io.on('connection',function(socket){
 			}
 			var out='';
 			var json=JSON.parse(stdout);
+			console.log(json);
 			if(json.result.compilemessage===''){
-				out=json.result.stdout;
+					out=json.result.stdout;
 			}
 			else{
-				out=(json.result.compilemessage).replace(/â??/g,'');
+				out=(json.result.compilemessage);
+				out=utf8.decode(out);
 			}
-			console.log(json);
 			console.log(out);
 			users[data.UserName].emit('testCode',out);
 		});
