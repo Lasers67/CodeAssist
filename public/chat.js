@@ -70,7 +70,7 @@ function create_chatbox(Name)
 		New_Chatbox.style.border="1px solid red";
 		var Chat_head=document.createElement("div");
 		New_Chatbox.appendChild(Chat_head);
-		Chat_head.innerHTML=Name;
+		Chat_head.innerHTML='<a onclick=\'OverlayOn("'+Name+'")\'>'+Name+'</a>';
 		var Chat_bottom=document.createElement("div");
 		New_Chatbox.appendChild(Chat_bottom);
 		var New_Message=document.createElement("input");

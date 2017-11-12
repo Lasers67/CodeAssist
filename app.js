@@ -25,6 +25,19 @@ app.set('view engine','ejs');
 app.get('/signup',function(req,res){
 	res.render('signup',{Name:req.query.Name,Password:req.query.Password,RePassword:req.query.RePassword,Email:req.query.Email});
 });
+/*app.get('/profile/:name',function(req,res){
+	var data=req.params.name;
+	con.query('Select * from User where Name=?',[data],function(err,result){
+		if(err) throw err;
+		else if(result.length===0);	//Result is empty, do nothing !
+		else{
+			var j=JSON.parse(JSON.stringify(result));
+			var d=j[0];
+			console.log(d);
+			res.render('profile',{Name:data,EMail:d.Email,Rating:d.Rating});
+		}
+	});
+});*/
 app.post('/signup',urlencodeParser,function(req,res){
 	if(req.body.Password===req.body.RePassword)
 	{
@@ -34,6 +47,7 @@ app.post('/signup',urlencodeParser,function(req,res){
 			console.log("Inserted New Value into User");
 
 		});
+		fs.writeFileSync(__dirname+'//codes//'+req.body.Name+'.txt','');
 		res.redirect('/?Name='+req.body.Name);
 	res.end("Inserted");
 	}
@@ -101,86 +115,62 @@ io.on('connection',function(socket){
 		var d = new Date();
 		var str='\n['+data.UserName+':-'+d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+","+d.getHours()+':'+d.getMinutes()+']'+text+'*--x--*';
 		console.log(str);
-		if(fs.existsSync(__dirname+'\\chats\\'+data.to+'+'+data.UserName+'.txt')){
-			fs.appendFileSync(__dirname+'\\chats\\'+data.to+'+'+data.UserName+'.txt',str);
-		}
-		else if(fs.existsSync(__dirname+'\\chats\\'+data.UserName+'+'+data.to+'.txt')){
-			fs.appendFileSync(__dirname+'\\chats\\'+data.UserName+'+'+data.to+'.txt',str);
-		}
-		else{
-			fs.writeFileSync(__dirname+'\\chats\\'+data.to+'+'+data.UserName+'.txt',str);
-		}
-		users[data.to].emit('chat',data);
+		con.query('Select FileName from Chat where (User1=? and User2= ?)or(User1=? and User2=?)',[data.to,data.UserName,data.UserName,data.to],function(err,result){
+			if(err) throw err;
+			else if(result.length===0);
+			else{
+				var j=JSON.parse(JSON.stringify(result));
+				var l=j[0].FileName;
+				if(fs.existsSync(__dirname+'\\chats\\'+l)){
+					fs.appendFileSync(__dirname+'\\chats\\'+l,str);
+				}
+				else{
+					fs.writeFileSync(__dirname+'\\chats\\'+l,str);
+				}
+				users[data.to].emit('chat',data);
+			}
+		});
 	});
 	socket.on('myChatInBox',function(data){
 		console.log('Getting mychat...');
 		console.log('To:'+data.to+'\nFrom:'+data.UserName);
-		try{
-			console.log('1st try');
-			var text=fs.readFileSync(__dirname+'\\chats\\'+data.to+'+'+data.UserName+'.txt','utf8');
-			var chats=text.split("*--x--*");
-			chats.forEach(function(item,index){
-				var t=item.split(":-");
-				var s=t[0];
-				s=s.substring(2);
-				if(s===data.UserName){
-					var x=item.indexOf(']');
-					s=item.substring(x+1);
-					var dat={
-						to:data.to,
-						Message:s,
-						UserName:data.UserName
-					};
-					socket.emit('myChatInBox',dat);
+		con.query('Select FileName from Chat where (User1=? and User2= ?)or(User1=? and User2=?)',[data.to,data.UserName,data.UserName,data.to],function(err,result){
+			if(err) throw err;
+			else if(result.length===0);
+			else{
+				var j=JSON.parse(JSON.stringify(result));
+				var l=j[0].FileName;
+				if(fs.existsSync(__dirname+'\\chats\\'+l)){
+					var text=fs.readFileSync(__dirname+'\\chats\\'+l,'utf8');
+					var chats=text.split("*--x--*");
+					chats.forEach(function(item,index){
+						var t=item.split(":-");
+						var s=t[0];
+						s=s.substring(2);
+						if(s===data.UserName){
+							var x=item.indexOf(']');
+							s=item.substring(x+1);
+							var dat={
+								to:data.to,
+								Message:s,
+								UserName:data.UserName
+							};
+							socket.emit('myChatInBox',dat);
+						}
+						else if(s===data.to){
+							var x=item.indexOf(']');
+							s=item.substring(x+1);
+							var dat={
+								to:data.UserName,
+								Message:s,
+								UserName:data.to
+							};
+							socket.emit('chat',dat);
+						}
+					});
 				}
-				else if(s===data.to){
-					var x=item.indexOf(']');
-					s=item.substring(x+1);
-					var dat={
-						to:data.UserName,
-						Message:s,
-						UserName:data.to
-					};
-					socket.emit('chat',dat);
-				}
-			});
-		}
-		catch(err){
-			console.log(err);
-			try{
-				console.log('2nd try');
-				var text=fs.readFileSync(__dirname+'\\chats\\'+data.UserName+'+'+data.to+'.txt','utf8');
-				var chats=text.split("*--x--*");
-				chats.forEach(function(item,index){
-					var t=item.split(":-");
-					var s=t[0];
-					s=s.substring(2);
-					if(s===data.UserName){
-						var x=item.indexOf(']');
-						s=item.substring(x+1);
-						var dat={
-							to:data.to,
-							Message:s,
-							UserName:data.UserName
-						};
-						socket.emit('myChatInBox',dat);
-					}
-					else if(s===data.to){
-						var x=item.indexOf(']');
-						s=item.substring(x+1);
-						var dat={
-							to:data.UserName,
-							Message:s,
-							UserName:data.to
-						};
-						socket.emit('chat',dat);
-					}
-				});
 			}
-			catch(err){
-				console.log(err);
-			}
-		}
+		});
 	});
 	socket.on('typing',function(data){
 		socket.broadcast.emit('typing',data);
@@ -314,11 +304,21 @@ io.on('connection',function(socket){
    socket.on('testCode',function(data){
 		var x=data.source;
 		x=x.replace(/\n/g,'%0A');
-		//console.log(x);
+		x=x.replace(/"/g,'\\"');
+		x=x.replace('+','\+');
+		/*var a=x.split('+');
+		x='';
+		a.forEach(function(item,index){
+			if(index===a.length-1)
+				x=x+item;
+			else
+				x=x+item+'\\+';
+		});*/
+		console.log(x);
 		var y=data.testcases;
 		y=y.replace(/\n/g,'%0A');
-		console.log(y);
-		exec("curl -sX POST api.hackerrank.com/checker/submission.json -d \"source="+x+"&lang=2&testcases=['"+y+"']&api_key=hackerrank|2252156-2145|f983468b215ca61b1185e513e8379c676967af34\" -x 10.8.0.1:8080 -H \"charset:utf-8\"",function(error,stdout,stderr){
+		var z=data.lang;
+		exec("curl -sX POST api.hackerrank.com/checker/submission.json -d \"source="+x+"&lang="+z+"&testcases=['"+y+"']&api_key=hackerrank|2252156-2145|f983468b215ca61b1185e513e8379c676967af34\" -x 10.8.0.1:8080 -H \"charset:utf-8\"",function(error,stdout,stderr){
 			if(error){
 				console.log(error);
 			}
@@ -336,5 +336,20 @@ io.on('connection',function(socket){
 			users[data.UserName].emit('testCode',out);
 		});
 		users[data.UserName].emit('pleaseWait');
+   });
+   socket.on('OverlayContent',function(data){
+		con.query('Select * from User where Name=?',[data],function(err,result){
+			if(err) throw err;
+			else if(result.length===0);
+			else{
+				var j=JSON.parse(JSON.stringify(result));
+				var d={
+					Name:j[0].Name,
+					Email:j[0].Email,
+					Gender:j[0].Gender,
+				};
+				socket.emit('OverlayContent',d);
+			}
+		});
    });
 });

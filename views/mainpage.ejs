@@ -16,7 +16,11 @@
    padding-right: 20px;
    padding-left: 25px;
 } 
-
+.scroll-menu{
+   min-width: 220px;
+   max-height: 40vh;
+   overflow: auto;
+}
 .btn-arrow-right:before,
 .btn-arrow-right:after   { 
    content: "";
@@ -234,7 +238,44 @@ html {
                     background-color:white;
                     border: 1px solid #006600;
                 }
-
+				#overlay {
+					position: fixed;
+    				display: none;
+    				width: 100%;
+    				height: 100%;
+    				top: 0;
+    				left: 0;
+    				right: 0;
+    				bottom: 0;
+    				background-color: rgba(0,0,0,0.5);
+    				z-index: 3000;
+    				cursor: pointer;
+				}
+				#whiteSpaceOverlay{
+					width:60%;
+					height:60%;
+					margin-top:10%;
+					margin-left:20%;
+					background-color:white;
+					z-index: 4000;
+					cursor:pointer;
+				}
+				#OverlayName,#OverlayEmail,#OverlayGender{
+					padding:5%;
+				}
+				#UserImage{
+					margin-top:50%;
+					margin-left:70%;
+					height:10vh;
+					width:10vh;
+				}
+				#OverlayNameHead{
+					width:20vh;
+					height:10vh;
+					text-decoration:underline;
+					margin-left:50%;
+					padding:10%;
+				}
   </style>
 </head>
 <body>
@@ -267,7 +308,7 @@ html {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="#"><strong><span id="name"><%= Name%></span></strong></a>
+          <a onclick='OverlayOn("<%= Name%>")'><strong><span id="name" style='cursor:pointer;'><%= Name%></span></strong></a>
         </li>
         <li >
           <a id="signout"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
@@ -278,11 +319,100 @@ html {
 </nav>
 <!-- Nav Bar Over-->
 <!-- Tabs -->
+<div id="overlay" onclick='OverlayOff()'>
+	<div id='whiteSpaceOverlay'>
+	<div class="container-fluid" style="margin-left: 1.5vw;margin-right: -0.5vw;">
+		<div class="row">
+          <div class="col-sm-4" ></div>
+        <div class="col-sm-2" >
+         <center><div class="hidden-xs"  id='UserImage'> <a><img title="profile image" class="img-circle img-responsive" src="user.png" style="width: 10vw;"></a></div>
+		 </center>
+		 </div>
+        <div class="col-sm-4" ></div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row" >
+			<div class="container-fluid">
+				<div class="col-sm-4" ></div>
+				<div class="col-sm-2" style="font-size: 26px;">
+					<center>
+					<div class="row" id='OverlayNameHead'></div>
+					</center>
+				</div>
+				<div class="col-sm-4" ></div>
+			</div>  
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-4"></div>
+					<div class="col-sm-4">
+						<ul class="list-group ">
+							<li class="list-group-item text-muted" contenteditable="false" style="background-color: black">PROFILE</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">User Name:</%=></strong></span><span id='OverlayName'></span></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Email Id</strong></span><span id='OverlayEmail'></span></%=></li>
+                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Gender</strong></span><span id='OverlayGender'></span></li>
+            </ul>
+    </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="container-fluid" id="Apple" style="margin-top: -1.72vh; margin-bottom: 0.7166667vh; margin-left: -1.41vw;">
-  <div class="col-sm-10 col-md-10 hidden-xs col-lg-10" id="tabs">
+  <div class="col-sm-8 col-md-8 hidden-xs col-lg-8" id="tabs">
     <button type="button" id="my_name" class="btn btn-default btn-arrow-right">Me</button>
-
   </div>
+  <div class="dropdown btn-group">
+       <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id ='LangButton'>Language
+			<span class="caret"></span>
+		</button>
+        <ul class="dropdown-menu scroll-menu" role="menu" id="Compilation">
+		<li ><a href='#' id="1" onclick='LangChange(this)'>C</a></li>
+		  <li><a href='#' id="2" onclick='LangChange(this)'>C++</a></li>
+		  <li ><a href='#' id="3" onclick='LangChange(this)'>Java</a></li>
+		  <li ><a href='#' id="5" onclick='LangChange(this)'>Python2.7</a></li>
+		  <li ><a href='#' id="6" onclick='LangChange(this)'>Perl</a></li>
+		  <li ><a href='#' id="7" onclick='LangChange(this)'>PHP</a></li>
+		  <li ><a href='#' id="8" onclick='LangChange(this)'>Ruby</a></li>
+		  <li ><a href='#' id="9" onclick='LangChange(this)'>C#</a></li>
+		  <li ><a href='#' id="10" onclick='LangChange(this)'>MySQL</a></li>
+		  <li ><a href='#' id="11" onclick='LangChange(this)'>Oracle</a></li>
+		  <li ><a href='#' id="12" onclick='LangChange(this)'>Haskell</a></li>
+		  <li ><a href='#' id="13" onclick='LangChange(this)'>Clojure</a></li>
+		  <li ><a href='#' id="14" onclick='LangChange(this)'>Bash</a></li>
+		  <li ><a href='#' id="15" onclick='LangChange(this)'>Scala</a></li>
+		  <li ><a href='#' id="16" onclick='LangChange(this)'>Erlang</a></li>
+		  <li ><a href='#' id="18" onclick='LangChange(this)'>Lua</a></li>
+		  <li ><a href='#' id="20" onclick='LangChange(this)'>JavaScript</a></li>
+		  <li ><a href='#' id="21" onclick='LangChange(this)'>Go</a></li>
+		  <li ><a href='#' id="22" onclick='LangChange(this)'>D</a></li>
+		  <li ><a href='#' id="23" onclick='LangChange(this)'>OCaml</a></li>
+		  <li ><a href='#' id="24" onclick='LangChange(this)'>R</a></li>
+		  <li ><a href='#' id="25" onclick='LangChange(this)'>Pascal</a></li>
+		  <li ><a href='#' id="26" onclick='LangChange(this)'>SBCL</a></li>
+		  <li ><a href='#' id="30" onclick='LangChange(this)'>Python3</a></li>
+		  <li ><a href='#' id="31" onclick='LangChange(this)'>Groovy</a></li>
+		  <li ><a href='#' id="32" onclick='LangChange(this)'>Objective-C</a></li>
+		  <li ><a href='#' id="33" onclick='LangChange(this)'>F#</a></li>
+		  <li ><a href='#' id="36" onclick='LangChange(this)'>COBOL</a></li>
+		  <li ><a href='#' id="37" onclick='LangChange(this)'>Visual Basic</a></li>
+		  <li ><a href='#' id="38" onclick='LangChange(this)'>LOLCODE</a></li>
+		  <li ><a href='#' id="39" onclick='LangChange(this)'>Smalltalk</a></li>
+		  <li ><a href='#' id="40" onclick='LangChange(this)'>Tcl</a></li>
+		  <li ><a href='#' id="41" onclick='LangChange(this)'>Whitespace</a></li>
+		  <li ><a href='#' id="42" onclick='LangChange(this)'>Transact-SQL</a></li>
+		  <li ><a href='#' id="43" onclick='LangChange(this)'>Java8</a></li>
+		  <li ><a href='#' id="44" onclick='LangChange(this)'>Db2</a></li>
+		  <li ><a href='#' id="46" onclick='LangChange(this)'>GNU Octave</a></li>
+		  <li ><a href='#' id="48" onclick='LangChange(this)'>XQuery</a></li>
+		  <li ><a href='#' id="49" onclick='LangChange(this)'>Racket</a></li>
+		  <li ><a href='#' id="50" onclick='LangChange(this)'>Rust</a></li>
+		  <li ><a href='#' id="51" onclick='LangChange(this)'>Swift</a></li>
+		  <li ><a href='#' id="54" onclick='LangChange(this)'>Fortran</a></li>
+        </ul>
+      </div>
+  
   <div class="hidden-sm hidden-md hidden-lg col-xs-12" id="Tabs">
     <div class="btn-group">
       <div class="dropdown btn-group">
@@ -291,7 +421,6 @@ html {
         </button>
             <ul class="dropdown-menu" id="tabs_M">
               <li><a href="#" id="my_name2">Me</a></li>
-        
             </ul>
       </div>
       <div class="dropdown btn-group">

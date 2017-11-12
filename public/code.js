@@ -1,12 +1,29 @@
 var Code=document.getElementById('Workspace');
 // Code.contentEditable=true;
 var Tabs=document.getElementById('tabs');
-var Tabs_M=document.getElementById('tabs_M');
+//var Tabs_M=document.getElementById('tabs_M');
 var mybutton= document.getElementById('my_name');
 var mybutton2= document.getElementById('my_name2');
 var logoff=document.getElementById("signout");
 var compileButton=document.getElementById("Compile");
 var compileButton2=document.getElementById("Compile2");
+var language=1;
+function OverlayOn(data){
+	console.log('Overlay On!');
+	console.log(data);
+	document.getElementById('overlay').style.display='block';
+	socket.emit('OverlayContent',data);
+}
+function OverlayOff(){
+	console.log('Overlay Off!');
+	document.getElementById('overlay').style.display='none';
+}
+function LangChange(lang){
+	console.log(lang.id);
+	var x=document.getElementById(lang.id).innerHTML;
+	language=lang.id;
+	document.getElementById('LangButton').innerHTML=x+'<span class="caret"></span>';
+}
 compileButton2.onclick=function(){
 	submitCode();
 }
@@ -74,6 +91,7 @@ function submitCode()
 	var dat={
 		source:Code.value,
 		testcases:testCases.value,
+		lang:language,
 		UserName:user.innerHTML
 	};
 	socket.emit('testCode',dat);
@@ -119,7 +137,7 @@ socket.on('codeTogether',function(data){
 						leave_room.style.display='block';
 					};
 					list1.appendChild(ref1);
-					Tabs_M.appendChild(list1);
+					//Tabs_M.appendChild(list1);
 					
 
 
@@ -217,21 +235,21 @@ socket.on('kick_tab',function(data){
 	}
 	if(a!=null){
 		Tabs.removeChild(a);
-		Tabs_M.removeChild(a);
+		//Tabs_M.removeChild(a);
 	}
 });
 leave_room.onclick=function(){
 	leave_room.style.display='none';
 	var a=document.getElementById(current+"1");
 	Tabs.removeChild(a);
-	Tabs_M.removeChild(a);
+	//Tabs_M.removeChild(a);
 	socket.emit('left',{room:current, leaving:user.innerHTML});
 	clickedMyButton();
 }
 socket.on("got_kicked",function(data){
 	var a=document.getElementById(data+"1");
 	Tabs.removeChild(a);
-	Tabs_M.removeChild(a);
+	//Tabs_M.removeChild(a);
 	clickedMyButton();
 });
 socket.on('byebye',function(data){
@@ -247,4 +265,11 @@ socket.on('testCode',function(data){
 });
 socket.on('pleaseWait',function(){
 	output.value='Please Wait...';
+});
+socket.on('OverlayContent',function(data){
+	console.log(data);
+	document.getElementById('OverlayNameHead').innerHTML=data.Name;
+	document.getElementById('OverlayName').innerHTML=data.Name;
+	document.getElementById('OverlayEmail').innerHTML=data.Email;
+	document.getElementById('OverlayGender').innerHTML=data.Gender;
 });
