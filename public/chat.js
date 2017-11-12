@@ -82,6 +82,8 @@ function create_chatbox(Name)
 		SEND.id=Name+"4";
 		SEND.innerHTML="Send";
 		Chat_bottom.appendChild(SEND);
+		var oldChatData={to:Name,UserName:user.innerHTML};
+		socket.emit('myChatInBox',oldChatData);
 		SEND.onclick=function(){
 			var string=this.id;
 			var name=string.substr(0,string.length-1);
@@ -116,4 +118,7 @@ socket.on('chat',function(data){
 	var Apple=data.UserName;
 	create_chatbox(Apple);
 	function1(data,'her',Apple);
+});
+socket.on('myChatInBox',function(data){
+	function1(data,"my",data.to);
 });
