@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= Name %></title>
+  <title>CodeAssist: <%= Name %> </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -164,18 +164,6 @@ html {
     padding: 12px;
     text-decoration: none;
 }
-
-#sidebar{
-                    height: 100%;
-                    color: white;
-                    background-color: #545454;
-                    width: 16%;
-                    position: fixed;
-                    top:20%;
-                    /*z-index: -1;*/
-                    left: 86%;
-                        overflow: auto;
-                }
 #ChattingArea{
                     width:100%;
                     height: 260px;
@@ -191,14 +179,7 @@ html {
                     background-color: #dedbdb;
                         /*display: none;*/
                 }
-.inviteButton{
-                    width:50%;
-                    padding:20px;
-                    font-size:20px;
-                    color:#3333ff;
-                    background-color:white;
-                    border: 1px solid #00004d;
-                }
+
                 #bottom-chat{
                     width: 100%;
                     height: 30px;
@@ -222,21 +203,37 @@ html {
                 }
                 #my{
                     float:right;
-                                        display: inline;
-                                color: red;
+                    display: block;
+                    /*width: 30%;*/
+                    background-color: #1187c2;
+                    color: white;
+                    border: none;
+                    padding: 5px;
                     margin-right:20px;
+                    width: auto;
+                    text-align: right;
+                    border-radius: 5px;
                 }
                 #her{   
                     clear:right;
-                    color: blue;
+                    display: block;
+                    color: black;
+                    width: auto;
+                    text-align: left;
+                    padding: 5px;
+                    margin-left: 20px;
+                    background-color: #DCE1E2;
+                    /*width: 30%;*/
+                    border: none;
+                    border-radius: 5px;
+                }
+                .inviteButton{
+                    width:50%;
+                    background-color: black
                 }
                 .chatButton{
                     width:50%;
-                    padding:20px;
-                    font-size:20px;
-                    color:#00ff00;
-                    background-color:white;
-                    border: 1px solid #006600;
+                    background-color: black
                 }
 				#overlay {
 					position: fixed;
@@ -260,7 +257,7 @@ html {
 					z-index: 4000;
 					cursor:pointer;
 				}
-				#OverlayName,#OverlayEmail,#OverlayGender{
+				#OverlayName,#OverlayEmail{
 					padding:5%;
 				}
 				#UserImage{
@@ -276,6 +273,19 @@ html {
 					margin-left:50%;
 					padding:10%;
 				}
+        #sidebar{
+                    height: 100%;
+                    color: white;
+                    background-color: #545454;
+                    width: 14%;
+                    position: fixed;
+                    top:7vh;
+                    /*z-index: -10;*/
+                    /*z-index: -1;*/
+                    left: 86%;
+                    overflow: auto;
+                    /*display: none;*/
+                }
   </style>
 </head>
 <body>
@@ -295,16 +305,6 @@ html {
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="#">About</a></li>
-        <li >
-          <a  href="#">Apple </a>
-        </li>
-        <li>
-          <a href="#">Ball</a>
-        </li>
-        <li>
-          <a href="#">Cat</a>
-        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -350,7 +350,6 @@ html {
 							<li class="list-group-item text-muted" contenteditable="false" style="background-color: black">PROFILE</li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">User Name:</%=></strong></span><span id='OverlayName'></span></li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">Email Id</strong></span><span id='OverlayEmail'></span></%=></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Gender</strong></span><span id='OverlayGender'></span></li>
             </ul>
     </div>
     </div>
@@ -361,7 +360,7 @@ html {
 </div>
 <div class="container-fluid" id="Apple" style="margin-top: -1.72vh; margin-bottom: 0.7166667vh; margin-left: -1.41vw;">
   <div class="col-sm-8 col-md-8 hidden-xs col-lg-8" id="tabs">
-    <button type="button" id="my_name" class="btn btn-default btn-arrow-right">Me</button>
+    <button type="button" id="my_name" class="btn btn-default btn-arrow-right" style="background-color: black; color: white;">Me</button>
   </div>
   <div class="dropdown btn-group">
        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id ='LangButton'>Language
@@ -487,7 +486,12 @@ html {
   </div>
 </div>
 </div>
-<div id="sidebar"></div>
+<div id="sidebar">
+  
+</div> 
+
+
+</div>
 <div id="ChattingArea" style="z-index: 2000"></div>
 <div id="Chat-box">
   <div id="chat-head">
@@ -499,6 +503,7 @@ html {
   <input type="text" id="Message" placeholder="Message" />
   <button id="send">Send</button></div>
 </div>
+
 <script src='/chat.js'></script>
 <script src='/code.js'></script>
 <!-- compile Area Over -->

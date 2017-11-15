@@ -1,154 +1,462 @@
 <html>
+
 <head>
-<title>Sign up for collaborative coding</title>
+<title>Log In or Join Now to Start Coding Collaboratively</title>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/html'>
 <style type="text/css">
-#frm
+/*.Login
 {
-	margin-top:100px;
-	margin-left:400px;
-	border-style:ridge solid;
-	border-color:white;
-	border-width:5px;
-	width:500px;
-	padding:20px 30px;
-	font-size:30px;
-	border-radius:25px;
-	background-color:#999999;
-	/*font-family:Calibri;*/
+    position: absolute;
+    top:40px;                        
+    width: 23%;
+    left:364px;
+    background-color: #dbdbd8;
+    height: 75%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}*/
+
+#side
+{
+  height: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: absolute;
+  left: -0.4vw;
 }
 
-input:active,input:hover
-{
-	border-bottom:3px solid #666666;
-}
-#subbut
-{
-	padding:5px;
-	background-color:orange;
-	border-radius:15px;
-	box-shadow: 0 8px #666;
-	text-decoration:none;
-	text-align:center;
-	display:inline-block;
-	color:red;
-	font-size:24px;
-	font-weight:bold;
-	margin:20px 0px;
-	transition:0.5s;
-}
-#subbut:hover
-{
-	color:orange;
-	background-color:red;
-	transition:0.5s;
-}
-#subbut:active
-{
-	box-shadow: 0 5px #222;
-	transform:translateY(4px);
+.Form{
+                           
+    width: 100%;
+    background-color: #dbdbd8;
+    height: 100%;
+    
+    /*border-left: 2px black;*/
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   margin-left: -1vw;
+
 }
 
-#abc
+
+
+#logup
 {
-	margin-left:600px;
-	padding:5px;
-	background-color:orange;
-	border-radius:15px;
-	box-shadow: 0 8px #666;
-	text-decoration:none;
-	text-align:center;
-	display:inline-block;
-	color:red;
-	font-size:24px;
-	font-weight:bold;
-	margin-top:50px;
-	transition:0.5s;
-}
-#abc:hover
-{
-	color:orange;
-	background-color:red;
-	transition:0.5s;
-}
-#abc:active
-{
-	box-shadow: 0 5px #222;
-	transform:translateY(4px);
+  font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+  color: #2e2e2c;
+  font-size: 23px;
+
 }
 
-a:link,a:visited
+#user
 {
-	text-decoration: none;
-	color: black;
-	padding: 14px;
-	background-color: white;  
-}
-a:hover{
-	text-decoration: none;  
-	color: black;
-	padding: 14px;
-	border-bottom:2px solid black;
-	box-shadow:0px 1px 0px black;
-	background-color: white;
-}
-a:active {
-	text-decoration: none;
-	color: black;
-	box-shadow:0px 1px 1px black;
-	background-color: #b6b8b4;
-	opacity: 0.8;
+  position: absolute;
+  left: 227px;
+  top: 175px;
+  color: #abaa9e;
+
 }
 
-.navbar{
-	background-color: white;
-	padding:16px;
-	position: fixed;
-	width: 100%;    
-	top:0px;
-	left: 0px;
+#passglyph
+{
+  position: absolute;
+  left: 227px;
+  top: 272px;
+  color: #abaa9e;
 }
-#WELCOME{
-	position: fixed;
-	top:0px;
-	left: 35%;
-    font-family: Trebuchet MS;
+
+#repassglyph{
+  position: absolute;
+  left:227px;
+  top: 320px;
+  color: #abaa9e;
+
+
 }
- #ABOUT {
-	position: fixed;
-	top:0px;
-	left: 41.3%;
-	font-family: Trebuchet MS;
+#emailglyph{
+  position: absolute;
+  left: 227px;
+  top: 225px;
+  color: #abaa9e;
+
 }
- #PROJECTS {
-	position: fixed;
-	top:0px;
-	left: 46%;
-    font-family: Trebuchet MS;
+
+#userglyph2
+{
+  color: #abaa9e;
+
 }
- #CONTACT{
-	position: fixed;
-	top:0px;
-	left: 52.1%;
-	font-family: Trebuchet MS;
+
+#passglyph2
+{
+  color: #abaa9e;
 }
+
+
+input::-webkit-input-placeholder {
+    color: #999;
+}
+input:focus::-webkit-input-placeholder {
+display: none;}
+
+/* Firefox < 19 */
+input:-moz-placeholder {
+    color: #999;
+}
+input:focus:-moz-placeholder {
+display: none;}
+
+/* Firefox > 19 */
+input::-moz-placeholder {
+    color: #999;
+}
+input:focus::-moz-placeholder {
+display: none;}
+
+/* Internet Explorer 10 */
+input:-ms-input-placeholder {
+    color: #999;
+}
+input:focus:-ms-input-placeholder {
+display: none;}
+
+.log
+{
+                        
+    height: 100%;
+    /*left:355px;*/
+    background: transparent;
+    /*margin-left: 51%;*/
+    /*z-index: -1;*/
+}
+
+#username
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+     /* width : 260px;*/
+    position: relative;
+     top:120px;
+     left: 75px;
+color:black;
+    padding: 1px;
+    border: none;
+    border-bottom: 1px solid #abaa9e;
+    background: transparent;
+    font: 14px  Copperplate, "Copperplate Gothic Light", fantasy;
+     background-image:url('smiley.png') left center no-repeat;
+}
+
+#email
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+    /*  width : 260px;*/
+     /*margin: 1px 730px;*/
+      position: relative;
+     top:150px;
+     left: 75px;
+    padding: 1px;
+    border: none;
+    border-bottom: 1px solid #abaa9e;
+    background: transparent;
+    font: 14px  Copperplate, "Copperplate Gothic Light", fantasy;
+   
+   
+}
+
+
+#password
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+     /* width : 260px;*/
+     /*margin: 100px 730px;*/
+      position: relative;
+     top:180px;
+     left: 75px;
+    padding: 1px;
+    border: none;
+    border-bottom: 1px solid #abaa9e;
+    background: transparent;
+    font: 14px  Copperplate, "Copperplate Gothic Light", fantasy;
+}
+
+
+#rpass
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+      /*width : 260px;*/
+     /*margin: 100px 730px;*/
+      position: relative;
+     top:210px;
+     left: 75px;
+    padding: 1px;
+    border: none;
+    border-bottom: 1px solid #abaa9e;
+    background: transparent;
+    font: 14px  Copperplate, "Copperplate Gothic Light", fantasy;
+    color: black;
+   
+}
+
+#rpass : active{
+    border-bottom: 2px solid #444441;
+}
+
+
+
+#signup {
+    background-color: #dedbdb;
+    border: 1.5px solid #3c3c3b  ;
+    border-radius: 5px;
+    color: #3c3c3b;
+    padding: 8px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+      position: relative;
+     top:250px;
+     left: 90px;
+    font-size: 14px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    /*margin:-20px 1300px;*/
+    cursor: pointer;
+}
+#signup:hover {
+    color : #dedbdb;
+    background-color: #3c3c3b;
+    border-color: #dedbdb;
+}
+
+#login
+{
+  position: absolute;
+  left: 90px;
+  top: 64px;
+  font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+  color: #2e2e2c;
+  font-size: 23px;
+}
+
+
+
+input::-webkit-input-placeholder {
+    color: #999;
+}
+input:focus::-webkit-input-placeholder {
+display: none;}
+
+/* Firefox < 19 */
+input:-moz-placeholder {
+    color: #999;
+}
+input:focus:-moz-placeholder {
+display: none;}
+
+/* Firefox > 19 */
+input::-moz-placeholder {
+    color: #999;
+}
+input:focus::-moz-placeholder {
+display: none;}
+
+/* Internet Explorer 10 */
+input:-ms-input-placeholder {
+    color: #999;
+}
+input:focus:-ms-input-placeholder {
+display: none;}
+
+
+
+#username2
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+     /* width : 260px;*/
+color:black;
+    padding: 1px;
+    border: none;
+    border-bottom: 1px solid #abaa9e;
+    background: transparent;
+    font: 14px  Copperplate, "Copperplate Gothic Light", fantasy;
+   
+}
+
+#password2
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+    /*  width : 260px;*/
+     /*margin: 1px 730px;*/
+    padding: 1px;
+    border: none;
+    border-bottom: 1px solid #abaa9e;
+    background: transparent;
+    font: 14px  Copperplate, "Copperplate Gothic Light", fantasy;
+   
+   
+}
+
+#signup2 {
+    background-color: #dedbdb;
+    border: 1.5px solid #3c3c3b  ;
+    border-radius: 5px;
+    color: #3c3c3b;
+    padding: 8px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    /*margin:-20px 1300px;*/
+    cursor: pointer;
+}
+#signup2:hover {
+    color : #dedbdb;
+    background-color: #3c3c3b;
+    border-color: #dedbdb;
+}
+
+#vt
+{
+   border-left: 1px solid #abaa9e;
+   position: absolute;
+   left: 25vw;
+   top: 2.5vh;
+   height: 220px;
+}
+
+#vt1
+{
+   border-left: 1px solid #abaa9e;
+   position: absolute;
+   left: 25vw;
+   top: 39.5vh;
+   height: 220px;
+}
+
+#mid
+{
+  position: absolute;
+  left: 24vw;
+  top: 36vh;
+  font: 19px  Copperplate, "Copperplate Gothic Light", fantasy;
+}
+
 </style>
 </head>
-<body bgcolor='#dedbdb'>
-<div class="navbar">
-        <p><a href="#" id="ABOUT">ABOUT</a><a href="#" id="PROJECTS">PROJECTS</a><a href="#" id="CONTACT">CONTACT</a></p>
-</div>
-<form method="POST" action="/signup" id="frm">
-	Name: 
-	<input type="text" name="Name" value="<%= Name %>" style='margin-left:160px;'><br>
-	Password: 
-	<input type="Password" name="Password" value="<%= Password %>" style='margin-left:120px;'><br>
-	Re-enter Password: 
-	<input type="Password" name="RePassword" value="<%= RePassword %>"><br>
-	Email: 
-	<input type="text" name="Email" value="<%= Email %>" style='margin-left:170px;'><br>
-	<input id='subbut' type="submit" value="Sign Up" name="Submit"><br>
-</form>
-	<a href="/signin" id="abc">Or Sign In</a>
+<body style="background-color: #3c3c3c">
+  <div class="container-fluid">
+    <div class="row" style="height: 75vh; margin-top: 100px;">
+          <div class="col-sm-1" style="height: 75vh;">
+          </div>
+              <div class="col-sm-4" style="height: 75vh;">
+                <img src="appfront.jpg" class="img-responsive" id="side" style="width: 100%; z-index: 2000">
+              </div>
+                  <div class="col-sm-6" style="height: 75vh; background-color: #dbdbd8">
+                   <center> <h2 style="position: absolute; top: 3vh; left: 5vw;">Sign Up</h2> </center>
+                    <!-- <div class="new" style="position: absolute; top: 16vh;"> -->
+                          <div class="row" style="height: 75vh; margin-top: 16vh;  z-index: 3000">
 
+
+                      <div class="col-sm-6" >
+                   <form name="signupForm" class="form-horizontal" method="POST" action="/signup" onsubmit="return suval()">
+  
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd"></label>
+                    <div class="col-sm-10"> 
+                      <input type="text" class="form-control" name="Name" id="pwd" placeholder="Username" style="background-color: #3c3c3b; color: white;" required><br>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd"></label>
+                    <div class="col-sm-10"> 
+                      <input type="text" class="form-control" name="Email" id="pwd" placeholder="Email Id" style="background-color: #3c3c3b; color: white;" required><br>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd"></label>
+                    <div class="col-sm-10"> 
+                      <input type="password" class="form-control" name="Password" id="pwd" placeholder="Password" style="background-color: #3c3c3b; color: white;" required><br>
+                    </div>
+                  </div>
+                 
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd"></label>
+                    <div class="col-sm-10"> 
+                      <input type="password" class="form-control" name="RePassword" id="pwd" placeholder="Re Password" style="background-color: #3c3c3b; color: white;" required><br>
+                    </div>
+                  </div>
+
+                  <div class="form-group"> 
+                    <div class="col-sm-offset-2 col-sm-10">
+                     <center> <button type="submit" class="btn btn-default">Sign Up</button></center>
+                    </div>
+                  </div>
+                </form>
+ 
+<!-- </div>  
+ --></div>
+
+                  <div class="col-sm-6" style="position: absolute; left: 22vw;">
+                  <center><h2 style="position: absolute; top: -13vh; left: 5vw;">Log In</h2></center>
+
+                   <form name="signupForm" class="form-horizontal" method="POST" action="/signin" onsubmit="return sival()">
+  
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd"></label>
+                    <div class="col-sm-10"> 
+                     <br><br> <input type="text" class="form-control" name="Username" id="pwd" placeholder="Username" style="background-color: #3c3c3b; color: white;" required><br><br>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd"></label>
+                    <div class="col-sm-10"> 
+                      <input type="password" class="form-control" name="Pass" id="pwd" placeholder="Password" style="background-color: #3c3c3b; color: white;" required><br><br><br><br><br>
+                    </div>
+                  </div>
+                 
+                  
+
+                  <div class="form-group"> 
+                    <div class="col-sm-offset-2 col-sm-10">
+                     <center> <button type="submit" class="btn btn-default">Log In</button></center>
+                    </div>
+                  </div>
+                </form>
+ 
+</div>               
+</div>
+</div>
+</div>
 </body>
 </html>

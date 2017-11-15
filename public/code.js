@@ -1,4 +1,5 @@
 var Code=document.getElementById('Workspace');
+var user=document.getElementById('name');
 // Code.contentEditable=true;
 var Tabs=document.getElementById('tabs');
 //var Tabs_M=document.getElementById('tabs_M');
@@ -101,11 +102,23 @@ function clickedMyButton()
 	leave_room.style.display='none';
 	codingTogetherHost=true;
 	current=user.innerHTML;
+	// document.getElementById(current+"1").style.backgroundColor='white';
+	// document.getElementById(current+"1").style.color='black';
+	mybutton.style.backgroundColor='black';
+	mybutton.style.color='white';
 	socket.emit('takefilename',{filen:current});
 	socket.emit('users_inside_this_room',current);
 }
 mybutton.onclick=function(){
-	clickedMyButton();
+	leave_room.style.display='none';
+	codingTogetherHost=true;
+	document.getElementById(current+"1").style.backgroundColor='white';
+	document.getElementById(current+"1").style.color='black';
+	current=user.innerHTML;
+	this.style.backgroundColor='black';
+	this.style.color='white';
+	socket.emit('takefilename',{filen:current});
+	socket.emit('users_inside_this_room',current);
 
 };
 mybutton2.onclick=function(){
@@ -146,13 +159,37 @@ socket.on('codeTogether',function(data){
 					but.innerText=data.fileName;
 					but.className="btn btn-default btn-arrow-right";
 					but.id=data.fileName+"1";
+					but.style.backgroundColor='black';
+					but.style.color='white';
+					if(current!=user.innerHTML)
+					{
+						document.getElementById(current+"1").style.backgroundColor='white';
+						document.getElementById(current+"1").style.color='black';
+					}
+					else
+					{
+						mybutton.style.backgroundColor='white';
+						mybutton.style.color='black';
+					}
 					but.onclick=function()
 					{ 
 						var string = this.id;
 						string = string.substr(0,string.length-1);
 						codingTogetherHost=false;
 						codingTogetherFlag=true;
+						if(current!=user.innerHTML)
+						{
+							document.getElementById(current+"1").style.backgroundColor='white';
+							document.getElementById(current+"1").style.color='black';
+						}
+						else
+						{
+							mybutton.style.backgroundColor='white';
+							mybutton.style.color='black';
+						}
 						current = string;
+						this.style.backgroundColor='black';
+						this.style.color='white';
 						socket.emit('users_inside_this_room',current);
 						socket.emit('takefilename',{filen:current});
 						leave_room.style.display='block';
@@ -205,6 +242,8 @@ function marzi(name){
 		var row = document.createElement('tr');
 		var col = document.createElement('td');
 		col.innerText=name;
+		if(current==user.innerHTML && name!=user.innerHTML)
+			col.title='Kick '+name;
 		col.id=name+"6";
 		users_in_room.appendChild(row); 
 		col.onclick=function(){
@@ -271,5 +310,4 @@ socket.on('OverlayContent',function(data){
 	document.getElementById('OverlayNameHead').innerHTML=data.Name;
 	document.getElementById('OverlayName').innerHTML=data.Name;
 	document.getElementById('OverlayEmail').innerHTML=data.Email;
-	document.getElementById('OverlayGender').innerHTML=data.Gender;
 });

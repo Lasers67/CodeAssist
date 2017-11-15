@@ -1,1 +1,0 @@
-{"source":"#include<iostream>%0Aint main()%0A{%0A int a,b;%0A std::cin>>a>>b;%0A std::cout<<a+b;%0A return 0;%0A}","lang":2,"testcases":["1 2"],"api_key":"hackerrank|2252156-2145|f983468b215ca61b1185e513e8379c676967af34"}
