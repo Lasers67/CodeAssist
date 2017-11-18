@@ -93,10 +93,6 @@ logoff.onclick=function(){
 setInterval(saveCode, 10000);
 function submitCode()
 {
-	if(document.getElementById('LangButton').id!==language)
-	{
-		alert('Language not chosen!');
-	}
 	var dat={
 		source:Code.value,
 		testcases:testCases.value,
