@@ -1,3 +1,4 @@
+//Lasers67 //GotNoChill
 var exec=require('child_process').exec;
 var http=require('http');
 var express=require('express');
@@ -9,7 +10,7 @@ var utf8=require('utf8');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"palakgupta889",
+	password:"2,4,6Trinitrophenol",
 	database:"Test"
 });
 con.connect(function(err){

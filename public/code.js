@@ -23,9 +23,12 @@ function LangChange(lang){
 	console.log(lang.id);
 	var x=document.getElementById(lang.id).innerHTML;
 	language=lang.id;
+	// alert("a"+language);
 	document.getElementById('LangButton').innerHTML=x+'<span class="caret"></span>';
 }
 compileButton2.onclick=function(){
+	autolanguagedetection();
+
 	submitCode();
 }
 var testCases=document.getElementById('Input');
@@ -58,7 +61,7 @@ Code.addEventListener('keyup',function(){
 	}
 });
 compileButton.onclick=function(){
-	submitCode();
+	autolanguagedetection();
 }
 function codeTogether(otherUser){
 	saveCode();
@@ -89,6 +92,11 @@ logoff.onclick=function(){
 setInterval(saveCode, 10000);
 function submitCode()
 {
+	// alert("b"+language);
+	if(document.getElementById('LangButton').id!=language)
+	{
+		alert("Gaandu Language Daal!");
+	}
 	var dat={
 		source:Code.value,
 		testcases:testCases.value,
@@ -311,3 +319,78 @@ socket.on('OverlayContent',function(data){
 	document.getElementById('OverlayName').innerHTML=data.Name;
 	document.getElementById('OverlayEmail').innerHTML=data.Email;
 });
+function autolanguagedetection()
+{
+	var input = Code.value;
+	Algorithmia.client("simlsSH3xPkksEwSuBmAmXYlMHh1")
+    .algo("PetiteProgrammer/ProgrammingLanguageIdentification/0.1.3")
+    .pipe(input)
+    .then(function(output){
+    	var ID='0';
+        if(output.result[0][0]=='javascript'){
+        	ID='20';
+        }
+        else if(output.result[0][0]=='java'){
+        	ID='3';
+        }
+        else if(output.result[0][0]=='php'){
+        	ID='7';
+        }	
+        else if(output.result[0][0]=='c'){
+        	ID='1';
+        }
+        else if(output.result[0][0]=='lua'){
+        	ID='18';
+        	        }
+        else if(output.result[0][0]=='html'){
+        }
+        else if(output.result[0][0]=='objective-c'){
+        	ID='32';
+        }
+        else if(output.result[0][0]=='sql'){
+        	ID='10';
+        }
+        else if(output.result[0][0]=='css'){
+
+        }
+        else if(output.result[0][0]=='c++'){
+        	ID='2';
+        }
+        else if(output.result[0][0]=='swift'){
+        	ID='51';
+        }
+        else if(output.result[0][0]=='bash'){
+        	ID='14';
+        }
+        else if(output.result[0][0]=='ruby'){
+        	ID='8';
+        }
+        else if(output.result[0][0]=='perl'){
+        	ID='6';
+        }
+        else if(output.result[0][0]=='c#'){
+        	ID='9';
+        }
+        else if(output.result[0][0]=='scala'){
+        	ID='15';
+        }
+        else if(output.result[0][0]=='python'){
+        	ID='5';
+        }
+         else if(output.result[0][0]=='r'){
+         	ID='24';
+        }
+         else if(output.result[0][0]=='haskell'){
+         	ID='12';
+        }
+         else if(output.result[0][0]=='vb'){
+         	ID='37';
+        }
+        if(ID!='0')
+        {
+        	var to_change=document.getElementById(ID);
+        	LangChange(to_change);
+        }
+        submitCode();
+    });
+}
