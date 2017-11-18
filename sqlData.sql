@@ -154,7 +154,7 @@ CREATE TABLE `pratyushtags` (
 
 LOCK TABLES `pratyushtags` WRITE;
 /*!40000 ALTER TABLE `pratyushtags` DISABLE KEYS */;
-INSERT INTO `pratyushtags` VALUES ('C++',1,NULL);
+INSERT INTO `pratyushtags` VALUES ('C++',2,3.3),('Language\n     \n   ',0,0.0),('Language\n           \n         ',0,0.0),('Python2.7',1,5.0);
 /*!40000 ALTER TABLE `pratyushtags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,6 +224,7 @@ CREATE TABLE `shashwattags` (
 
 LOCK TABLES `shashwattags` WRITE;
 /*!40000 ALTER TABLE `shashwattags` DISABLE KEYS */;
+INSERT INTO `shashwattags` VALUES ('C++',0,0.0),('Java',0,0.0),('Language\n     \n   ',0,0.0),('Language\n           \n         ',0,0.0);
 /*!40000 ALTER TABLE `shashwattags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -251,7 +252,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('App','2345','aaa','bglXxOWTe5oAFU5vAAAC',0,'Male'),('Pratyush','Pratyush100','pratyushgauravgo@gmail.com','I8aMyPfkigFHabBQAAAB',1,'Male'),('Shashwat','Sg@iitmandi','shshwt.grg@gmail.com','1Y4ToUFkYcZ3y3juAAAA',1,'Male');
+INSERT INTO `user` VALUES ('App','2345','aaa','VbbnkZkBvo_B4bJMAAAB',1,'Male'),('Pratyush','Pratyush100','pratyushgauravgo@gmail.com','L1IjUcdfqPkxUxenAAAA',0,'Male'),('Shashwat','Sg@iitmandi','shshwt.grg@gmail.com','Cemszs5OEJ-nJSKSAAAC',1,'Male');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -284,4 +285,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-18 17:52:13
+-- Dump completed on 2017-11-19  1:35:00
