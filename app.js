@@ -9,7 +9,7 @@ var utf8=require('utf8');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"shshwt.grg",
+	password:"2,4,6Trinitrophenol",
 	database:"Test"
 });
 con.connect(function(err){
@@ -347,24 +347,91 @@ io.on('connection',function(socket){
 			}
 			var out='';
 			var json=JSON.parse(stdout);
-			//console.log(json.result.compilemessage);
-			//console.log(json.result.stderr);
-			//console.log(json.result.stdout);
-			console.log(json);
-			/*if((json.result.compilemessage==='')&&(json.result.stderr==='')){
-					out=json.result.stdout;
-			}
-			else{
-				out=(json.result.compilemessage)+(json.result.stderr);
-				out=utf8.decode(out);
-			}*/
 			if(json.result.stdout==null){
-				out=(json.result.compilemessage)+(json.result.stderr);
+				if(json.result.compilemessage!=null)
+					out=(json.result.compilemessage);
+				if(json.result.stderr!=null)
+					out+=(json.result.stderr);
 				out=utf8.decode(out);
+				var compErr=out.toLowerCase();
+				var i=compErr.indexOf("error");
+				compErr=compErr.substr(i);
+				i=compErr.indexOf("\n");
+				compErr=compErr.substr(0,i);
+				x=z;
+				var lang="0";
+				if(x==="1")
+					lang="C";
+				else if(x==="2")
+					lang="C++";
+				else if(x==="3")
+					lang="Java";
+				else if(x==="5")
+					lang="Python2.7";
+				else if(x==="6")
+					lang="Perl";
+				else if(x==="7")
+					lang="PHP";
+				else if(x==="8")
+					lang="Ruby";
+				else if(x==="9")
+					lang="C#";
+				else if(x==="10")
+					lang="MySQL";
+				else if(x==="12")
+					lang="Haskell";
+				else if(x==="14")
+					lang="Bash";
+				else if(x==="15")
+					lang="Scala";
+				else if(x==="18")
+					lang="Lua";
+				else if(x==="20")
+					lang="JavaScript";
+				else if(x==="24")
+					lang="R";
+				else if(x==="32")
+					lang="Objective-C";
+				else if(x==="37")
+					lang="Visual Basic";
+				else if(x==="51")
+					lang="Swift";
+				var spawn=require("child_process").spawn;
+				var processes = spawn('python',["Test.py",compErr]);
+				//processes.stdout.on('data',function(data){
+				exec("python test.py "+compErr,function(err,stdout,stderr){
+					var link=stdout.toString();
+					var q="select FriendName from `"+data.UserName+"` where FriendName in (select Name from user where Online=1)";
+					con.query(q,function(err,result){
+						if(err) throw err;
+						var j=JSON.parse(JSON.stringify(result));
+						var jarr=[];
+						j.forEach(function(item){
+							q="select Rating from `"+item.FriendName+"Tags` where Language=?";
+							con.query(q,[lang],function(err,result){
+								if(err)	throw err;
+								if(result.length===0);
+								else{
+									var sj=JSON.parse(JSON.stringify(result));
+									var jobj={
+										name:item.Name,
+										rating:sj[0].Rating
+									};
+									jarr.push(jobj);
+								}
+							});
+						});
+						console.log(jarr);
+						var sendData={
+							arr:jarr,
+							url:link
+						};
+						users[data.UserName].emit('compileErrorResolve',sendData);
+					});
+				});
 			}
 			else
 				out=json.result.stdout;
-			//console.log(out);
 			users[data.UserName].emit('testCode',out);
 		});
 		users[data.UserName].emit('pleaseWait');

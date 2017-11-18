@@ -27,7 +27,7 @@ function findUsers(namestr)
 		namestr=userSearch.value;
 	console.log(namestr);
 	var x=document.getElementById('SearchedText');
-	x.innerText="'"+userSearch.value+"'";
+	x.innerText="'"+namestr+"'";
 	var modal = document.getElementById('myModal');
 	var users=document.getElementById('Users');
 	var span = document.getElementsByClassName("close")[0];
@@ -55,14 +55,14 @@ socket.on('findUsers',function(data){
 	var f=d.friend;
 	console.log(f);
 	f.forEach(function(item){
-		var but='<button onclick=\'UnFriend("'+item.Name+'")\'>Unfriend</button>';
-		x.innerHTML+='<div class="search-result"><h3><a onclick=\'OverlayOn("'+item.Name+'")\'>'+item.Name+'</a></h3>'+but+'<img src="/profile.jpg" alt="user pic"><p>Description of user.</p></div>';
+		var but='<button onclick=\'UnFriend("'+item.Name+'")\' class="btn btn-success" style="float:right;">Unfriend</button>';
++		x.innerHTML+='<div class="search-result"><h3><a onclick=\'OverlayOn("'+item.Name+'")\'>'+item.Name+'</a></h3><img src="/profile.jpg" alt="user pic"><span style="color:white;">Description of user.</span>'+but+'</div>';
 	});
 	var uf=d.nonfriend;
 	console.log(uf);
 	uf.forEach(function(item){
 		var but='<button onclick=\'AddFriend("'+item.Name+'")\'>Add friend</button>';
-		x.innerHTML+='<div class="search-result"><h3><a onclick=\'OverlayOn("'+item.Name+'")\'>'+item.Name+'</a></h3>'+but+'<img src="/profile.jpg" alt="user pic"><p>Description of user.</p></div>';
+		x.innerHTML+='<div class="search-result"><h3><a onclick=\'OverlayOn("'+item.Name+'")\'>'+item.Name+'</a></h3><img src="/profile.jpg" alt="user pic"><span style="color:white;">Description of user.</span>'+but+'</div>';
 	});
 });
 socket.on('ChangedFriend',function(data){

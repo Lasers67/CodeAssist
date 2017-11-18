@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CodeAssist: <%= Name %> </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="styles/default.css">
+<!--<script src="highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>-->
+  <style type="text/css">
+  html *{
+    font-size: 18px; 
+  }
+  .btn-arrow-right   {
+   position: relative;
+   padding-right: 20px;
+   padding-left: 25px;
+ } 
+ .scroll-menu{
+   min-width: 220px;
+   max-height: 40vh;
+   overflow: auto;
+ }
+ .btn-arrow-right:before,
+ .btn-arrow-right:after   { 
+   content: "";
+   position: absolute;
+   top: 5px;
+   width: 22px;
+   height: 22px;
+   background: inherit;
+   border: inherit;
+   border-left-color: transparent;
+   border-bottom-color: transparent;
+   border-radius: 0px 4px 0px 0px;  
+   -webkit-border-radius: 0px 4px 0px 0px;
+   -moz-border-radius: 0px 4px 0px 0px;
+ }
+ .btn-arrow-right:before,
+ .btn-arrow-right:after {
+   transform: rotate(45deg);
+   -webkit-transform: rotate(45deg);
+   -moz-transform: rotate(45deg);
+   -o-transform: rotate(45deg);
+   -ms-transform: rotate(45deg);
+ }
+ .btn-arrow-right:before  {
+   left: -11px;
+   background-color: white;
+ }
+ .btn-arrow-right:after {
+   right: -11px;
+   z-index: 1;
+ } 
+ #Tabs{
+  margin-top: -14px;
+  margin-bottom: 0px;
+  margin-left: -20px;
+}
+#Workspace{
+  float : left;
+  position: relative;
+  /*top: 15px;   */
+  margin-left: 10px; 
+  /*border:0px solid black;*/
+  /*font-size: 18;*/
+  resize: none;
+  overflow: auto;
+  height: 55vh;
+  width: 75vw;
+  /*z-index: -1;*/
+}
+
+.vertical-menu {
+  width: 100px;
+  position: absolute; 
+  left:75vw;
+  margin-left: 10px;
+  margin-top:-13px;/* Set a width if you like */
+}
+
+.vertical-menu a {
+  background-color: #eee; /* Grey background color */
+  color: black; /* Black text color */
+  display: block; /* Make the links appear below each other */
+  padding: 12px; /* Add some padding */
+  text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+  background-color: #4CAF50; /* Add a green color to the "active/current" link */
+  color: white;
+}
+@media (max-width: 768px){
+  #Workspace{
+    width: 95%;
+    margin-left: 10px;
+  }
+
+}
+@media (max-width: 992px){
+  #Input,#codeOutput{
+    resize:none;
+    /*margin-right: 12px; */
+  }
+}
+#Exit_room{
+  margin-top: -3px;
+}
+#Online_users{
+  margin-top: -5px;
+}
+#button-and-usersinroom{
+  margin-left: -3%;
+  position: absolute;
+  left: 78vw;
+  height: 55vh;
+  /*background-color: red;*/
+  /*width: 100%;*/
+  /*float: right;*/
+}
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0px;  /* remove scrollbar space */
+  background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #FF0000;
+}
+#Leave{
+  position: absolute;
+  bottom: 0px;
+}
+.table-responsive{
+  margin-top: -11px;
+  margin-bottom: 5px;
+  max-height: 74%;
+}
+#Input,#codeOutput{
+  position: relative;
+  height: 28vh;
+  resize:none;
+}
+#Input1,#codeOutput1{
+  position: relative;
+  height: 28vh;
+  resize:none;
+}
+.vertical-menu {
+  width: 200px;
+  height: 150px;
+  overflow-y: auto;
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+#ChattingArea{
+  /*width:100%;*/
+  height: 370px;
+  position: fixed;
+  bottom:0;
+  overflow: auto;
+  right: 16vw;
+  /*background-color:red;*/
+}
+#Chat-box{
+  position:absolute;  
+  bottom: 0;
+  left:83%;
+  background-color: #dedbdb;
+  /*display: none;*/
+}
+
+#bottom-chat{
+  width: 100%;
+  height: 30px;
+  background-color: white;
+  display: none;
+}
+#message{
+  border: none;
+  padding: 2px;
+  height: 30px;
+  width: 75%;
+}
+#send{
+  border: none;
+  background-color: white;
+  padding: 8px;
+}
+#send:hover{
+  background-color: black;
+  color:white;
+}
+#my{
+  float:right;
+  display: block;
+  /*width: 30%;*/
+  background-color: #1187c2;
+  color: white;
+  border: none;
+  padding: 5px;
+  margin-top: 1.5px;
+  margin-right:5px;
+  width: auto;
+  text-align: right;
+  border-radius: 5px;
+}
+#her{   
+  clear:right;
+  display: block;
+  color: black;
+  width: auto;
+  text-align: left;
+  padding: 5px;
+  margin-top: 1.5px;
+  margin-left: 5px;
+  background-color: #DCE1E2;
+  /*width: 30%;*/
+  border: none;
+  border-radius: 5px;
+}
+.inviteButton{
+  width:50%;
+  background-color: black
+}
+.chatButton{
+  width:50%;
+  background-color: black
+}
+#overlay {
+ position: fixed;
+ display: none;
+ width: 100%;
+ height: 100%;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background-color: rgba(0,0,0,0.5);
+ z-index: 4000;
+ cursor: pointer;
+}
+#whiteSpaceOverlay{
+ width:60%;
+ height:60%;
+ margin-top:10%;
+ margin-left:20%;
+ background-color:white;
+ z-index: 4000;
+ cursor:pointer;
+}
+#OverlayName,#OverlayEmail{
+ padding:5%;
+}
+#UserImage{
+ margin-top:50%;
+ margin-left:70%;
+ height:10vh;
+ width:10vh;
+}
+#OverlayNameHead{
+ width:20vh;
+ height:10vh;
+ text-decoration:underline;
+ margin-left:50%;
+ padding:10%;
+}
+#sidebar{
+  height: 100%;
+  color: white;
+  background-color: #545454;
+  width: 14%;
+  position: absolute;
+  top:53px;
+  /*z-index: -10;*/
+  /*z-index: -1;*/
+  left: 86%;
+  overflow: auto;
+  /*display: none;*/
+}
+
+/* Find User Modal Styling*/
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 3000; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 3500; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+/* Find user Modal Content Styling */
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+  <style type="text/css">
+  @import "http://fonts.googleapis.com/css?family=Roboto:300,400,500,700";
+
+  .container { margin-top: 20px; }
+  .mb20 { margin-bottom: 20px; } 
+
+  hgroup { padding-left: 15px; border-bottom: 1px solid #ccc; }
+  hgroup h1 { font: 500 normal 1.625em "Roboto",Arial,Verdana,sans-serif; color: #2a3644; margin-top: 0; line-height: 1.15; }
+  hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; color: #2a3644; margin: 0; padding-bottom: 10px; }
+
+  .search-result .thumbnail { border-radius: 0 !important; }
+  .search-result:first-child { margin-top: 0 !important; }
+  .search-result { margin-top: 20px; }
+  .search-result .col-md-2 { border-right: 1px dotted #ccc; min-height: 140px; }
+  .search-result ul { padding-left: 0 !important; list-style: none;  }
+  .search-result ul li { font: 400 normal .85em "Roboto",Arial,Verdana,sans-serif;  line-height: 30px; }
+  .search-result ul li i { padding-right: 5px; }
+  .search-result .col-md-7 { position: relative; }
+  .search-result h3 { font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif; margin-top: 0 !important; margin-bottom: 10px !important; }
+  .search-result h3 > a, .search-result i { color: #248dc1 !important; }
+  .search-result p { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; } 
+  .search-result span.plus { position: absolute; right: 0; top: 126px; }
+  .search-result span.plus a { background-color: #248dc1; padding: 5px 5px 3px 5px; }
+  .search-result span.plus a:hover { background-color: #414141; }
+  .search-result span.plus a i { color: #fff !important; }
+  .search-result span.border { display: block; width: 97%; margin: 0 15px; border-bottom: 1px dotted #ccc; }
+  .search-result{
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .search-result img{
+    float: left;
+    margin-right: 10px;
+  }
+  .modal-content h1,.modal-content .lead {
+    color:white;
+  }
+  .modal-content :placeholder{
+    color:#eee;
+  }
+  #bot_input { width: 400px; }
+</style>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <!-- Search results-->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+  <div class="modal-content" style="width: 700px; background: #456;">
+    <span class="close">&times;</span>
+    <div class="container" style="width: 650px; padding: 0;">
+    <hgroup class="mb20">
+      <h1>Search Results</h1>
+      <h2 class="lead">Results found for the search for <strong id='SearchedText'>''</strong></h2>               
+    </hgroup>
+
+    <section>
+      <article class="`search-result row">
+        <div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 10px">
+          <input type='text' placeholder="username" id="searchtext"/>
+          <button onclick='findUsers("getfrominput")' class="btn btn-primary" style="float:right;">Search</button>
+        </div>
+        <div class="col-xs-12 col-sm-12 excerpet" id='Users'>
+        </div>
+        <span class="clearfix borda"></span>
+        </article>
+      </section>
+    </div>
+  </div>
+</div>
+
+  <!-- Search Results end -->
+
+  <!-- 'Language Selection while Coding Together' BEGINS -->
+<div id="CodingTogetherLang" class="modal">
+    <!-- Modal content -->
+  <div class="modal-content" style="width: 700px;">
+    <span class="close" id='closeLang'>&times;</span>
+    <div class="container" style="width: 650px;">
+    <hgroup class="mb20">
+      <h1 style="font-size: 22px !important;">Please select the language which you wish to ask help for:</h1>
+    </hgroup>
+    <div class="dropdown btn-group">
+   <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id ='CodeTogetherLangButton'>Language
+     <span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu scroll-menu" role="menu">
+    <li ><a href='#' id="1" onclick='CodeTogetherLangChange(this)'>C</a></li>
+    <li ><a href='#' id="2" onclick='CodeTogetherLangChange(this)'>C++</a></li>
+    <li ><a href='#' id="3" onclick='CodeTogetherLangChange(this)'>Java</a></li>
+    <li ><a href='#' id="5" onclick='CodeTogetherLangChange(this)'>Python2.7</a></li>
+    <li ><a href='#' id="6" onclick='CodeTogetherLangChange(this)'>Perl</a></li>
+    <li ><a href='#' id="7" onclick='CodeTogetherLangChange(this)'>PHP</a></li>
+    <li ><a href='#' id="8" onclick='CodeTogetherLangChange(this)'>Ruby</a></li>
+    <li ><a href='#' id="9" onclick='CodeTogetherLangChange(this)'>C#</a></li>
+    <li ><a href='#' id="10" onclick='CodeTogetherLangChange(this)'>MySQL</a></li>
+    <li ><a href='#' id="12" onclick='CodeTogetherLangChange(this)'>Haskell</a></li>
+    <li ><a href='#' id="14" onclick='CodeTogetherLangChange(this)'>Bash</a></li>
+    <li ><a href='#' id="15" onclick='CodeTogetherLangChange(this)'>Scala</a></li>
+    <li ><a href='#' id="18" onclick='CodeTogetherLangChange(this)'>Lua</a></li>
+    <li ><a href='#' id="20" onclick='CodeTogetherLangChange(this)'>JavaScript</a></li>
+    <li ><a href='#' id="24" onclick='CodeTogetherLangChange(this)'>R</a></li>
+    <li ><a href='#' id="32" onclick='CodeTogetherLangChange(this)'>Objective-C</a></li>
+    <li ><a href='#' id="37" onclick='CodeTogetherLangChange(this)'>Visual Basic</a></li>
+    <li ><a href='#' id="51" onclick='CodeTogetherLangChange(this)'>Swift</a></li>
+  </ul>
+  </div>
+  <div style="float: right;">
+      <button id="ConfirmCodeTogether" class="btn btn-primary" type="button">Confirm and Enter</button>
+  </div>
+    </div>
+  </div>
+</div>
+  <!-- 'Language Selection while Coding Together' ENDS -->
+
+  <!-- Rating BEGINS -->
+  <div id="CodingTogetherRate" class="modal">
+    <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close" id='closeRate'>&times;</span>
+    <div class="container">
+    <hgroup class="mb20">
+      <h1>Please select the language in which your mate helped you:</h1>
+    </hgroup>
+    <div class="dropdown btn-group">
+   <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id ='CodeTogetherLangButtonRate'>Language
+     <span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu scroll-menu" role="menu">
+    <li ><a href='#' id="1" onclick='CodeTogetherLangChangeRate(this)'>C</a></li>
+    <li ><a href='#' id="2" onclick='CodeTogetherLangChangeRate(this)'>C++</a></li>
+    <li ><a href='#' id="3" onclick='CodeTogetherLangChangeRate(this)'>Java</a></li>
+    <li ><a href='#' id="5" onclick='CodeTogetherLangChangeRate(this)'>Python2.7</a></li>
+    <li ><a href='#' id="6" onclick='CodeTogetherLangChangeRate(this)'>Perl</a></li>
+    <li ><a href='#' id="7" onclick='CodeTogetherLangChangeRate(this)'>PHP</a></li>
+    <li ><a href='#' id="8" onclick='CodeTogetherLangChangeRate(this)'>Ruby</a></li>
+    <li ><a href='#' id="9" onclick='CodeTogetherLangChangeRate(this)'>C#</a></li>
+    <li ><a href='#' id="10" onclick='CodeTogetherLangChangeRate(this)'>MySQL</a></li>
+    <li ><a href='#' id="12" onclick='CodeTogetherLangChangeRate(this)'>Haskell</a></li>
+    <li ><a href='#' id="14" onclick='CodeTogetherLangChangeRate(this)'>Bash</a></li>
+    <li ><a href='#' id="15" onclick='CodeTogetherLangChangeRate(this)'>Scala</a></li>
+    <li ><a href='#' id="18" onclick='CodeTogetherLangChangeRate(this)'>Lua</a></li>
+    <li ><a href='#' id="20" onclick='CodeTogetherLangChangeRate(this)'>JavaScript</a></li>
+    <li ><a href='#' id="24" onclick='CodeTogetherLangChangeRate(this)'>R</a></li>
+    <li ><a href='#' id="32" onclick='CodeTogetherLangChangeRate(this)'>Objective-C</a></li>
+    <li ><a href='#' id="37" onclick='CodeTogetherLangChangeRate(this)'>Visual Basic</a></li>
+    <li ><a href='#' id="51" onclick='CodeTogetherLangChangeRate(this)'>Swift</a></li>
+  </ul>
+  </div>
+  <hgroup class="mb20">
+      <h1>Please rate your Mate:</h1>
+      <select name="CodeTogetherRate" id='CodeTogetherRate' style="cursor:pointer;">
+        <option name="1">1</option>
+        <option name="2">2</option>
+        <option name="3">3</option>
+        <option name="4">4</option>
+        <option name="5">5</option>
+      </select>
+  </hgroup>
+  <hgroup class="mb20">
+      <button id='CodeTogetherRateSubmit'>Submit</button>
+  </hgroup>
+    </div>
+  </div>
+</div>
+<!-- Rating ENDS -->
+  <!-- Nav Bar -->
+  
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="#">CodeAssist</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a onclick='findUsers("")'><strong><span id="searchUser" style='cursor:pointer;'>Search for users</span></strong></a>
+          </li>
+          <li>
+            <a onclick='OverlayOn("<%= Name%>")'><strong><span id="name" style='cursor:pointer;'><%= Name%></span></strong></a>
+          </li>
+          <li >
+            <a id="signout"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Nav Bar Over-->
+  <!-- Tabs -->
+  <div id="overlay" onclick='OverlayOff()'>
+   <div id='whiteSpaceOverlay'>
+     <div class="container-fluid" style="margin-left: 1.5vw;margin-right: -0.5vw;">
+      <div class="row">
+        <div class="col-sm-4" ></div>
+        <div class="col-sm-2" >
+         <center><div class="hidden-xs"  id='UserImage'> <a><img title="profile image" class="img-circle img-responsive" src="user.png" style="width: 10vw;"></a></div>
+         </center>
+       </div>
+       <div class="col-sm-4" ></div>
+     </div>
+   </div>
+   <div class="container-fluid">
+    <div class="row" >
+     <div class="container-fluid">
+      <div class="col-sm-4" ></div>
+      <div class="col-sm-2" style="font-size: 26px;">
+       <center>
+         <div class="row" id='OverlayNameHead'></div>
+       </center>
+     </div>
+     <div class="col-sm-4" ></div>
+   </div>  
+   <div class="container-fluid">
+     <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+        <ul class="list-group ">
+         <li class="list-group-item text-muted" contenteditable="false" style="background-color: black">PROFILE</li>
+         <li class="list-group-item text-right"><span class="pull-left"><strong class="">User Name:</%=></strong></span><span id='OverlayName'></span></li>
+         <li class="list-group-item text-right"><span class="pull-left"><strong class="">Email Id</strong></span><span id='OverlayEmail'></span></%=></li>
+       </ul>
+     </div>
+   </div>
+ </div>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid" id="Apple" style="margin-top: -1.72vh; margin-bottom: 0.7166667vh; margin-left: -1.41vw;">
+  <div class="col-sm-8 col-md-8 hidden-xs col-lg-8" id="tabs">
+    <button type="button" id="my_name" class="btn btn-default btn-arrow-right" style="background-color: black; color: white;">Me</button>
+  </div>
+  <div class="dropdown btn-group">
+   <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id ='LangButton'>Language
+     <span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu scroll-menu" role="menu">
+    <li ><a href='#' id="1" onclick='LangChange(this)'>C</a></li>
+    <li ><a href='#' id="2" onclick='LangChange(this)'>C++</a></li>
+    <li ><a href='#' id="3" onclick='LangChange(this)'>Java</a></li>
+    <li ><a href='#' id="5" onclick='LangChange(this)'>Python2.7</a></li>
+    <li ><a href='#' id="6" onclick='LangChange(this)'>Perl</a></li>
+    <li ><a href='#' id="7" onclick='LangChange(this)'>PHP</a></li>
+    <li ><a href='#' id="8" onclick='LangChange(this)'>Ruby</a></li>
+    <li ><a href='#' id="9" onclick='LangChange(this)'>C#</a></li>
+    <li ><a href='#' id="10" onclick='LangChange(this)'>MySQL</a></li>
+    <li ><a href='#' id="12" onclick='LangChange(this)'>Haskell</a></li>
+    <li ><a href='#' id="14" onclick='LangChange(this)'>Bash</a></li>
+    <li ><a href='#' id="15" onclick='LangChange(this)'>Scala</a></li>
+    <li ><a href='#' id="18" onclick='LangChange(this)'>Lua</a></li>
+    <li ><a href='#' id="20" onclick='LangChange(this)'>JavaScript</a></li>
+    <li ><a href='#' id="24" onclick='LangChange(this)'>R</a></li>
+    <li ><a href='#' id="32" onclick='LangChange(this)'>Objective-C</a></li>
+    <li ><a href='#' id="37" onclick='LangChange(this)'>Visual Basic</a></li>
+    <li ><a href='#' id="51" onclick='LangChange(this)'>Swift</a></li>
+  </ul>
+</div>
+
+<div class="hidden-sm hidden-md hidden-lg col-xs-12" id="Tabs">
+  <div class="btn-group">
+    <div class="dropdown btn-group">
+      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">My Rooms
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" id="tabs_M">
+        <li><a href="#" id="my_name2">Me</a></li>
+      </ul>
+    </div>
+    <div class="dropdown btn-group">
+      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">In Room
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu" id="users_in_room_M">
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<script type="text/javascript">
+  //****************************************** set all outline None*****************************
+  var a=document.getElementById('apple');
+  a.onclick=function(){
+    this.style.outline="none";
+  };
+</script>-->
+<!-- Tabs Over -->
+<!-- Main Area -->
+<div>
+  <textarea class="form-control" rows="20" id="Workspace" ></textarea>
+</div>
+<script type="text/javascript">
+  document.getElementById("Workspace").onfocus=function(){
+    this.style.outline="none";
+  };
+</script>
+<!-- Main Area Over -->
+<!-- button and usersinroom are -->
+<div class="hidden-xs">
+  <div class="row ">
+    <div class="col-md-8"></div>
+    <div class="col-md-1" id="button-and-usersinroom">
+      <ul class="list-group">
+        <li class="list-group-item active" id="Compile" style="cursor: pointer;">Compile</li>
+      </ul>
+      <div class="table table-responsive" >          
+        <table class="table">
+          <tbody id="users_in_room">
+          </tbody>
+        </table>
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item active" id="leave_room" style="display: none;cursor: pointer;">Exit Room</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- button and usersinroom are over -->
+<!-- Compile Area -->
+<div class="hidden-lg hidden-md hidden-sm" style="margin-left: 10px;">
+  <ul class="list-group btn-group">
+    <li class="btn btn-warning" id="Compile2" style="z-index: 201;"><center>Compile</center></li>
+    <li class="btn btn-info" id="leave_room" style="display: none;"><center>Exit Room</center></li>
+  </ul>
+</div>
+<div >
+  <div class="container-fluid">
+    <div class="row">
+      <textarea class="col-sm-5 col-lg-5 col-md-5 well" style="margin-left: 10px; z-index: 200;" placeholder="Write Input Here..." id="Input"></textarea>
+      <textarea disabled class="col-sm-5 col-lg-5 col-md-5 well" style="margin-left: 10px; z-index: 200;" placeholder="Output" id="codeOutput"></textarea>
+    </div>
+  </div>
+</div>
+</div>
+<div id="sidebar">
+</div>
+</div>
+<div id="ChattingArea" style="z-index: 2000"></div>
+<div id="Chat-box">
+  <div id="chat-head">
+    <strong><div id="typing"></div></strong>
+  </div>
+  <ul id="Output" type="none">
+  </ul>
+  <div id="bottom-chat">
+    <input type="text" id="Message" placeholder="Message" />
+    <button id="send">Send</button></div>
+  </div>
+  <script src='/chat.js'></script>
+  <script src='/code.js'></script>
+  <script src='/friends.js'></script>
+  <script src="algorithmia-0.2.0.js" type="text/javascript"></script>
+  <script src="chat_bot.js"></script>
+  <div id="THECHATBOT">
+    <input id="bot_input" type="text">
+    <br>Response<br> <span id="response" style='height:100px;'></span>
+  </div>
+  <!-- compile Area Over -->
+</body>
+</html>

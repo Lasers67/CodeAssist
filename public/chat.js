@@ -55,7 +55,7 @@ function fun(data,ID)
 	newbutton.onclick=function(){receiver=data;create_chatbox(ID);};
 	new_div.appendChild(newbutton);
 	var newbutton2 = document.createElement("a");
-	newbutton2.id=ID;
+	newbutton2.id=ID+'c';
 	newbutton2.className='btn btn-default';
 	newbutton.style.backgroundColor="#26292a";
 	newbutton.style.border="#aeb2b4";
@@ -142,6 +142,7 @@ function create_chatbox(Name)
 		Chat_bottom.style.color='black';
 		var New_Message=document.createElement("input");
 		New_Message.type="text";
+		New_Message.style.width='190px';
 		New_Message.placeholder="Message";
 		Chat_bottom.appendChild(New_Message);
 		var SEND=document.createElement("button");

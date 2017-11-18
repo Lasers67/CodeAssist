@@ -32,14 +32,18 @@ function CodeTogetherRate(data){
 	    modal.style.display = "none";
 	}
 	conf.onclick =function(){
-		modal.style.display="none";
-		console.log(rate.selectedIndex+1);
-		var d={
-			User:data.leaving,
-			lang:users.innerText,
-			rate:(rate.selectedIndex+1)
-		};
-		socket.emit('RatingUpdate',d);
+		if(users.innerText==='Language')
+			console.log('Nothing chosen!');
+		else{
+			modal.style.display="none";
+			console.log(ratingValue);
+			var d={
+				User:data.leaving,
+				lang:users.innerText,
+				rate:ratingValue
+			};
+			socket.emit('RatingUpdate',d);
+		}
 	}
 	window.onclick = function(event) {
     	if (event.target == modal) {
@@ -116,12 +120,16 @@ function codeTogetherOverlay(otherUser){
 	    modal.style.display = "none";
 	}
 	conf.onclick =function(){
-		modal.style.display="none";
-		var d={
-			other:otherUser.id,
-			lang:users.innerText
-		};
-		codeTogether(d);
+		if(users.innerText==='Language')
+			console.log('Chutiya kaat diya...');
+		else{
+			modal.style.display="none";
+			var d={
+				other:otherUser.id,
+				lang:users.innerText
+			};
+			codeTogether(d);
+		}
 	}
 	window.onclick = function(event) {
     	if (event.target == modal) {
@@ -186,7 +194,6 @@ mybutton.onclick=function(){
 	current=user.innerText;
 	this.style.backgroundColor='black';
 	this.style.color='white';
-
 	socket.emit('takefilename',{filen:current});
 	socket.emit('users_inside_this_room',current);
 };
@@ -199,7 +206,6 @@ socket.on('codeTogether',function(data){
 	// switch tabs on re Alert
 	if(choice==true){
 		socket.emit('codeTogetherUpdate',data);
-		console.log('Yup!');
 		var A=document.getElementById(data.fileName+"1");
 		if(A==null){
 		leave_room.style.display='block';
@@ -436,4 +442,16 @@ socket.on('OverlayContent',function(data){
 });
 socket.on('CodeTogetherEnd',function(data){
 	CodeTogetherRate(data);
+});
+socket.on('compileErrorResolve',function(data){
+	console.log(data);
+	var doc=document.getElementById('response');
+	doc.innerHTML="<a href='http://www.google.co.in' style='color:white;'>Google says this</a><br/>";
+	if(data.arr.length==0);
+	else{	
+		doc.innerHTML="Or you can contact:";
+		data.arr.forEach(function(item){
+			doc.innerHTML+='<br/>'+item.FriendName;
+		});
+	}
 });

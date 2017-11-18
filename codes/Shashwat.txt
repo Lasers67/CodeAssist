@@ -5,7 +5,6 @@ int main()
  int a;
  int b;
  cin>>a>>b;
- cout<<a*b;
+ cout<<a*b*c;
  return 0;
 }
-hgfh
