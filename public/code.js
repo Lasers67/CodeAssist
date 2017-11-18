@@ -9,7 +9,7 @@ var logoff=document.getElementById("signout");
 var compileButton=document.getElementById("Compile");
 var compileButton2=document.getElementById("Compile2");
 var searchUsers=document.getElementById('searchUsers');
-var language=1;
+var language=0;
 function OverlayOn(data){
 	console.log('Overlay On!');
 	console.log(data);
@@ -27,7 +27,10 @@ function LangChange(lang){
 	document.getElementById('LangButton').innerHTML=x+'<span class="caret"></span>';
 }
 compileButton2.onclick=function(){
-	autolanguagedetection();
+	if(language===0)
+		autolanguagedetection();
+	else
+		submitCode();
 }
 var testCases=document.getElementById('Input');
 var output=document.getElementById('codeOutput');
