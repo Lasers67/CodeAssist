@@ -10,6 +10,43 @@ var compileButton=document.getElementById("Compile");
 var compileButton2=document.getElementById("Compile2");
 var searchUsers=document.getElementById('searchUsers');
 var language=0;
+var testCases=document.getElementById('Input');
+var output=document.getElementById('codeOutput');
+Code.focus();
+var users_in_room=document.getElementById('users_in_room');
+var users_in_room_M=document.getElementById('users_in_room_M');
+var leave_room=document.getElementById('leave_room');
+// var table=document.getElementById('tableToModify');
+var codingTogetherFlag=false;
+var codingTogetherHost=false;
+var original_room=user.innerText;
+var current=original_room;
+function CodeTogetherRate(data){
+	var modal = document.getElementById('CodingTogetherRate');
+	var users=document.getElementById('CodeTogetherLangButtonRate');
+	var span = document.getElementById("closeRate");
+	var rate = document.getElementById("CodeTogetherRate");
+    var conf= document.getElementById("CodeTogetherRateSubmit");
+    modal.style.display = "block";
+	span.onclick = function() {
+	    modal.style.display = "none";
+	}
+	conf.onclick =function(){
+		modal.style.display="none";
+		console.log(rate.selectedIndex+1);
+		var d={
+			User:data.leaving,
+			lang:users.innerText,
+			rate:(rate.selectedIndex+1)
+		};
+		socket.emit('RatingUpdate',d);
+	}
+	window.onclick = function(event) {
+    	if (event.target == modal) {
+    	    modal.style.display = "none";
+   	 }
+	}
+}
 function OverlayOn(data){
 	console.log('Overlay On!');
 	console.log(data);
@@ -32,23 +69,18 @@ function CodeTogetherLangChange(lang){
 	language=lang.id;
 	document.getElementById('CodeTogetherLangButton').innerHTML=x+'<span class="caret"></span>';
 }
+function CodeTogetherLangChangeRate(lang){
+	console.log(lang.id);
+	var x=document.getElementById(lang.id).innerHTML;
+	language=lang.id;
+	document.getElementById('CodeTogetherLangButtonRate').innerHTML=x+'<span class="caret"></span>';
+}
 compileButton2.onclick=function(){
 	if(language===0)
 		autolanguagedetection();
 	else
 		submitCode();
 }
-var testCases=document.getElementById('Input');
-var output=document.getElementById('codeOutput');
-Code.focus();
-var users_in_room=document.getElementById('users_in_room');
-var users_in_room_M=document.getElementById('users_in_room_M');
-var leave_room=document.getElementById('leave_room');
-// var table=document.getElementById('tableToModify');
-var codingTogetherFlag=false;
-var codingTogetherHost=false;
-var original_room=user.innerText;
-var current=original_room;
 socket.on('connect',function(){
 	console.log('working');
 	socket.emit('room',{Room:original_room,to:user.innerText,from:user.innerText});
@@ -154,6 +186,7 @@ mybutton.onclick=function(){
 	current=user.innerText;
 	this.style.backgroundColor='black';
 	this.style.color='white';
+
 	socket.emit('takefilename',{filen:current});
 	socket.emit('users_inside_this_room',current);
 };
@@ -314,40 +347,38 @@ function autolanguagedetection()
     });
 }
 function marzi(name){
-		var list=document.createElement('li');
-		var ref=document.createElement('a');
-		ref.innerHTML=name;
-		ref.id=name+"6";
-		// ref.href='#';
-		ref.onclick=function(){
-			if(current===user.innerText && current!=this.innerHTML)
-			{
-				socket.emit('kicking',{kicked_person:this.innerHTML,from:user.innerText});
-			}
-			else{
-				alert("Apple");
-			}
-		};
-		list.appendChild(ref);
-		users_in_room_M.appendChild(list);
-
-		var row = document.createElement('tr');
-		var col = document.createElement('td');
-		col.innerText=name;
-		if(current==user.innerText && name!=user.innerText)
-			col.title='Kick '+name;
-		col.id=name+"6";
-		users_in_room.appendChild(row); 
-		col.onclick=function(){
-			if(current===user.innerText && current!=this.innerText)
-			{
-				socket.emit('kicking',{kicked_person:this.innerText,from:user.innerText});
-			}
-			else{
-				// alert("Cannot ");
-			}
-		};
-		row.appendChild(col);
+	var list=document.createElement('li');
+	var ref=document.createElement('a');
+	ref.innerHTML=name;
+	ref.id=name+"6";
+	ref.onclick=function(){
+		if(current===user.innerText && current!=this.innerHTML)
+		{
+			socket.emit('kicking',{kicked_person:this.innerHTML,from:user.innerText});
+		}
+		else{
+			alert("Apple");
+		}
+	};
+	list.appendChild(ref);
+	users_in_room_M.appendChild(list);
+	var row = document.createElement('tr');
+	var col = document.createElement('td');
+	col.innerText=name;
+	if(current==user.innerText && name!=user.innerText)
+		col.title='Kick '+name;
+	col.id=name+"6";
+	users_in_room.appendChild(row); 
+	col.onclick=function(){
+		if(current===user.innerText && current!=this.innerText)
+		{
+			socket.emit('kicking',{kicked_person:this.innerText,from:user.innerText});
+		}
+		else{
+			// alert("Cannot ");
+		}
+	};
+	row.appendChild(col);
 }
 socket.on('users_inside_this_room',function(data){
 	users_in_room.innerHTML='';
@@ -402,4 +433,7 @@ socket.on('OverlayContent',function(data){
 	document.getElementById('OverlayNameHead').innerHTML=data.Name;
 	document.getElementById('OverlayName').innerHTML=data.Name;
 	document.getElementById('OverlayEmail').innerHTML=data.Email;
+});
+socket.on('CodeTogetherEnd',function(data){
+	CodeTogetherRate(data);
 });

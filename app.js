@@ -301,7 +301,6 @@ io.on('connection',function(socket){
    socket.on('left',function(data){
    		users[data.leaving].leave(data.room);
    		var clients = io.sockets.adapter.rooms[data.room].sockets;   
-
 		//to get the number of clients
 		var numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
 		var A=[];
@@ -312,8 +311,9 @@ io.on('connection',function(socket){
 		     A.push(clientSocket.name);
 		}
 		console.log(A);
+		users[data.room].emit('CodeTogetherEnd',data);
+		console.log("Disconnection caused!");
 		io.to(data.room).emit('users_inside_this_room',A);
-
    });
    socket.on('kicking',function(data){
    		users[data.kicked_person].emit('got_kicked',data.from);
@@ -337,7 +337,7 @@ io.on('connection',function(socket){
 		var x=data.source;
 		x=x.replace(/\n/g,'%0A');
 		x=x.replace(/"/g,'\\"');
-		console.log(x);
+		//console.log(x);
 		var y=data.testcases;
 		y=y.replace(/\n/g,'%0A');
 		var z=data.lang;
@@ -347,15 +347,24 @@ io.on('connection',function(socket){
 			}
 			var out='';
 			var json=JSON.parse(stdout);
+			//console.log(json.result.compilemessage);
+			//console.log(json.result.stderr);
+			//console.log(json.result.stdout);
 			console.log(json);
-			if((json.result.compilemessage==='')&&(json.result.stderr==='')){
+			/*if((json.result.compilemessage==='')&&(json.result.stderr==='')){
 					out=json.result.stdout;
 			}
 			else{
 				out=(json.result.compilemessage)+(json.result.stderr);
 				out=utf8.decode(out);
+			}*/
+			if(json.result.stdout==null){
+				out=(json.result.compilemessage)+(json.result.stderr);
+				out=utf8.decode(out);
 			}
-			console.log(out);
+			else
+				out=json.result.stdout;
+			//console.log(out);
 			users[data.UserName].emit('testCode',out);
 		});
 		users[data.UserName].emit('pleaseWait');
@@ -424,18 +433,29 @@ io.on('connection',function(socket){
    			if(err) throw err;
    			else if(result.length===0)
    			{
-   				x="insert into `"+data.otherUser+"Tags` values(?,1)";
+   				x="insert into `"+data.otherUser+"Tags` values(?,0,0)";
    				con.query(x,[data.lang],function(err,result){
    					if(err)	throw err;
    				});
    			}
-   			else
+/*   		else
    			{
    				x='update `'+data.otherUser+"Tags` set TimesHelped=TimesHelped+1 where Language=?";
    				con.query(x,[data.lang],function(err,result){
    					if(err)	throw err;
    				});
-   			}
+   			}*/
    		});
+   });
+   socket.on('RatingUpdate',function(data){
+   		var q="update `"+data.User+"Tags` set Rating=((Rating*TimesHelped)+?)/(TimesHelped+1) where Language=?";
+   		con.query(q,[data.rate,data.lang],function(err,result){
+   			if(err)	throw err;
+   			q="update `"+data.User+"Tags` set TimesHelped=TimesHelped+1 where Language=?";
+   			con.query(q,[data.lang],function(err,result){
+   				if(err) return err;
+   			});
+   		});
+
    });
 });

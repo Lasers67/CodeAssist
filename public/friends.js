@@ -1,5 +1,4 @@
 var userSearch=document.getElementById('searchtext');
-
 function AddFriend(namestr)
 {
 	var dat={
@@ -27,6 +26,8 @@ function findUsers(namestr)
 	if(namestr==="getfrominput")
 		namestr=userSearch.value;
 	console.log(namestr);
+	var x=document.getElementById('SearchedText');
+	x.innerText="'"+userSearch.value+"'";
 	var modal = document.getElementById('myModal');
 	var users=document.getElementById('Users');
 	var span = document.getElementsByClassName("close")[0];

@@ -410,10 +410,9 @@ html {
   <div class="modal-content" style="width: 700px; background: #456;">
     <span class="close">&times;</span>
     <div class="container" style="width: 650px; padding: 0;">
-
     <hgroup class="mb20">
       <h1>Search Results</h1>
-      <h2 class="lead"><strong class="text-danger">3</strong> results were found for the search for <strong class="text-danger">ash</strong></h2>               
+      <h2 class="lead">Results found for the search for <strong id='SearchedText'>''</strong></h2>               
     </hgroup>
 
     <section>
@@ -433,7 +432,7 @@ html {
 
   <!-- Search Results end -->
 
-  <!-- Language Selection while Coding Together -->
+  <!-- 'Language Selection while Coding Together' BEGINS -->
 <div id="CodingTogetherLang" class="modal">
     <!-- Modal content -->
   <div class="modal-content" style="width: 700px;">
@@ -473,7 +472,59 @@ html {
     </div>
   </div>
 </div>
-  <!-- Language Selection while Coding Together ends -->
+  <!-- 'Language Selection while Coding Together' ENDS -->
+
+  <!-- Rating BEGINS -->
+  <div id="CodingTogetherRate" class="modal">
+    <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close" id='closeRate'>&times;</span>
+    <div class="container">
+    <hgroup class="mb20">
+      <h1>Please select the language in which your mate helped you:</h1>
+    </hgroup>
+    <div class="dropdown btn-group">
+   <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id ='CodeTogetherLangButtonRate'>Language
+     <span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu scroll-menu" role="menu">
+    <li ><a href='#' id="1" onclick='CodeTogetherLangChangeRate(this)'>C</a></li>
+    <li ><a href='#' id="2" onclick='CodeTogetherLangChangeRate(this)'>C++</a></li>
+    <li ><a href='#' id="3" onclick='CodeTogetherLangChangeRate(this)'>Java</a></li>
+    <li ><a href='#' id="5" onclick='CodeTogetherLangChangeRate(this)'>Python2.7</a></li>
+    <li ><a href='#' id="6" onclick='CodeTogetherLangChangeRate(this)'>Perl</a></li>
+    <li ><a href='#' id="7" onclick='CodeTogetherLangChangeRate(this)'>PHP</a></li>
+    <li ><a href='#' id="8" onclick='CodeTogetherLangChangeRate(this)'>Ruby</a></li>
+    <li ><a href='#' id="9" onclick='CodeTogetherLangChangeRate(this)'>C#</a></li>
+    <li ><a href='#' id="10" onclick='CodeTogetherLangChangeRate(this)'>MySQL</a></li>
+    <li ><a href='#' id="12" onclick='CodeTogetherLangChangeRate(this)'>Haskell</a></li>
+    <li ><a href='#' id="14" onclick='CodeTogetherLangChangeRate(this)'>Bash</a></li>
+    <li ><a href='#' id="15" onclick='CodeTogetherLangChangeRate(this)'>Scala</a></li>
+    <li ><a href='#' id="18" onclick='CodeTogetherLangChangeRate(this)'>Lua</a></li>
+    <li ><a href='#' id="20" onclick='CodeTogetherLangChangeRate(this)'>JavaScript</a></li>
+    <li ><a href='#' id="24" onclick='CodeTogetherLangChangeRate(this)'>R</a></li>
+    <li ><a href='#' id="32" onclick='CodeTogetherLangChangeRate(this)'>Objective-C</a></li>
+    <li ><a href='#' id="37" onclick='CodeTogetherLangChangeRate(this)'>Visual Basic</a></li>
+    <li ><a href='#' id="51" onclick='CodeTogetherLangChangeRate(this)'>Swift</a></li>
+  </ul>
+  </div>
+  <hgroup class="mb20">
+      <h1>Please rate your Mate:</h1>
+      <select name="CodeTogetherRate" id='CodeTogetherRate' style="cursor:pointer;">
+        <option name="1">1</option>
+        <option name="2">2</option>
+        <option name="3">3</option>
+        <option name="4">4</option>
+        <option name="5">5</option>
+      </select>
+  </hgroup>
+  <hgroup class="mb20">
+      <button id='CodeTogetherRateSubmit'>Submit</button>
+  </hgroup>
+    </div>
+  </div>
+</div>
+<!-- Rating ENDS -->
   <!-- Nav Bar -->
   
   <nav class="navbar navbar-inverse">
@@ -626,7 +677,7 @@ html {
         </table>
       </div>
       <ul class="list-group">
-        <li class="list-group-item active" id="leave_room" style="display: none; cursor: pointer;">Exit Room</li>
+        <li class="list-group-item active" id="leave_room" style="display: none;cursor: pointer;">Exit Room</li>
       </ul>
     </div>
   </div>
