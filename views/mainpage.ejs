@@ -394,6 +394,12 @@ html {
     float: left;
     margin-right: 10px;
   }
+  .modal-content h1,.modal-content .lead {
+    color:white;
+  }
+  .modal-content :placeholder{
+    color:#eee;
+  }
 </style>
 </head>
 <body>
@@ -401,20 +407,20 @@ html {
   <!-- Search results-->
   <div id="myModal" class="modal">
     <!-- Modal content -->
-  <div class="modal-content">
+  <div class="modal-content" style="width: 700px; background: #456;">
     <span class="close">&times;</span>
-    <div class="container">
+    <div class="container" style="width: 650px; padding: 0;">
 
     <hgroup class="mb20">
       <h1>Search Results</h1>
       <h2 class="lead"><strong class="text-danger">3</strong> results were found for the search for <strong class="text-danger">ash</strong></h2>               
     </hgroup>
 
-    <section class="col-xs-12 col-sm-6 col-md-12">
+    <section>
       <article class="`search-result row">
-        <div class="col-xs-12 col-sm-12 col-md-3">
-          <input type='text' placeholder="username" class="thumbnail" id="searchtext"/>
-          <button onclick='findUsers("getfrominput")'>Search</button>
+        <div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 10px">
+          <input type='text' placeholder="username" id="searchtext"/>
+          <button onclick='findUsers("getfrominput")' class="btn btn-primary" style="float:right;">Search</button>
         </div>
         <div class="col-xs-12 col-sm-12 excerpet" id='Users'>
         </div>
@@ -430,11 +436,11 @@ html {
   <!-- Language Selection while Coding Together -->
 <div id="CodingTogetherLang" class="modal">
     <!-- Modal content -->
-  <div class="modal-content">
+  <div class="modal-content" style="width: 700px;">
     <span class="close" id='closeLang'>&times;</span>
-    <div class="container">
+    <div class="container" style="width: 650px;">
     <hgroup class="mb20">
-      <h1>Please select the language which you wish to ask help for:</h1>
+      <h1 style="font-size: 22px !important;">Please select the language which you wish to ask help for:</h1>
     </hgroup>
     <div class="dropdown btn-group">
    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id ='CodeTogetherLangButton'>Language
@@ -461,9 +467,9 @@ html {
     <li ><a href='#' id="51" onclick='CodeTogetherLangChange(this)'>Swift</a></li>
   </ul>
   </div>
-  <hgroup class="mb20">
-      <h1><a id='ConfirmCodeTogether' style='cursor:pointer;'>Click here if you are sure to call for help!</a></h1>
-  </hgroup>
+  <div style="float: right;">
+      <button id="ConfirmCodeTogether" class="btn btn-primary" type="button">Confirm and Enter</button>
+  </div>
     </div>
   </div>
 </div>
@@ -611,7 +617,7 @@ html {
     <div class="col-md-8"></div>
     <div class="col-md-1" id="button-and-usersinroom">
       <ul class="list-group">
-        <li class="list-group-item active" id="Compile">Compile</li>
+        <li class="list-group-item active" id="Compile" style="cursor: pointer;">Compile</li>
       </ul>
       <div class="table table-responsive" >          
         <table class="table">
@@ -620,7 +626,7 @@ html {
         </table>
       </div>
       <ul class="list-group">
-        <li class="list-group-item active" id="leave_room" style="display: none;">Exit Room</li>
+        <li class="list-group-item active" id="leave_room" style="display: none; cursor: pointer;">Exit Room</li>
       </ul>
     </div>
   </div>
