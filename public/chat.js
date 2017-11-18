@@ -81,6 +81,7 @@ function fun(data,ID)
 	new_div.appendChild(newbutton2);
 	sidebar.appendChild(new_div);
 }
+
 function create_chatbox(Name)
 {
 	var A=document.getElementById(Name+"2");
@@ -90,14 +91,17 @@ function create_chatbox(Name)
 		var Name_box=Name+"2";
 		New_Chatbox.id=Name_box;
 		// New_Chatbox.style.position='fixed';
-		New_Chatbox.style.float='right';
-		New_Chatbox.style.top="-300px";
+		// New_Chatbox.style.float='right';
+		// New_Chatbox.style.top="-300px";
 		// New_Chatbox.style.backgroundColor='blue';
-		New_Chatbox.style.height="40vh";
-		New_Chatbox.style.width="20vw";
+		// New_Chatbox.style.height="40vh";
+		// New_Chatbox.style.width="250px";
 		// New_Chatbox.style.position='absolute';
-		New_Chatbox.style.marginTop='-100px';
-		New_Chatbox.style.bottom='0';
+		// New_Chatbox.style.marginTop='-100px';
+		New_Chatbox.style.marginRight='10px';
+		New_Chatbox.style.marginLeft='10px';
+		// New_Chatbox.style.bottom='0';
+		// New_Chatbox.style.borderRadius='5px';
 		// New_Chatbox.style.color="white";
 		// New_Chatbox.style.border="1px solid red";
 	
@@ -107,13 +111,14 @@ function create_chatbox(Name)
 		cross_button.id=Name+"X";
 		cross_button.className="glyphicon glyphicon-remove";
 		cross_button.style.position='relative';
+		cross_button.style.float='right';
 		cross_button.onmouseover=function(){
 			this.style.color="grey";
 		}
 		cross_button.onmouseout=function(){
 			this.style.color="white";
 		}
-		cross_button.style.left="14vw";
+		// cross_button.style.left="14vw";
 		cross_button.onclick=function()
 		{
 			var string=this.id;
@@ -128,10 +133,11 @@ function create_chatbox(Name)
 		Chat_head.style.padding='5px';
 		Chat_head.style.backgroundColor='#1187c2';
 		Chat_head.style.color='white';
-		Chat_head.style.width='20vw';	
+		Chat_head.style.width='16vw';
+		Chat_head.style.bottom='370.5px';	
 		New_Chatbox.appendChild(Chat_head);
 		var Chat_bottom=document.createElement("div");
-		Chat_bottom.style.width='20vw';
+		Chat_bottom.style.width='16vw';
 		// Chat_bottom.style.border='1px solid black';
 		Chat_bottom.style.color='black';
 		var New_Message=document.createElement("input");
@@ -146,7 +152,7 @@ function create_chatbox(Name)
 		Chat_bottom.appendChild(SEND);
 		Chat_bottom.style.position='fixed';
 		Chat_bottom.style.backgroundColor="white";
-		Chat_bottom.style.bottom='0';
+		Chat_bottom.style.bottom='5px';
 		SEND.onclick=function(){
 			var string=this.id;
 			var name=string.substr(0,string.length-1);
@@ -154,7 +160,7 @@ function create_chatbox(Name)
 			socket.emit("chat",{to:name,Message:to_send,UserName:user.innerHTML});
 			var data={to:name,Message:to_send,UserName:user.innerHTML};
 			var Apple=name;
-			function1(data,"my",Apple);
+			function1(data,"2",Apple);
 			New_Message.value="";
 		};
 		New_Chatbox.appendChild(Chat_bottom);
@@ -167,12 +173,12 @@ function create_chatbox(Name)
 		var  Chat_area=document.createElement('div');
 		Chat_area.style.backgroundColor="white";
 		Chat_area.style.position='fixed';
-		Chat_area.style.marginTop='30px';
+		// Chat_area.style.marginTop='30px';
 		// Chat_area.style.marginTop="-11vh";
 		// Chat_area.style.marginBottom='0vh';
-		Chat_area.style.height='30%';
+		Chat_area.style.height='330px';
 		// Chat_area.style.zIndex='-11';
-		Chat_area.style.width='20vw';	
+		Chat_area.style.width='16vw';	
 		Chat_area.id=Name+'Box';
 		Chat_area.style.overflow="auto";
 		New_Chatbox.appendChild(Chat_area);
@@ -184,8 +190,9 @@ function create_chatbox(Name)
 socket.on('Online',function(data){
 	sidebar.innerHTML='';
 	data.forEach(function(item){
-		if(item!=user.innerHTML){
-			fun(item,item);
+		console.log(user.innerText+' '+item.Name);
+		if(item.Name!=user.innerHTML){
+			fun(item.Name,item.Name);
 		}
 	});
 });

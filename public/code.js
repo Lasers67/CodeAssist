@@ -8,6 +8,7 @@ var mybutton2= document.getElementById('my_name2');
 var logoff=document.getElementById("signout");
 var compileButton=document.getElementById("Compile");
 var compileButton2=document.getElementById("Compile2");
+var searchUsers=document.getElementById('searchUsers');
 var language=1;
 function OverlayOn(data){
 	console.log('Overlay On!');
@@ -23,13 +24,10 @@ function LangChange(lang){
 	console.log(lang.id);
 	var x=document.getElementById(lang.id).innerHTML;
 	language=lang.id;
-	// alert("a"+language);
 	document.getElementById('LangButton').innerHTML=x+'<span class="caret"></span>';
 }
 compileButton2.onclick=function(){
 	autolanguagedetection();
-
-	submitCode();
 }
 var testCases=document.getElementById('Input');
 var output=document.getElementById('codeOutput');
@@ -87,15 +85,14 @@ function saveCode(){
 };
 logoff.onclick=function(){
 	saveCode();
-	this.href="http://localhost:3000/"; 
+	this.href="http://localhost:4000/"; 
 };
 setInterval(saveCode, 10000);
 function submitCode()
 {
-	// alert("b"+language);
-	if(document.getElementById('LangButton').id!=language)
+	if(document.getElementById('LangButton').id!==language)
 	{
-		alert("Gaandu Language Daal!");
+		alert('Language not chosen!');
 	}
 	var dat={
 		source:Code.value,
@@ -158,11 +155,6 @@ socket.on('codeTogether',function(data){
 						leave_room.style.display='block';
 					};
 					list1.appendChild(ref1);
-					//Tabs_M.appendChild(list1);
-					
-
-
-
 					var but=document.createElement('button');
 					but.innerText=data.fileName;
 					but.className="btn btn-default btn-arrow-right";
@@ -215,21 +207,6 @@ socket.on("takefilename",function(data){
 });
 
 function marzi(name){
-	// var new_button=document.createElement('button');
-	// new_button.id=name+"6";
-	// new_button.innerText=name;
-	// new_button.onclick=function(){
-	// 	if(current===user.innerHTML && current!=this.innerText)
-	// 	{
-	// 		socket.emit('kicking',{kicked_person:this.innerText,from:user.innerHTML});
-	// 	}
-	// 	else{
-	// 		alert("Apple");
-	// 	}
-
-	// };
-	// users_in_room.appendChild(new_button);
-	// alert(users_in_room.nodeName);
 		var list=document.createElement('li');
 		var ref=document.createElement('a');
 		ref.innerHTML=name;

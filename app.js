@@ -1,4 +1,3 @@
-//Lasers67 //GotNoChill
 var exec=require('child_process').exec;
 var http=require('http');
 var express=require('express');
@@ -10,7 +9,7 @@ var utf8=require('utf8');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"2,4,6Trinitrophenol",
+	password:"shshwt.grg",
 	database:"Test"
 });
 con.connect(function(err){
@@ -26,6 +25,13 @@ app.set('view engine','ejs');
 app.get('/signup',function(req,res){
 	res.render('signup',{Name:req.query.Name,Password:req.query.Password,RePassword:req.query.RePassword,Email:req.query.Email});
 });
+/*app.get('/search_user',function(req,res){
+	con.query("select Name from user where Name!='App'",function(err,result){
+   		if(err) throw err;
+   		var j=JSON.parse(JSON.stringify(result));
+   		res.render('search_results',{dat:j});
+   	});
+});*/
 /*app.get('/profile/:name',function(req,res){
 	var data=req.params.name;
 	con.query('Select * from User where Name=?',[data],function(err,result){
@@ -51,10 +57,12 @@ app.post('/signup',urlencodeParser,function(req,res){
 				con.query(sql,[req.body.Name,req.body.Password,req.body.Email],function(err,result){
 					if(err) throw err;
 					console.log("Inserted New Value into user");
+					fs.writeFileSync(__dirname+'/codes/'+req.body.Name+'.txt','');
+					con.query('create table `?`(FriendName varchar(255));',function(err,result){
+						res.redirect('/?Name='+req.body.Name);
+						res.end("Inserted");
+					});
 				});
-				fs.writeFileSync(__dirname+'/codes/'+req.body.Name+'.txt','');
-				res.redirect('/?Name='+req.body.Name);
-				res.end("Inserted");
 			}
 		});
 	}
@@ -97,7 +105,7 @@ app.get('/',function(req,res){
 			res.render('signup');
 });
 app.get('/:garbage',function(req,res){
-	res.redirect('http://10.8.17.80:4000/signup');
+	res.redirect('http://localhost:4000/signup');
 });
 var users={};
 var Online_Users='';
@@ -113,13 +121,21 @@ io.on('connection',function(socket){
 		socket.emit("takefilename",text);
 	}
 	var sql='UPDATE user SET Online=1 where SessionID=?';
-	var sql2='UPDATE user SET Online=0 where SessionID=?';
-	// var online_users="select Name from User where Online=1";
-	io.sockets.emit('Online',Object.keys(users));
-	console.log(Object.keys(users));
 	con.query(sql,[socket.id],function(err){
 		if(err) throw err;
 	});
+	var sql2='UPDATE user SET Online=0 where SessionID=?';
+	// var online_users="select Name from User where Online=1";
+	Object.keys(users).forEach(function(item){
+		var q="select Name from user where Online=1 and Name in (select FriendName from `"+item+"`)";
+		con.query(q,function(err,result){
+			if(err)	throw err;
+			var j=JSON.parse(JSON.stringify(result));
+			users[item].emit('Online',j);
+		});
+	});
+	//io.sockets.emit('Online',Object.keys(users));
+	//console.log(Object.keys(users));
 	socket.on('chat',function(data){
 		var text=data.Message;
 		var d = new Date();	
@@ -192,7 +208,7 @@ io.on('connection',function(socket){
 		console.log('Error!',err);
 	});
 	socket.on('room',function(room){
-		console.log("apple");
+		//console.log("apple");
 		try{
 		users[room.from].join(room.Room);
 		// var a=io.of('/').in(room.Room).sockets;
@@ -348,7 +364,7 @@ io.on('connection',function(socket){
 		users[data.UserName].emit('pleaseWait');
    });
    socket.on('OverlayContent',function(data){
-		con.query('Select * from user where Name=?',[data],function(err,result){
+		con.query('select * from user where Name=?',[data],function(err,result){
 			if(err) throw err;
 			else if(result.length===0);
 			else{
@@ -360,5 +376,49 @@ io.on('connection',function(socket){
 				socket.emit('OverlayContent',d);
 			}
 		});
+   });
+   socket.on("findUsers",function(dat){
+   		var q="select Name from user where Name like ? and Name!=? and Name!='App' and Name not in (select FriendName from `"+dat.User+"`)";
+   		con.query(q,['%'+dat.str+'%',dat.User],function(err,result){
+   			if(err) throw err;
+   			var j=JSON.parse(JSON.stringify(result));
+   			console.log(j);
+   			//socket.emit('findUsers',j);
+   			q="select Name from user where Name like ? and Name!=? and Name!='App' and Name in (select FriendName from `"+dat.User+"`)";
+   			con.query(q,['%'+dat.str+'%',dat.User],function(err,result){
+   				if(err) throw err;
+   				var w=JSON.parse(JSON.stringify(result));
+   				console.log(w);
+   				var tot={
+   					friend:w,
+   					nonfriend:j
+   				};
+   				socket.emit('findUsers',tot);
+   			});
+   		});
+   });
+   socket.on('AddFriend',function(data){
+   		var q="insert into `"+data.User+"` values (?)";
+   		con.query(q,data.other,function(err,result){
+   			if(err) throw err;
+   			q="insert into `"+data.other+"` values (?)";
+   			con.query(q,data.User,function(err,result){
+   				if(err) throw err;
+   				console.log("Friends Added!");
+   				socket.emit('ChangedFriend',data);
+   			});
+   		});
+   });
+   socket.on('UnFriend',function(data){
+   		var q="delete from `"+data.User+"` where FriendName=?";
+   		con.query(q,data.other,function(err,result){
+   			if(err) throw err;
+   			q="delete from `"+data.other+"` where FriendName=?";
+   			con.query(q,data.User,function(err,result){
+   				if(err) throw err;
+   				console.log("Friends Removed!");
+   				socket.emit('ChangedFriend',data);
+   			});
+   		});
    });
 });
