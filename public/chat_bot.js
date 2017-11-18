@@ -4,6 +4,7 @@
 		$(document).ready(function() {
 			$("#bot_input").keypress(function(event) {
 				if (event.which == 13) {
+					console.log('kya?');
 					event.preventDefault();
 					send();
 				}
@@ -48,7 +49,6 @@
 			send();
 		}
 		function send() {
-			document.getElementById('bot_input').value='';
 			var text = $("#bot_input").val();
 			$.ajax({
 				type: "POST",
@@ -66,6 +66,7 @@
 					setResponse("Internal Server Error");
 				}
 			});
+			document.getElementById('bot_input').value='';
 			// setResponse("Loading...");
 		}
 		function setResponse(val) {

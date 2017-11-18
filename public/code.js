@@ -120,8 +120,7 @@ function codeTogetherOverlay(otherUser){
 	    modal.style.display = "none";
 	}
 	conf.onclick =function(){
-		if(users.innerText==='Language')
-			console.log('Chutiya kaat diya...');
+		if(users.innerText==='Language');
 		else{
 			modal.style.display="none";
 			var d={
@@ -148,7 +147,7 @@ function codeTogether(data){
 	socket.emit('takefilename',d);
 	var dat={
 		fileName:user.innerText,
-		otherUser:data.other,
+		otherUser:(data.other).substr(0,(data.other).length-1),
 		lang: data.lang
 	};
 	console.log(dat);
@@ -446,7 +445,7 @@ socket.on('CodeTogetherEnd',function(data){
 socket.on('compileErrorResolve',function(data){
 	console.log(data);
 	var doc=document.getElementById('response');
-	doc.innerHTML="<a href='http://www.google.co.in' style='color:white;'>Google says this</a><br/>";
+	doc.innerHTML="<a href='"+data.url+"' style='color:white;'>Google says this</a><br/>";
 	if(data.arr.length==0);
 	else{	
 		doc.innerHTML="Or you can contact:";

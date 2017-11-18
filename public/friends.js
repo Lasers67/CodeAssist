@@ -56,7 +56,7 @@ socket.on('findUsers',function(data){
 	console.log(f);
 	f.forEach(function(item){
 		var but='<button onclick=\'UnFriend("'+item.Name+'")\' class="btn btn-success" style="float:right;">Unfriend</button>';
-+		x.innerHTML+='<div class="search-result"><h3><a onclick=\'OverlayOn("'+item.Name+'")\'>'+item.Name+'</a></h3><img src="/profile.jpg" alt="user pic"><span style="color:white;">Description of user.</span>'+but+'</div>';
+		x.innerHTML+='<div class="search-result"><h3><a onclick=\'OverlayOn("'+item.Name+'")\'>'+item.Name+'</a></h3><img src="/profile.jpg" alt="user pic"><span style="color:white;">Description of user.</span>'+but+'</div>';
 	});
 	var uf=d.nonfriend;
 	console.log(uf);
