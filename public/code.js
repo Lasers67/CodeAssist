@@ -62,7 +62,10 @@ Code.addEventListener('keyup',function(){
 	}
 });
 compileButton.onclick=function(){
-	autolanguagedetection();
+	if(language===0)
+		autolanguagedetection();
+	else
+		submitCode();
 }
 function codeTogether(otherUser){
 	saveCode();
