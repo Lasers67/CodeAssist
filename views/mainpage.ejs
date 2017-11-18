@@ -334,7 +334,28 @@ html {
     text-decoration: none;
     cursor: pointer;
 }
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 3500; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
 /* Find user Modal Content Styling */
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
@@ -396,40 +417,57 @@ html {
           <button onclick='findUsers("getfrominput")'>Search</button>
         </div>
         <div class="col-xs-12 col-sm-12 excerpet" id='Users'>
-          <!--<div class="search-result">
-            <h3><a href="#" title="">ash</a></h3>
-            <img src="/profile.jpg" alt="user pic">
-            <p>Description of user. Description of user. Description of user. Description of user. Description of user. Description of user.</p>
-            <p>Description of user. Description of user. Description of user. Description of user.</p>
-            <p>Description of user. Description of user.</p>
-            <p>Description of user.</p>
-          </div>
-          <div class="search-result">
-            <h3><a href="#" title="">ash</a></h3>
-            <img src="../images/profile.jpg" alt="user pic">
-            <p>Description of user. Description of user. Description of user. Description of user. Description of user. Description of user.</p>
-            <p>Description of user. Description of user. Description of user. Description of user.</p>
-            <p>Description of user. Description of user.</p>
-            <p>Description of user.</p>
-          </div>
-          <div class="search-result">
-            <h3><a href="#" title="">ash</a></h3>
-            <img src="../images/profile.jpg" alt="user pic">
-            <p>Description of user. Description of user. Description of user. Description of user. Description of user. Description of user.</p>
-            <p>Description of user. Description of user. Description of user. Description of user.</p>
-            <p>Description of user. Description of user.</p>
-            <p>Description of user.</p>
-          </div>-->
         </div>
         <span class="clearfix borda"></span>
         </article>
       </section>
     </div>
   </div>
-
 </div>
 
   <!-- Search Results end -->
+
+  <!-- Language Selection while Coding Together -->
+<div id="CodingTogetherLang" class="modal">
+    <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close" id='closeLang'>&times;</span>
+    <div class="container">
+    <hgroup class="mb20">
+      <h1>Please select the language which you wish to ask help for:</h1>
+    </hgroup>
+    <div class="dropdown btn-group">
+   <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id ='CodeTogetherLangButton'>Language
+     <span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu scroll-menu" role="menu">
+    <li ><a href='#' id="1" onclick='CodeTogetherLangChange(this)'>C</a></li>
+    <li ><a href='#' id="2" onclick='CodeTogetherLangChange(this)'>C++</a></li>
+    <li ><a href='#' id="3" onclick='CodeTogetherLangChange(this)'>Java</a></li>
+    <li ><a href='#' id="5" onclick='CodeTogetherLangChange(this)'>Python2.7</a></li>
+    <li ><a href='#' id="6" onclick='CodeTogetherLangChange(this)'>Perl</a></li>
+    <li ><a href='#' id="7" onclick='CodeTogetherLangChange(this)'>PHP</a></li>
+    <li ><a href='#' id="8" onclick='CodeTogetherLangChange(this)'>Ruby</a></li>
+    <li ><a href='#' id="9" onclick='CodeTogetherLangChange(this)'>C#</a></li>
+    <li ><a href='#' id="10" onclick='CodeTogetherLangChange(this)'>MySQL</a></li>
+    <li ><a href='#' id="12" onclick='CodeTogetherLangChange(this)'>Haskell</a></li>
+    <li ><a href='#' id="14" onclick='CodeTogetherLangChange(this)'>Bash</a></li>
+    <li ><a href='#' id="15" onclick='CodeTogetherLangChange(this)'>Scala</a></li>
+    <li ><a href='#' id="18" onclick='CodeTogetherLangChange(this)'>Lua</a></li>
+    <li ><a href='#' id="20" onclick='CodeTogetherLangChange(this)'>JavaScript</a></li>
+    <li ><a href='#' id="24" onclick='CodeTogetherLangChange(this)'>R</a></li>
+    <li ><a href='#' id="32" onclick='CodeTogetherLangChange(this)'>Objective-C</a></li>
+    <li ><a href='#' id="37" onclick='CodeTogetherLangChange(this)'>Visual Basic</a></li>
+    <li ><a href='#' id="51" onclick='CodeTogetherLangChange(this)'>Swift</a></li>
+  </ul>
+  </div>
+  <hgroup class="mb20">
+      <h1><a id='ConfirmCodeTogether' style='cursor:pointer;'>Click here if you are sure to call for help!</a></h1>
+  </hgroup>
+    </div>
+  </div>
+</div>
+  <!-- Language Selection while Coding Together ends -->
   <!-- Nav Bar -->
   
   <nav class="navbar navbar-inverse">
@@ -508,7 +546,7 @@ html {
    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id ='LangButton'>Language
      <span class="caret"></span>
    </button>
-   <ul class="dropdown-menu scroll-menu" role="menu" id="Compilation">
+   <ul class="dropdown-menu scroll-menu" role="menu">
     <li ><a href='#' id="1" onclick='LangChange(this)'>C</a></li>
     <li ><a href='#' id="2" onclick='LangChange(this)'>C++</a></li>
     <li ><a href='#' id="3" onclick='LangChange(this)'>Java</a></li>
@@ -605,10 +643,7 @@ html {
 </div>
 </div>
 <div id="sidebar">
-
-</div> 
-
-
+</div>
 </div>
 <div id="ChattingArea" style="z-index: 2000"></div>
 <div id="Chat-box">
@@ -621,7 +656,6 @@ html {
     <input type="text" id="Message" placeholder="Message" />
     <button id="send">Send</button></div>
   </div>
-
   <script src='/chat.js'></script>
   <script src='/code.js'></script>
   <script src='/friends.js'></script>

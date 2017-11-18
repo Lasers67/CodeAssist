@@ -61,7 +61,7 @@ function fun(data,ID)
 	newbutton.style.border="#aeb2b4";
 	newbutton2.innerHTML = 'Share';
 	newbutton2.onclick=function(){
-		codeTogether(this);
+		codeTogetherOverlay(this);
 	};
 	newbutton2.style.display='none';
 	new_div.onmouseover=function(){

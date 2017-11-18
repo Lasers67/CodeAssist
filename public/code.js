@@ -26,6 +26,12 @@ function LangChange(lang){
 	language=lang.id;
 	document.getElementById('LangButton').innerHTML=x+'<span class="caret"></span>';
 }
+function CodeTogetherLangChange(lang){
+	console.log(lang.id);
+	var x=document.getElementById(lang.id).innerHTML;
+	language=lang.id;
+	document.getElementById('CodeTogetherLangButton').innerHTML=x+'<span class="caret"></span>';
+}
 compileButton2.onclick=function(){
 	if(language===0)
 		autolanguagedetection();
@@ -41,11 +47,11 @@ var leave_room=document.getElementById('leave_room');
 // var table=document.getElementById('tableToModify');
 var codingTogetherFlag=false;
 var codingTogetherHost=false;
-var original_room=user.innerHTML;
+var original_room=user.innerText;
 var current=original_room;
 socket.on('connect',function(){
 	console.log('working');
-	socket.emit('room',{Room:original_room,to:user.innerHTML,from:user.innerHTML});
+	socket.emit('room',{Room:original_room,to:user.innerText,from:user.innerText});
 });
 //receive character from server
 socket.on('server_character',function(content){
@@ -67,19 +73,45 @@ compileButton.onclick=function(){
 	else
 		submitCode();
 }
-function codeTogether(otherUser){
+function codeTogetherOverlay(otherUser){
+	saveCode();
+	var modal = document.getElementById('CodingTogetherLang');
+	var users=document.getElementById('CodeTogetherLangButton');
+	var span = document.getElementById("closeLang");
+	var conf = document.getElementById("ConfirmCodeTogether");
+    modal.style.display = "block";
+	span.onclick = function() {
+	    modal.style.display = "none";
+	}
+	conf.onclick =function(){
+		modal.style.display="none";
+		var d={
+			other:otherUser.id,
+			lang:users.innerText
+		};
+		codeTogether(d);
+	}
+	window.onclick = function(event) {
+    	if (event.target == modal) {
+    	    modal.style.display = "none";
+   	 }
+	}
+};
+function codeTogether(data){
 	saveCode();
 	codingTogetherFlag=true;
 	codingTogetherHost=true;
 	clickedMyButton();
-	var dat={
-		filen:user.innerHTML
+	var d={
+		filen:user.innerText,
 	};
-	socket.emit('takefilename',dat);
+	socket.emit('takefilename',d);
 	var dat={
-		fileName:user.innerHTML,
-		otherUser:otherUser.id,
+		fileName:user.innerText,
+		otherUser:data.other,
+		lang: data.lang
 	};
+	console.log(dat);
 	socket.emit('codeTogether',dat);
 };
 function saveCode(){
@@ -100,7 +132,7 @@ function submitCode()
 		source:Code.value,
 		testcases:testCases.value,
 		lang:language,
-		UserName:user.innerHTML
+		UserName:user.innerText
 	};
 	socket.emit('testCode',dat);
 }
@@ -108,9 +140,7 @@ function clickedMyButton()
 {
 	leave_room.style.display='none';
 	codingTogetherHost=true;
-	current=user.innerHTML;
-	// document.getElementById(current+"1").style.backgroundColor='white';
-	// document.getElementById(current+"1").style.color='black';
+	current=user.innerText;
 	mybutton.style.backgroundColor='black';
 	mybutton.style.color='white';
 	socket.emit('takefilename',{filen:current});
@@ -121,21 +151,22 @@ mybutton.onclick=function(){
 	codingTogetherHost=true;
 	document.getElementById(current+"1").style.backgroundColor='white';
 	document.getElementById(current+"1").style.color='black';
-	current=user.innerHTML;
+	current=user.innerText;
 	this.style.backgroundColor='black';
 	this.style.color='white';
 	socket.emit('takefilename',{filen:current});
 	socket.emit('users_inside_this_room',current);
-
 };
 mybutton2.onclick=function(){
 	clickedMyButton();
 };
 socket.on('codeTogether',function(data){
 	saveCode();
-	var choice=confirm('Want to code together with '+data.fileName+'?');
+	var choice=confirm('Want to code together with '+data.fileName+' in '+data.lang+'?');
 	// switch tabs on re Alert
 	if(choice==true){
+		socket.emit('codeTogetherUpdate',data);
+		console.log('Yup!');
 		var A=document.getElementById(data.fileName+"1");
 		if(A==null){
 		leave_room.style.display='block';
@@ -163,7 +194,7 @@ socket.on('codeTogether',function(data){
 					but.id=data.fileName+"1";
 					but.style.backgroundColor='black';
 					but.style.color='white';
-					if(current!=user.innerHTML)
+					if(current!=user.innerText)
 					{
 						document.getElementById(current+"1").style.backgroundColor='white';
 						document.getElementById(current+"1").style.color='black';
@@ -179,7 +210,7 @@ socket.on('codeTogether',function(data){
 						string = string.substr(0,string.length-1);
 						codingTogetherHost=false;
 						codingTogetherFlag=true;
-						if(current!=user.innerHTML)
+						if(current!=user.innerText)
 						{
 							document.getElementById(current+"1").style.backgroundColor='white';
 							document.getElementById(current+"1").style.color='black';
@@ -201,102 +232,11 @@ socket.on('codeTogether',function(data){
 		current=data.fileName;
 		codingTogetherHost=false;
 		codingTogetherFlag=true;
-		socket.emit('room',{Room:data.fileName,to:data.fileName,from:user.innerHTML});
+		socket.emit('room',{Room:data.fileName,to:data.fileName,from:user.innerText});
 	}
 });
 socket.on("takefilename",function(data){
 	Code.value=data;
-});
-
-function marzi(name){
-		var list=document.createElement('li');
-		var ref=document.createElement('a');
-		ref.innerHTML=name;
-		ref.id=name+"6";
-		// ref.href='#';
-		ref.onclick=function(){
-			if(current===user.innerHTML && current!=this.innerHTML)
-			{
-				socket.emit('kicking',{kicked_person:this.innerHTML,from:user.innerHTML});
-			}
-			else{
-				alert("Apple");
-			}
-		};
-		list.appendChild(ref);
-		users_in_room_M.appendChild(list);
-
-		var row = document.createElement('tr');
-		var col = document.createElement('td');
-		col.innerText=name;
-		if(current==user.innerHTML && name!=user.innerHTML)
-			col.title='Kick '+name;
-		col.id=name+"6";
-		users_in_room.appendChild(row); 
-		col.onclick=function(){
-			if(current===user.innerHTML && current!=this.innerText)
-			{
-				socket.emit('kicking',{kicked_person:this.innerText,from:user.innerHTML});
-			}
-			else{
-				// alert("Cannot ");
-			}
-		};
-		row.appendChild(col);
-}
-socket.on('users_inside_this_room',function(data){
-	users_in_room.innerHTML='';
-	users_in_room_M.innerHTML='';
-	data.forEach(function(item){
-		marzi(item);
-	});
-});
-socket.on('kick_tab',function(data){
-	var a=document.getElementById(data+"1");
-	var b=document.getElementById(data+"6");
-	if(b!=null)
-	{
-		users_in_room.removeChild(b);
-		users_in_room_M.removeChild(b);
-	}
-	if(a!=null){
-		Tabs.removeChild(a);
-		//Tabs_M.removeChild(a);
-	}
-});
-leave_room.onclick=function(){
-	leave_room.style.display='none';
-	var a=document.getElementById(current+"1");
-	Tabs.removeChild(a);
-	//Tabs_M.removeChild(a);
-	socket.emit('left',{room:current, leaving:user.innerHTML});
-	clickedMyButton();
-}
-socket.on("got_kicked",function(data){
-	var a=document.getElementById(data+"1");
-	Tabs.removeChild(a);
-	//Tabs_M.removeChild(a);
-	clickedMyButton();
-});
-socket.on('byebye',function(data){
-	if(current===data)
-	{
-		clickedMyButton();
-	}
-});
-socket.on('testCode',function(data){
-	console.log('Testing:');
-	console.log(data);
-	output.value=data;
-});
-socket.on('pleaseWait',function(){
-	output.value='Please Wait...';
-});
-socket.on('OverlayContent',function(data){
-	console.log(data);
-	document.getElementById('OverlayNameHead').innerHTML=data.Name;
-	document.getElementById('OverlayName').innerHTML=data.Name;
-	document.getElementById('OverlayEmail').innerHTML=data.Email;
 });
 function autolanguagedetection()
 {
@@ -373,3 +313,93 @@ function autolanguagedetection()
         submitCode();
     });
 }
+function marzi(name){
+		var list=document.createElement('li');
+		var ref=document.createElement('a');
+		ref.innerHTML=name;
+		ref.id=name+"6";
+		// ref.href='#';
+		ref.onclick=function(){
+			if(current===user.innerText && current!=this.innerHTML)
+			{
+				socket.emit('kicking',{kicked_person:this.innerHTML,from:user.innerText});
+			}
+			else{
+				alert("Apple");
+			}
+		};
+		list.appendChild(ref);
+		users_in_room_M.appendChild(list);
+
+		var row = document.createElement('tr');
+		var col = document.createElement('td');
+		col.innerText=name;
+		if(current==user.innerText && name!=user.innerText)
+			col.title='Kick '+name;
+		col.id=name+"6";
+		users_in_room.appendChild(row); 
+		col.onclick=function(){
+			if(current===user.innerText && current!=this.innerText)
+			{
+				socket.emit('kicking',{kicked_person:this.innerText,from:user.innerText});
+			}
+			else{
+				// alert("Cannot ");
+			}
+		};
+		row.appendChild(col);
+}
+socket.on('users_inside_this_room',function(data){
+	users_in_room.innerHTML='';
+	users_in_room_M.innerHTML='';
+	data.forEach(function(item){
+		marzi(item);
+	});
+});
+socket.on('kick_tab',function(data){
+	var a=document.getElementById(data+"1");
+	var b=document.getElementById(data+"6");
+	if(b!=null)
+	{
+		users_in_room.removeChild(b);
+		users_in_room_M.removeChild(b);
+	}
+	if(a!=null){
+		Tabs.removeChild(a);
+		//Tabs_M.removeChild(a);
+	}
+});
+leave_room.onclick=function(){
+	leave_room.style.display='none';
+	var a=document.getElementById(current+"1");
+	Tabs.removeChild(a);
+	//Tabs_M.removeChild(a);
+	socket.emit('left',{room:current, leaving:user.innerText});
+	clickedMyButton();
+}
+socket.on("got_kicked",function(data){
+	var a=document.getElementById(data+"1");
+	Tabs.removeChild(a);
+	//Tabs_M.removeChild(a);
+	clickedMyButton();
+});
+socket.on('byebye',function(data){
+	if(current===data)
+	{
+		clickedMyButton();
+	}
+});
+socket.on('testCode',function(data){
+	console.log('Testing:');
+	console.log(data);
+	output.value=data;
+});
+socket.on('pleaseWait',function(){
+	output.value='Please Wait...';
+});
+socket.on('OverlayContent',function(data){
+	console.log(data);
+	document.getElementById('OverlayNameHead').innerHTML=data.Name;
+	document.getElementById('OverlayName').innerHTML=data.Name;
+	document.getElementById('OverlayEmail').innerHTML=data.Email;
+});

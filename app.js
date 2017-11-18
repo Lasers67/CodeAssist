@@ -58,9 +58,13 @@ app.post('/signup',urlencodeParser,function(req,res){
 					if(err) throw err;
 					console.log("Inserted New Value into user");
 					fs.writeFileSync(__dirname+'/codes/'+req.body.Name+'.txt','');
-					con.query('create table `?`(FriendName varchar(255));',function(err,result){
-						res.redirect('/?Name='+req.body.Name);
-						res.end("Inserted");
+					var q="create table `"+req.body.Name+"`(FriendName varchar(255));"
+					con.query(q,function(err,result){
+						q="create table `"+req.body.Name+"Tags`(Language varchar(255) primary key,TimesHelped int);"
+						con.query(q,function(err,result){
+							res.redirect('/?Name='+req.body.Name);
+							res.end("Inserted");
+						});
 					});
 				});
 			}
@@ -277,8 +281,10 @@ io.on('connection',function(socket){
 		var dat={
 			fileName:data.fileName,
 			otherUser:data.otherUser,
-			code:origCode
+			code:origCode,
+			lang:data.lang
 		};
+		console.log(dat.otherUser);
 		users[data.otherUser].emit('codeTogether',dat);
    });
    socket.on('takefilename',function(data){
@@ -331,15 +337,6 @@ io.on('connection',function(socket){
 		var x=data.source;
 		x=x.replace(/\n/g,'%0A');
 		x=x.replace(/"/g,'\\"');
-		x=x.replace('+','\+');
-		/*var a=x.split('+');
-		x='';
-		a.forEach(function(item,index){
-			if(index===a.length-1)
-				x=x+item;
-			else
-				x=x+item+'\\+';
-		});*/
 		console.log(x);
 		var y=data.testcases;
 		y=y.replace(/\n/g,'%0A');
@@ -419,6 +416,26 @@ io.on('connection',function(socket){
    				console.log("Friends Removed!");
    				socket.emit('ChangedFriend',data);
    			});
+   		});
+   });
+   socket.on('codeTogetherUpdate',function(data){
+   		var x="select * from `"+data.otherUser+"Tags` where Language=?";
+   		con.query(x,[data.lang],function(err,result){
+   			if(err) throw err;
+   			else if(result.length===0)
+   			{
+   				x="insert into `"+data.otherUser+"Tags` values(?,1)";
+   				con.query(x,[data.lang],function(err,result){
+   					if(err)	throw err;
+   				});
+   			}
+   			else
+   			{
+   				x='update `'+data.otherUser+"Tags` set TimesHelped=TimesHelped+1 where Language=?";
+   				con.query(x,[data.lang],function(err,result){
+   					if(err)	throw err;
+   				});
+   			}
    		});
    });
 });
