@@ -351,11 +351,11 @@ io.on('connection',function(socket){
 			var out='';
 			var json=JSON.parse(stdout);
 			console.log(json);
-			if(json.result.compilemessage===''){
+			if((json.result.compilemessage==='')&&(json.result.stderr==='')){
 					out=json.result.stdout;
 			}
 			else{
-				out=(json.result.compilemessage);
+				out=(json.result.compilemessage)+(json.result.stderr);
 				out=utf8.decode(out);
 			}
 			console.log(out);
