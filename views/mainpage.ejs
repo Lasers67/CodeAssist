@@ -118,9 +118,9 @@
   margin-top: -5px;
 }
 #button-and-usersinroom{
-  margin-left: -3%;
+  margin-left: -2.8%;
   position: absolute;
-  left: 78vw;
+  left: 80vw;
   height: 55vh;
   /*background-color: red;*/
   /*width: 100%;*/
@@ -149,7 +149,7 @@ html {
 }
 #Input,#codeOutput{
   position: relative;
-  height: 185px;
+  height: 30vh;
   resize:none;
 }
 #Input1,#codeOutput1{
@@ -650,11 +650,11 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 <!-- Main Area -->
 <div>
   <textarea class="form-control" rows="20" id="Workspace" style="width:60%; margin-right: 7px;"></textarea>
-  <div class="form-control" id="response" style="width: 15.5%;height:223px; background: #456; color:white; font-size: 1.2em; display: inline-block;" readonly>Hey <%= Name %></div>
+  <div class="form-control" id="response" style="width: 15.5%;height:223px; background: #456; color:white; font-size: 1.2em; display: inline-block; text-align: center;" readonly>Hey <%= Name %>!<br>How can I Help You?</div>
   <!-- <div style="border-radius:50%; border: 1px solid #333;">
     <img src="profile.jpg" >
   </div> -->
-  <textarea class="form-control" id="bot_input" style="width: 15.5%;height:223px; font-size: 1.2em;">Hello HelpBot!</textarea>
+  <textarea class="form-control" id="bot_input" style="width: 15.5%;height:223px; font-size: 1.2em;" placeholder="Hello Bot!"></textarea>
 </div>
 
 <script type="text/javascript">
@@ -670,7 +670,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
       <ul class="list-group">
         <li class="list-group-item active" id="Compile" style="cursor: pointer;">Compile</li>
       </ul>
-      <b>Code_Room</b>
+      <b>In This Room</b>
       <span class="table table-responsive" >          
         <table class="table">
           <tbody id="users_in_room">
@@ -704,16 +704,6 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 </div>
 </div>
 <div id="ChattingArea" style="z-index: 2000"></div>
-<div id="Chat-box">
-  <div id="chat-head">
-    <strong><div id="typing"></div></strong>
-  </div>
-  <ul id="Output" type="none">
-  </ul>
-  <div id="bottom-chat">
-    <input type="text" id="Message" placeholder="Message" />
-    <button id="send">Send</button></div>
-  </div>
   <script src='/chat.js'></script>
   <script src='/code.js'></script>
   <script src='/friends.js'></script>

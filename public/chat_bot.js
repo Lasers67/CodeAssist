@@ -79,9 +79,12 @@
 				var x=res;
 				x=x.substr(4);
 				if(document.getElementById(x)===null)
-					$("#response").html(x+" is offline!");
-				else
+					$("#response").html("Sorry! "+x+" is offline!");
+				else{
+					$("#response").html("here we go Chatting with "+x);
 					document.getElementById(x).click();
+				}
+
 				//console.log(x+'se Chat karni hai!');
 			}
 			else if(res.indexOf("changelang")!=-1)
@@ -125,7 +128,7 @@
 				else if(x==="Swift")
 					LangChange(document.getElementById("51"));
 				else
-					$("#response").html("Cannot find "+res+" language in database!");
+					$("#response").html("Sorry I dont know "+res);
 				console.log('Language change karni hai!');
 			}
 			else if(res.indexOf("Collabwith")!=-1)
@@ -134,13 +137,16 @@
 				x=x.substr(10);
 				if(document.getElementById(x+'c')===null)
 					$("#response").html(x+" is offline!");
-				else
+				else{
 					document.getElementById(x+'c').click();
+					$("#response").html("Collabwith "+x);
+				}
 				console.log('Collab karna hai!');
 			}
 			else if(res.indexOf("Compiling")!=-1)
 			{
 				document.getElementById("Compile").click();
+				$("#response").html("We have a Compile button on the left but I ll Compile this for you! :)");
 				console.log('Compile karna hai!');
 			}
 			else if(res.indexOf("SearchingFor")!=-1)
@@ -157,8 +163,10 @@
 				x=x.substr(5);
 				if(document.getElementById(x+'1')===null)
 					$("#response").html("Tab for "+x+" is not available!");
-				else
+				else{
 					document.getElementById(x+'1').click();
+					$("#response").html("Room Changed!");
+				}
 				console.log('Tabbing karni hai!');
 			}
 			else

@@ -1,2 +1,0 @@
-Changed 'testcode' in app.js
-Rating implemented!

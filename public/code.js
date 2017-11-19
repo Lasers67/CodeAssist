@@ -446,9 +446,11 @@ socket.on('compileErrorResolve',function(data){
 	console.log(data);
 	var doc=document.getElementById('response');
 	doc.innerHTML="<a href='"+data.url+"' style='color:white;'>Google says this</a><br/>";
-	if(data.arr.length==0);
+	if(data.arr.length==0){
+		doc.innerHTML=+"<br>Try seeking help from your Friends!";
+	}
 	else{	
-		doc.innerHTML="Or you can contact:";
+		doc.innerHTML+="Or you can contact:";
 		data.arr.forEach(function(item){
 			doc.innerHTML+='<br/>'+item.FriendName;
 		});

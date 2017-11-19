@@ -9,7 +9,7 @@ var utf8=require('utf8');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"shshwt.grg",
+	password:"2,4,6Trinitrophenol",
 	database:"Test"
 });
 con.connect(function(err){
@@ -399,6 +399,7 @@ io.on('connection',function(socket){
 				var spawn=require("child_process").spawn;
 				var processes = spawn('python',["Test.py",compErr]);
 				//processes.stdout.on('data',function(data){
+					console.log(compErr);
 				exec("python test.py "+compErr,function(err,stdout,stderr){
 					var link=stdout.toString();
 					var q="select FriendName from `"+data.UserName+"` where FriendName in (select Name from user where Online=1)";
