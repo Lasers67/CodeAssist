@@ -9,7 +9,7 @@ var utf8=require('utf8');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"2,4,6Trinitrophenol",
+	password:"shshwt.grg",
 	database:"Test"
 });
 con.connect(function(err){
@@ -268,6 +268,14 @@ io.on('connection',function(socket){
 		});
 		socket.broadcast.emit('kick_tab',socket.name);
 		console.log(socket.id+' disconnected');
+		Object.keys(users).forEach(function(item){
+		var q="select Name from user where Online=1 and Name in (select FriendName from `"+item+"`)";
+		con.query(q,function(err,result){
+			if(err)	throw err;
+			var j=JSON.parse(JSON.stringify(result));
+			users[item].emit('Online',j);
+		});
+	});
 	});
     socket.on('client_character',function(msg){
    		socket.in(msg.Room).broadcast.emit('server_character',msg);
@@ -456,8 +464,6 @@ io.on('connection',function(socket){
    		con.query(q,['%'+dat.str+'%',dat.User],function(err,result){
    			if(err) throw err;
    			var j=JSON.parse(JSON.stringify(result));
-   			console.log(j);
-   			//socket.emit('findUsers',j);
    			q="select Name from user where Name like ? and Name!=? and Name!='App' and Name in (select FriendName from `"+dat.User+"`)";
    			con.query(q,['%'+dat.str+'%',dat.User],function(err,result){
    				if(err) throw err;
@@ -480,8 +486,16 @@ io.on('connection',function(socket){
    				if(err) throw err;
    				console.log("Friends Added!");
    				socket.emit('ChangedFriend',data);
+   				Object.keys(users).forEach(function(item){
+					var q="select Name from user where Online=1 and Name in (select FriendName from `"+item+"`)";
+					con.query(q,function(err,result){
+					if(err)	throw err;
+					var j=JSON.parse(JSON.stringify(result));
+					users[item].emit('Online',j);
+				});
    			});
    		});
+	});
    });
    socket.on('UnFriend',function(data){
    		var q="delete from `"+data.User+"` where FriendName=?";
@@ -492,8 +506,16 @@ io.on('connection',function(socket){
    				if(err) throw err;
    				console.log("Friends Removed!");
    				socket.emit('ChangedFriend',data);
+   				Object.keys(users).forEach(function(item){
+					var q="select Name from user where Online=1 and Name in (select FriendName from `"+item+"`)";
+					con.query(q,function(err,result){
+					if(err)	throw err;
+					var j=JSON.parse(JSON.stringify(result));
+					users[item].emit('Online',j);
+				});
    			});
    		});
+	});
    });
    socket.on('codeTogetherUpdate',function(data){
    		var x="select * from `"+data.otherUser+"Tags` where Language=?";
@@ -506,13 +528,6 @@ io.on('connection',function(socket){
    					if(err)	throw err;
    				});
    			}
-/*   		else
-   			{
-   				x='update `'+data.otherUser+"Tags` set TimesHelped=TimesHelped+1 where Language=?";
-   				con.query(x,[data.lang],function(err,result){
-   					if(err)	throw err;
-   				});
-   			}*/
    		});
    });
    socket.on('RatingUpdate',function(data){

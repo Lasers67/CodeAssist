@@ -142,10 +142,11 @@ function create_chatbox(Name)
 		// New_Message.style.position="relative";
 }
 socket.on('Online',function(data){
+	console.log('Ho na be!');
 	sidebar.innerHTML='';
 	data.forEach(function(item){
 		console.log(user.innerText+' '+item.Name);
-		if(item.Name!=user.innerHTML){
+		if(item.Name!=user.innerText){
 			fun(item.Name,item.Name);
 		}
 	});
