@@ -430,6 +430,7 @@ io.on('connection',function(socket){
 								}
 							});
 						});
+						console.log(link);
 						console.log(jarr);
 						var sendData={
 							arr:jarr,

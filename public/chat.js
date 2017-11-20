@@ -1,4 +1,4 @@
-var socket=io.connect('http://localhost:4000');
+var socket=io.connect('http://10.8.14.144:4000');
 var user=document.getElementById('name');
 var code=document.getElementById('Code-space');
 var sidebar=document.getElementById('sidebar');
@@ -142,7 +142,6 @@ function create_chatbox(Name)
 		// New_Message.style.position="relative";
 }
 socket.on('Online',function(data){
-	console.log('Ho na be!');
 	sidebar.innerHTML='';
 	data.forEach(function(item){
 		console.log(user.innerText+' '+item.Name);
