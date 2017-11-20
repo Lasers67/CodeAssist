@@ -393,9 +393,15 @@ io.on('connection',function(socket){
 				var spawn=require("child_process").spawn;
 				var processes = spawn('python',["Test.py",compErr]);
 				//processes.stdout.on('data',function(data){
-					console.log(compErr);
+				compErr=utf8.decode(compErr);
+				console.log(compErr);
 				exec("python test.py "+compErr,function(err,stdout,stderr){
 					var link=stdout.toString();
+					//link=utf8.decode(link);
+					console.log('link:');
+					console.log(link);
+					console.log(stdout);
+					console.log(stderr);
 					var q="select FriendName from `"+data.UserName+"` where FriendName in (select Name from user where Online=1)";
 					con.query(q,function(err,result){
 						if(err) throw err;

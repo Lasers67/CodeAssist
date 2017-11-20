@@ -418,9 +418,9 @@ socket.on('CodeTogetherEnd',function(data){
 });
 socket.on('compileErrorResolve',function(data){
 	var doc=document.getElementById('response');
-	doc.innerHTML="<a href='"+data.url+"' style='color:white;'>Google says this</a><br/>";
+	doc.innerHTML="<a href='"+data.url+"' style='color:white;' target='_blank'>Google says this</a><br/>";
 	if(data.arr.length==0){
-		doc.innerHTML=+"<br>Try seeking help from your Friends!";
+		doc.innerHTML+="<br>Try seeking help from your Friends!";
 	}
 	else{	
 		doc.innerHTML+="Or you can contact:";
