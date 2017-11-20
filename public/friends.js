@@ -1,4 +1,11 @@
 var userSearch=document.getElementById('searchtext');
+function OverlayOn(data){
+	document.getElementById('overlay').style.display='block';
+	socket.emit('OverlayContent',data);
+}
+function OverlayOff(){
+	document.getElementById('overlay').style.display='none';
+}
 function AddFriend(namestr)
 {
 	var dat={
@@ -25,7 +32,6 @@ function findUsers(namestr)
 {
 	if(namestr==="getfrominput")
 		namestr=userSearch.value;
-	console.log(namestr);
 	var x=document.getElementById('SearchedText');
 	x.innerText="'"+namestr+"'";
 	var modal = document.getElementById('myModal');
@@ -49,22 +55,25 @@ function findUsers(namestr)
 	socket.emit('findUsers',dat);
 }
 socket.on('findUsers',function(data){
-	console.log(data);
 	var d=data;
 	var x=document.getElementById('Users');
 	var f=d.friend;
-	console.log(f);
 	f.forEach(function(item){
 		var but='<button onclick=\'UnFriend("'+item.Name+'")\' class="btn btn-success" style="float:right;">Unfriend</button>';
-		x.innerHTML+='<div class="search-result"><h3><a onclick=\'OverlayOn("'+item.Name+'")\'>'+item.Name+'</a></h3><img src="/profile.jpg" alt="user pic"><span style="color:white;">Description of user.</span>'+but+'</div>';
+		x.innerHTML+='<div class="search-result"><h3><a onclick=\'OverlayOn("'+item.Name+'")\'>'+item.Name+'</a></h3><img src="/profile.jpg" alt="user pic">'+but+'</div>';
 	});
 	var uf=d.nonfriend;
-	console.log(uf);
 	uf.forEach(function(item){
-		var but='<button onclick=\'AddFriend("'+item.Name+'")\'>Add friend</button>';
-		x.innerHTML+='<div class="search-result"><h3><a onclick=\'OverlayOn("'+item.Name+'")\'>'+item.Name+'</a></h3><img src="/profile.jpg" alt="user pic"><span style="color:white;">Description of user.</span>'+but+'</div>';
+		var but='<button style="float:right;" class="btn btn-success" onclick=\'AddFriend("'+item.Name+'")\'><span class="glyphicon glyphicon-plus"></span>Add friend</button>';
+		x.innerHTML+='<div class="search-result"><h3><a onclick=\'OverlayOn("'+item.Name+'")\'>'+item.Name+'</a></h3><img src="/profile.jpg" alt="user pic">'+but+'</div>';
 	});
 });
 socket.on('ChangedFriend',function(data){
 	findUsers("getfrominput");
+});
+socket.on('OverlayContent',function(data){
+	document.getElementById('OverlayNameHead').innerHTML=data.Name;
+	document.getElementById('OverlayName').innerHTML=data.Name;
+	document.getElementById('OverlayEmail').innerHTML=data.Email;
+	document.getElementById('OverlayRating').innerHTML=data.Rate;
 });

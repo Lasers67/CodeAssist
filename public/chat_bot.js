@@ -4,7 +4,6 @@
 		$(document).ready(function() {
 			$("#bot_input").keypress(function(event) {
 				if (event.which == 13) {
-					console.log('kya?');
 					event.preventDefault();
 					send();
 				}
@@ -67,13 +66,10 @@
 				}
 			});
 			document.getElementById('bot_input').value='';
-			// setResponse("Loading...");
 		}
 		function setResponse(val) {
-			// alert(typeof(val));
 			var obj=JSON.parse(val);
 			var res=obj.result.fulfillment.speech;
-			console.log(res);		
 			if(res.indexOf("Chat")!=-1)
 			{
 				var x=res;
@@ -81,11 +77,9 @@
 				if(document.getElementById(x)===null)
 					$("#response").html("Sorry! "+x+" is offline!");
 				else{
-					$("#response").html("here we go Chatting with "+x);
+					$("#response").html("Here we go! Chatting with "+x);
 					document.getElementById(x).click();
 				}
-
-				//console.log(x+'se Chat karni hai!');
 			}
 			else if(res.indexOf("changelang")!=-1)
 			{
@@ -129,7 +123,6 @@
 					LangChange(document.getElementById("51"));
 				else
 					$("#response").html("Sorry I dont know "+res);
-				console.log('Language change karni hai!');
 			}
 			else if(res.indexOf("Collabwith")!=-1)
 			{
@@ -141,21 +134,17 @@
 					document.getElementById(x+'c').click();
 					$("#response").html("Collabwith "+x);
 				}
-				console.log('Collab karna hai!');
 			}
 			else if(res.indexOf("Compiling")!=-1)
 			{
 				document.getElementById("Compile").click();
-				$("#response").html("We have a Compile button on the left but I ll Compile this for you! :)");
-				console.log('Compile karna hai!');
+				$("#response").html("We have a Compile button on the left but I'll Compile this for you! :)");
 			}
 			else if(res.indexOf("SearchingFor")!=-1)
 			{
 				var x=res;
 				x=x.substr(12);
 				findUsers(x);
-				//$("#response").html(x+" is offline!");
-				console.log('Search karna hai!');
 			}
 			else if(res.indexOf("Tabs_")!=-1)
 			{
@@ -167,7 +156,6 @@
 					document.getElementById(x+'1').click();
 					$("#response").html("Room Changed!");
 				}
-				console.log('Tabbing karni hai!');
 			}
 			else
 			{	

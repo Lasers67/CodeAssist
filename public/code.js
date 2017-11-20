@@ -36,7 +36,6 @@ function CodeTogetherRate(data){
 			console.log('Nothing chosen!');
 		else{
 			modal.style.display="none";
-			console.log(ratingValue);
 			var d={
 				User:data.leaving,
 				lang:users.innerText,
@@ -51,30 +50,17 @@ function CodeTogetherRate(data){
    	 }
 	}
 }
-function OverlayOn(data){
-	console.log('Overlay On!');
-	console.log(data);
-	document.getElementById('overlay').style.display='block';
-	socket.emit('OverlayContent',data);
-}
-function OverlayOff(){
-	console.log('Overlay Off!');
-	document.getElementById('overlay').style.display='none';
-}
 function LangChange(lang){
-	console.log(lang.id);
 	var x=document.getElementById(lang.id).innerHTML;
 	language=lang.id;
 	document.getElementById('LangButton').innerHTML=x+'<span class="caret"></span>';
 }
 function CodeTogetherLangChange(lang){
-	console.log(lang.id);
 	var x=document.getElementById(lang.id).innerHTML;
 	language=lang.id;
 	document.getElementById('CodeTogetherLangButton').innerHTML=x+'<span class="caret"></span>';
 }
 function CodeTogetherLangChangeRate(lang){
-	console.log(lang.id);
 	var x=document.getElementById(lang.id).innerHTML;
 	language=lang.id;
 	document.getElementById('CodeTogetherLangButtonRate').innerHTML=x+'<span class="caret"></span>';
@@ -86,19 +72,15 @@ compileButton2.onclick=function(){
 		submitCode();
 }
 socket.on('connect',function(){
-	console.log('working');
 	socket.emit('room',{Room:original_room,to:user.innerText,from:user.innerText});
 });
 //receive character from server
 socket.on('server_character',function(content){
-		console.log('From Server:'+content.Room);
 		if(content.Room===current)
 			Code.value=content.buffer;
 });
 Code.addEventListener('keyup',function(){
 	if(codingTogetherFlag==true){
-		console.log(current);	
-		console.log('emitting client_character');
 		var workCode=Code.value;
 		socket.emit('client_character',{buffer:workCode, Room:current});
 	}
@@ -150,7 +132,6 @@ function codeTogether(data){
 		otherUser:(data.other).substr(0,(data.other).length-1),
 		lang: data.lang
 	};
-	console.log(dat);
 	socket.emit('codeTogether',dat);
 };
 function saveCode(){
@@ -426,24 +407,16 @@ socket.on('byebye',function(data){
 	}
 });
 socket.on('testCode',function(data){
-	console.log('Testing:');
-	console.log(data);
 	output.value=data;
 });
 socket.on('pleaseWait',function(){
 	output.value='Please Wait...';
 });
-socket.on('OverlayContent',function(data){
-	console.log(data);
-	document.getElementById('OverlayNameHead').innerHTML=data.Name;
-	document.getElementById('OverlayName').innerHTML=data.Name;
-	document.getElementById('OverlayEmail').innerHTML=data.Email;
-});
+
 socket.on('CodeTogetherEnd',function(data){
 	CodeTogetherRate(data);
 });
 socket.on('compileErrorResolve',function(data){
-	console.log(data);
 	var doc=document.getElementById('response');
 	doc.innerHTML="<a href='"+data.url+"' style='color:white;'>Google says this</a><br/>";
 	if(data.arr.length==0){

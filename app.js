@@ -25,26 +25,7 @@ app.set('view engine','ejs');
 app.get('/signup',function(req,res){
 	res.render('signup',{Name:req.query.Name,Password:req.query.Password,RePassword:req.query.RePassword,Email:req.query.Email});
 });
-/*app.get('/search_user',function(req,res){
-	con.query("select Name from user where Name!='App'",function(err,result){
-   		if(err) throw err;
-   		var j=JSON.parse(JSON.stringify(result));
-   		res.render('search_results',{dat:j});
-   	});
-});*/
-/*app.get('/profile/:name',function(req,res){
-	var data=req.params.name;
-	con.query('Select * from User where Name=?',[data],function(err,result){
-		if(err) throw err;
-		else if(result.length===0);	//Result is empty, do nothing !
-		else{
-			var j=JSON.parse(JSON.stringify(result));
-			var d=j[0];
-			console.log(d);
-			res.render('profile',{Name:data,EMail:d.Email,Rating:d.Rating});
-		}
-	});
-});*/
+
 app.post('/signup',urlencodeParser,function(req,res){
 	if(req.body.Password===req.body.RePassword)
 	{
@@ -337,6 +318,11 @@ io.on('connection',function(socket){
 		     A.push(clientSocket.name);
 		}
 		console.log(A);
+		var dat={
+			room:data.from,
+			leaving:data.kicked_person
+		};
+		users[dat.room].emit('CodeTogetherEnd',dat);
 		io.to(data.from).emit('users_inside_this_room',A); 
 
  		
@@ -452,11 +438,26 @@ io.on('connection',function(socket){
 			else if(result.length===0);
 			else{
 				var j=JSON.parse(JSON.stringify(result));
-				var d={
-					Name:j[0].Name,
-					Email:j[0].Email,
-				};
-				socket.emit('OverlayContent',d);
+				var n=j[0].Name;
+				var e=j[0].Email;
+				var q='select * from `'+n+'Tags`';
+				con.query(q,function(err,result){
+					j=JSON.parse(JSON.stringify(result));
+					var r=0;
+					var t=0;
+					j.forEach(function(item){
+						t+=item.TimesHelped;
+						r+=(item.TimesHelped)*item.Rating;
+					});
+					r=(r/t);
+					r=r.toFixed(2);
+					var d={
+						Name:n,
+						Email:e,
+						Rate:r
+					};
+					socket.emit('OverlayContent',d);
+				});
 			}
 		});
    });
