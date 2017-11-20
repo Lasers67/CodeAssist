@@ -390,18 +390,12 @@ io.on('connection',function(socket){
 					lang="Visual Basic";
 				else if(x==="51")
 					lang="Swift";
-				var spawn=require("child_process").spawn;
-				var processes = spawn('python',["Test.py",compErr]);
-				//processes.stdout.on('data',function(data){
 				compErr=utf8.decode(compErr);
 				console.log(compErr);
 				exec("python test.py "+compErr,function(err,stdout,stderr){
 					var link=stdout.toString();
-					//link=utf8.decode(link);
 					console.log('link:');
 					console.log(link);
-					console.log(stdout);
-					console.log(stderr);
 					var q="select FriendName from `"+data.UserName+"` where FriendName in (select Name from user where Online=1)";
 					con.query(q,function(err,result){
 						if(err) throw err;
@@ -414,6 +408,7 @@ io.on('connection',function(socket){
 								if(result.length===0);
 								else{
 									var sj=JSON.parse(JSON.stringify(result));
+									console.log(sj);
 									var jobj={
 										name:item.Name,
 										rating:sj[0].Rating
@@ -423,7 +418,8 @@ io.on('connection',function(socket){
 							});
 						});
 						console.log(link);
-						console.log(jarr);
+						link=link.substr(7);
+						//console.log(jarr);
 						var sendData={
 							arr:jarr,
 							url:link

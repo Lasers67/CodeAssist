@@ -7,4 +7,4 @@ int main()
  cin>>a>>b;
  cout<<a*b*c;
  return 0;
-}
+}`
