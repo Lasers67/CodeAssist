@@ -111,14 +111,14 @@ function create_chatbox(Name)
 			var string=this.id;
 			var name=string.substr(0,string.length-1);
 			var to_send=document.getElementById(name+"3").value;
-			socket.emit("chat",{to:name,Message:to_send,UserName:user.innerHTML});
-			var data={to:name,Message:to_send,UserName:user.innerHTML};
+			socket.emit("chat",{to:name,Message:to_send,UserName:user.innerText});
+			var data={to:name,Message:to_send,UserName:user.innerText};
 			var Apple=name;
 			function1(data,"my",Apple);
 			New_Message.value="";
 		};
 		New_Chatbox.appendChild(Chat_bottom);
-		var oldChatData={to:Name,UserName:user.innerHTML};
+		var oldChatData={to:Name,UserName:user.innerText};
 		socket.emit('myChatInBox',oldChatData);
 		New_Message.addEventListener('keypress',function(event){
 			if(event.keyCode==13)
@@ -127,19 +127,12 @@ function create_chatbox(Name)
 		var  Chat_area=document.createElement('div');
 		Chat_area.style.backgroundColor="white";
 		Chat_area.style.position='fixed';
-		// Chat_area.style.marginTop='30px';
-		// Chat_area.style.marginTop="-11vh";
-		// Chat_area.style.marginBottom='0vh';
 		Chat_area.style.height='330px';
-		// Chat_area.style.zIndex='-11';
 		Chat_area.style.width='16vw';	
 		Chat_area.id=Name+'Box';
 		Chat_area.style.overflow="auto";
 		New_Chatbox.appendChild(Chat_area);
-		// New_Chatbox.style.float="left";
-		// New_Chatbox.style.overflow="auto";
 		Chatting.appendChild(New_Chatbox);}
-		// New_Message.style.position="relative";
 }
 socket.on('Online',function(data){
 	sidebar.innerHTML='';
@@ -152,8 +145,10 @@ socket.on('Online',function(data){
 //Listen
 socket.on('chat',function(data){
 	var Apple=data.UserName;
-	create_chatbox(Apple);
-	function1(data,'her',Apple);
+	if(document.getElementById(Apple+'2')===null)
+		create_chatbox(Apple);
+	else
+		function1(data,'her',Apple);
 });
 socket.on('myChatInBox',function(data){
 	function1(data,"my",data.to);
