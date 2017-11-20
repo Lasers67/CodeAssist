@@ -38,13 +38,13 @@ LOCK TABLES `app` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `apptags`
+-- Table structure for table `appTags`
 --
 
-DROP TABLE IF EXISTS `apptags`;
+DROP TABLE IF EXISTS `appTags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `apptags` (
+CREATE TABLE `appTags` (
   `Language` varchar(255) DEFAULT NULL,
   `TimesHelped` int(11) DEFAULT NULL,
   `Rating` decimal(3,1) DEFAULT NULL
@@ -52,12 +52,12 @@ CREATE TABLE `apptags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `apptags`
+-- Dumping data for table `appTags`
 --
 
-LOCK TABLES `apptags` WRITE;
-/*!40000 ALTER TABLE `apptags` DISABLE KEYS */;
-/*!40000 ALTER TABLE `apptags` ENABLE KEYS */;
+LOCK TABLES `appTags` WRITE;
+/*!40000 ALTER TABLE `appTags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `appTags` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -89,35 +89,35 @@ INSERT INTO `chat` VALUES ('Shashwat','App','Shashwat+App.txt'),('Pratyush','App
 UNLOCK TABLES;
 
 --
--- Table structure for table `lasers67`
+-- Table structure for table `Lasers67`
 --
 
-DROP TABLE IF EXISTS `lasers67`;
+DROP TABLE IF EXISTS `Lasers67`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `lasers67` (
+CREATE TABLE `Lasers67` (
   `FriendName` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `lasers67`
+-- Dumping data for table `Lasers67`
 --
 
-LOCK TABLES `lasers67` WRITE;
-/*!40000 ALTER TABLE `lasers67` DISABLE KEYS */;
-INSERT INTO `lasers67` VALUES ('Pratyush');
-/*!40000 ALTER TABLE `lasers67` ENABLE KEYS */;
+LOCK TABLES `Lasers67` WRITE;
+/*!40000 ALTER TABLE `Lasers67` DISABLE KEYS */;
+INSERT INTO `Lasers67` VALUES ('Pratyush');
+/*!40000 ALTER TABLE `Lasers67` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `lasers67tags`
+-- Table structure for table `Lasers67Tags`
 --
 
-DROP TABLE IF EXISTS `lasers67tags`;
+DROP TABLE IF EXISTS `Lasers67Tags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `lasers67tags` (
+CREATE TABLE `Lasers67Tags` (
   `Language` varchar(255) NOT NULL,
   `TimesHelped` int(11) DEFAULT NULL,
   PRIMARY KEY (`Language`)
@@ -125,44 +125,44 @@ CREATE TABLE `lasers67tags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `lasers67tags`
+-- Dumping data for table `Lasers67Tags`
 --
 
-LOCK TABLES `lasers67tags` WRITE;
-/*!40000 ALTER TABLE `lasers67tags` DISABLE KEYS */;
-/*!40000 ALTER TABLE `lasers67tags` ENABLE KEYS */;
+LOCK TABLES `Lasers67Tags` WRITE;
+/*!40000 ALTER TABLE `Lasers67Tags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Lasers67Tags` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `mehul raj kumawat`
+-- Table structure for table `Mehul Raj Kumawat`
 --
 
-DROP TABLE IF EXISTS `mehul raj kumawat`;
+DROP TABLE IF EXISTS `Mehul Raj Kumawat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mehul raj kumawat` (
+CREATE TABLE `Mehul Raj Kumawat` (
   `FriendName` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mehul raj kumawat`
+-- Dumping data for table `Mehul Raj Kumawat`
 --
 
-LOCK TABLES `mehul raj kumawat` WRITE;
-/*!40000 ALTER TABLE `mehul raj kumawat` DISABLE KEYS */;
-INSERT INTO `mehul raj kumawat` VALUES ('Pratyush');
-/*!40000 ALTER TABLE `mehul raj kumawat` ENABLE KEYS */;
+LOCK TABLES `Mehul Raj Kumawat` WRITE;
+/*!40000 ALTER TABLE `Mehul Raj Kumawat` DISABLE KEYS */;
+INSERT INTO `Mehul Raj Kumawat` VALUES ('Pratyush');
+/*!40000 ALTER TABLE `Mehul Raj Kumawat` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `mehul raj kumawattags`
+-- Table structure for table `Mehul Raj KumawatTags`
 --
 
-DROP TABLE IF EXISTS `mehul raj kumawattags`;
+DROP TABLE IF EXISTS `Mehul Raj KumawatTags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mehul raj kumawattags` (
+CREATE TABLE `Mehul Raj KumawatTags` (
   `Language` varchar(255) NOT NULL,
   `TimesHelped` int(11) DEFAULT NULL,
   PRIMARY KEY (`Language`)
@@ -170,44 +170,44 @@ CREATE TABLE `mehul raj kumawattags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mehul raj kumawattags`
+-- Dumping data for table `Mehul Raj KumawatTags`
 --
 
-LOCK TABLES `mehul raj kumawattags` WRITE;
-/*!40000 ALTER TABLE `mehul raj kumawattags` DISABLE KEYS */;
-/*!40000 ALTER TABLE `mehul raj kumawattags` ENABLE KEYS */;
+LOCK TABLES `Mehul Raj KumawatTags` WRITE;
+/*!40000 ALTER TABLE `Mehul Raj KumawatTags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Mehul Raj KumawatTags` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `palak gupta`
+-- Table structure for table `Palak Gupta`
 --
 
-DROP TABLE IF EXISTS `palak gupta`;
+DROP TABLE IF EXISTS `Palak Gupta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `palak gupta` (
+CREATE TABLE `Palak Gupta` (
   `FriendName` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `palak gupta`
+-- Dumping data for table `Palak Gupta`
 --
 
-LOCK TABLES `palak gupta` WRITE;
-/*!40000 ALTER TABLE `palak gupta` DISABLE KEYS */;
-INSERT INTO `palak gupta` VALUES ('Pratyush'),('Shashwat');
-/*!40000 ALTER TABLE `palak gupta` ENABLE KEYS */;
+LOCK TABLES `Palak Gupta` WRITE;
+/*!40000 ALTER TABLE `Palak Gupta` DISABLE KEYS */;
+INSERT INTO `Palak Gupta` VALUES ('Pratyush'),('Shashwat');
+/*!40000 ALTER TABLE `Palak Gupta` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `palak guptatags`
+-- Table structure for table `Palak GuptaTags`
 --
 
-DROP TABLE IF EXISTS `palak guptatags`;
+DROP TABLE IF EXISTS `Palak GuptaTags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `palak guptatags` (
+CREATE TABLE `Palak GuptaTags` (
   `Language` varchar(255) NOT NULL,
   `TimesHelped` int(11) DEFAULT NULL,
   PRIMARY KEY (`Language`)
@@ -215,45 +215,45 @@ CREATE TABLE `palak guptatags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `palak guptatags`
+-- Dumping data for table `Palak GuptaTags`
 --
 
-LOCK TABLES `palak guptatags` WRITE;
-/*!40000 ALTER TABLE `palak guptatags` DISABLE KEYS */;
-/*!40000 ALTER TABLE `palak guptatags` ENABLE KEYS */;
+LOCK TABLES `Palak GuptaTags` WRITE;
+/*!40000 ALTER TABLE `Palak GuptaTags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Palak GuptaTags` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `pratyush`
+-- Table structure for table `Pratyush`
 --
 
-DROP TABLE IF EXISTS `pratyush`;
+DROP TABLE IF EXISTS `Pratyush`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pratyush` (
+CREATE TABLE `Pratyush` (
   `FriendName` varchar(255) NOT NULL,
   PRIMARY KEY (`FriendName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pratyush`
+-- Dumping data for table `Pratyush`
 --
 
-LOCK TABLES `pratyush` WRITE;
-/*!40000 ALTER TABLE `pratyush` DISABLE KEYS */;
-INSERT INTO `pratyush` VALUES ('Lasers67'),('Mehul Raj Kumawat'),('Palak Gupta'),('Shashwat');
-/*!40000 ALTER TABLE `pratyush` ENABLE KEYS */;
+LOCK TABLES `Pratyush` WRITE;
+/*!40000 ALTER TABLE `Pratyush` DISABLE KEYS */;
+INSERT INTO `Pratyush` VALUES ('Lasers67'),('Mehul Raj Kumawat'),('Palak Gupta'),('Shashwat');
+/*!40000 ALTER TABLE `Pratyush` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `pratyushtags`
+-- Table structure for table `PratyushTags`
 --
 
-DROP TABLE IF EXISTS `pratyushtags`;
+DROP TABLE IF EXISTS `PratyushTags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pratyushtags` (
+CREATE TABLE `PratyushTags` (
   `Language` varchar(255) NOT NULL,
   `TimesHelped` int(11) DEFAULT NULL,
   `Rating` decimal(3,1) DEFAULT NULL,
@@ -262,46 +262,46 @@ CREATE TABLE `pratyushtags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pratyushtags`
+-- Dumping data for table `PratyushTags`
 --
 
-LOCK TABLES `pratyushtags` WRITE;
-/*!40000 ALTER TABLE `pratyushtags` DISABLE KEYS */;
-INSERT INTO `pratyushtags` VALUES ('C++',2,3.3),('Language\n     \n   ',0,0.0),('Language\n           \n         ',0,0.0),('Python2.7',1,5.0);
-/*!40000 ALTER TABLE `pratyushtags` ENABLE KEYS */;
+LOCK TABLES `PratyushTags` WRITE;
+/*!40000 ALTER TABLE `PratyushTags` DISABLE KEYS */;
+INSERT INTO `PratyushTags` VALUES ('C++',2,3.3),('Language\n     \n   ',0,0.0),('Language\n           \n         ',0,0.0),('Python2.7',1,5.0);
+/*!40000 ALTER TABLE `PratyushTags` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `shashwat`
+-- Table structure for table `Shashwat`
 --
 
-DROP TABLE IF EXISTS `shashwat`;
+DROP TABLE IF EXISTS `Shashwat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `shashwat` (
+CREATE TABLE `Shashwat` (
   `FriendName` varchar(255) NOT NULL,
   PRIMARY KEY (`FriendName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `shashwat`
+-- Dumping data for table `Shashwat`
 --
 
-LOCK TABLES `shashwat` WRITE;
-/*!40000 ALTER TABLE `shashwat` DISABLE KEYS */;
-INSERT INTO `shashwat` VALUES ('Palak Gupta'),('Pratyush');
-/*!40000 ALTER TABLE `shashwat` ENABLE KEYS */;
+LOCK TABLES `Shashwat` WRITE;
+/*!40000 ALTER TABLE `Shashwat` DISABLE KEYS */;
+INSERT INTO `Shashwat` VALUES ('Palak Gupta'),('Pratyush');
+/*!40000 ALTER TABLE `Shashwat` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `shashwattags`
+-- Table structure for table `ShashwatTags`
 --
 
-DROP TABLE IF EXISTS `shashwattags`;
+DROP TABLE IF EXISTS `ShashwatTags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `shashwattags` (
+CREATE TABLE `ShashwatTags` (
   `Language` varchar(255) NOT NULL,
   `TimesHelped` int(11) DEFAULT NULL,
   `Rating` decimal(3,1) DEFAULT NULL,
@@ -310,13 +310,13 @@ CREATE TABLE `shashwattags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `shashwattags`
+-- Dumping data for table `ShashwatTags`
 --
 
-LOCK TABLES `shashwattags` WRITE;
-/*!40000 ALTER TABLE `shashwattags` DISABLE KEYS */;
-INSERT INTO `shashwattags` VALUES ('C++',0,0.0),('Java',0,0.0),('Language\n     \n   ',0,0.0),('Language\n           \n         ',0,0.0),('Python2.7',1,5.0);
-/*!40000 ALTER TABLE `shashwattags` ENABLE KEYS */;
+LOCK TABLES `ShashwatTags` WRITE;
+/*!40000 ALTER TABLE `ShashwatTags` DISABLE KEYS */;
+INSERT INTO `ShashwatTags` VALUES ('C++',0,0.0),('Java',0,0.0),('Language\n     \n   ',0,0.0),('Language\n           \n         ',0,0.0),('Python2.7',1,5.0);
+/*!40000 ALTER TABLE `ShashwatTags` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -343,7 +343,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('App','2345','aaa','VbbnkZkBvo_B4bJMAAAB',1,'Male'),('Lasers67','Lasers67','abcd@xyz.com','psMG58QWtDemIErEAAAA',0,NULL),('Mehul Raj Kumawat','mehul','mehul@iitmandi.ac.in','fkjxLX_PI3KzWPe3AAAE',0,NULL),('Palak Gupta','palak889','palak@gupta.com','ACmuMQKeSmo1XKO7AAAH',0,NULL),('Pratyush','Pratyush100','pratyushgauravgo@gmail.com','NF3scdzMMg6gNngcAAAD',1,'Male'),('Shashwat','Sg@iitmandi','shshwt.grg@gmail.com','QRbo70JLLpTxgLRbAAAC',0,'Male');
+INSERT INTO `user` VALUES ('App','2345','aaa','VbbnkZkBvo_B4bJMAAAB',1,'Male'),('Lasers67','Lasers67','abcd@xyz.com','psMG58QWtDemIErEAAAA',0,NULL),('Mehul Raj Kumawat','Mehul','Mehul@iitmandi.ac.in','fkjxLX_PI3KzWPe3AAAE',0,NULL),('Palak Gupta','Palak889','Palak@Gupta.com','ACmuMQKeSmo1XKO7AAAH',0,NULL),('Pratyush','Pratyush100','Pratyushgauravgo@gmail.com','NF3scdzMMg6gNngcAAAD',1,'Male'),('Shashwat','Sg@iitmandi','shshwt.grg@gmail.com','QRbo70JLLpTxgLRbAAAC',0,'Male');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
