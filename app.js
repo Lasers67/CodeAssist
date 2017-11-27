@@ -9,7 +9,7 @@ var utf8=require('utf8');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"shshwt.grg",
+	password:"",
 	database:"Test"
 });
 con.connect(function(err){
