@@ -1,4 +1,4 @@
-var socket=io.connect('http://10.8.6.176:4000');
+var socket=io.connect('http://localhost:4000');
 var user=document.getElementById('name');
 var code=document.getElementById('Code-space');
 var sidebar=document.getElementById('sidebar');
