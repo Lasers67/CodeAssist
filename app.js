@@ -9,12 +9,12 @@ var utf8=require('utf8');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"2,4,6Trinitrophenol",
+	password:"",
 	database:"Test"
 });
 con.connect(function(err){
 	if(err) throw err;
-	console.log("Server Started!");
+	console.log("Server Started at 4000!");
 });
 var app=express();
 app.use(express.static('public'));
@@ -22,7 +22,7 @@ http.createServer();
 var urlencodeParser=bodyParser.urlencoded({extended:false});
 var server=app.listen(4000);
 app.set('view engine','ejs');
-app.get('/signup',function(req,res){
+app.get('/signup',function(req,res){//route
 	res.render('signup',{Name:req.query.Name,Password:req.query.Password,RePassword:req.query.RePassword,Email:req.query.Email});
 });
 
@@ -72,7 +72,7 @@ app.post('/signin',urlencodeParser,function(req,res){
 			res.redirect('/?Name='+req.body.Username);
 		}
 		else{
-			res.render('signup',{Name:req.query.Username,Pass:req.query.Pass});		
+			res.render('signup',{Name:req.query.Username,Pass:req.query.Pass});
 		}
 	});
 });
@@ -96,23 +96,29 @@ var users={};
 var Online_Users='';
 io.on('connection',function(socket){
 	socket.name=NAME;
-	console.log('Connection Made by '+NAME);
+	console.log(' hi Connection Made by '+NAME);
+	// console.log(socket);
 	var session='UPDATE user SET SessionID=? where Name=?';
 	con.query(session,[socket.id,NAME]);
 	if(socket.Name!=='')
 	{
+		// console.log(socket.name);
 		users[socket.name]=socket;
 		var text=fs.readFileSync(__dirname+'/codes/'+socket.name+'.txt','utf8');
+		// console.log(text);
 		socket.emit("takefilename",text);
 	}
 	var sql='UPDATE user SET Online=1 where SessionID=?';
 	con.query(sql,[socket.id],function(err){
 		if(err) throw err;
 	});
-	var sql2='UPDATE user SET Online=0 where SessionID=?';
+	var sql2='UPDATE user SET Online=0 where SessionID=?';// 0 1 for disconnected and connected
 	// var online_users="select Name from User where Online=1";
+	// console.log('hey deepak see users array == ='+users);
+	// console.log(users);
 	Object.keys(users).forEach(function(item){
-		var q="select Name from user where Online=1 and Name in (select FriendName from `"+item+"`)";
+		// var q="select Name from user where Online=1 and Name in (select FriendName from `"+item+"`)";
+		var q="select Name from user where Online=1 ";
 		con.query(q,function(err,result){
 			if(err)	throw err;
 			var j=JSON.parse(JSON.stringify(result));
@@ -123,7 +129,7 @@ io.on('connection',function(socket){
 	//console.log(Object.keys(users));
 	socket.on('chat',function(data){
 		var text=data.Message;
-		var d = new Date();	
+		var d = new Date();
 		var str='\n['+data.UserName+':-'+d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+","+d.getHours()+':'+d.getMinutes()+']'+text+'*--x--*';
 		console.log(str);
 		con.query('Select FileName from chat where (User1=? and User2= ?)or(User1=? and User2=?)',[data.to,data.UserName,data.UserName,data.to],function(err,result){
@@ -132,6 +138,7 @@ io.on('connection',function(socket){
 			else{
 				var j=JSON.parse(JSON.stringify(result));
 				var l=j[0].FileName;
+				console.log('hi filename1 = = '+j);
 				if(fs.existsSync(__dirname+'/chats/'+l)){
 					fs.appendFileSync(__dirname+'/chats/'+l,str);
 				}
@@ -151,9 +158,13 @@ io.on('connection',function(socket){
 			else{
 				var j=JSON.parse(JSON.stringify(result));
 				var l=j[0].FileName;
+				console.log('hi filename2 = = '+l);
 				if(fs.existsSync(__dirname+'/chats/'+l)){
+					console.log('yes exist');
 					var text=fs.readFileSync(__dirname+'/chats/'+l,'utf8');
 					var chats=text.split("*--x--*");
+					// console.log(text);
+					// console.log(chats);
 					chats.forEach(function(item,index){
 						var t=item.split(":-");
 						var s=t[0];
@@ -198,7 +209,7 @@ io.on('connection',function(socket){
 		users[room.from].join(room.Room);
 		// var a=io.of('/').in(room.Room).sockets;
 		// console.log(a);
-		var clients = io.sockets.adapter.rooms[room.Room].sockets;   
+		var clients = io.sockets.adapter.rooms[room.Room].sockets;
 
 		//to get the number of clients
 		var numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
@@ -217,7 +228,7 @@ io.on('connection',function(socket){
 	}
 	});
 	socket.on('users_inside_this_room',function(data){
-		var clients = io.sockets.adapter.rooms[data].sockets;   
+		var clients = io.sockets.adapter.rooms[data].sockets;
 
 		//to get the number of clients
 		var numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
@@ -244,7 +255,7 @@ io.on('connection',function(socket){
 		        clients.forEach(function (socket_id) {
 		            io.sockets.sockets[socket_id].leave(socket.name);
 		        });
-		        
+
 		    }
 		});
 		socket.broadcast.emit('kick_tab',socket.name);
@@ -289,7 +300,7 @@ io.on('connection',function(socket){
    });
    socket.on('left',function(data){
    		users[data.leaving].leave(data.room);
-   		var clients = io.sockets.adapter.rooms[data.room].sockets;   
+   		var clients = io.sockets.adapter.rooms[data.room].sockets;
 		//to get the number of clients
 		var numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
 		var A=[];
@@ -307,7 +318,7 @@ io.on('connection',function(socket){
    socket.on('kicking',function(data){
    		users[data.kicked_person].emit('got_kicked',data.from);
    		users[data.kicked_person].leave(data.from);
-		var clients = io.sockets.adapter.rooms[data.from].sockets;   
+		var clients = io.sockets.adapter.rooms[data.from].sockets;
 		//to get the number of clients
 		var numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
 		var A=[];
@@ -323,9 +334,9 @@ io.on('connection',function(socket){
 			leaving:data.kicked_person
 		};
 		users[dat.room].emit('CodeTogetherEnd',dat);
-		io.to(data.from).emit('users_inside_this_room',A); 
+		io.to(data.from).emit('users_inside_this_room',A);
 
- 		
+
    });
    socket.on('testCode',function(data){
 		var x=data.source;
@@ -482,6 +493,27 @@ io.on('connection',function(socket){
    		});
    });
    socket.on('AddFriend',function(data){
+		 console.log('hey see theie = = ');
+		 console.log(data.User);
+		 console.log(data.other);
+
+	// 	 var deepak = "INSERT INTO chat VALUES (?)";
+  // con.query(deepak,['deeepak','deeepak','deepak'], function (err, result) {
+  //   if (err) throw err;
+  //   console.log("1 record inserted");
+  // });
+		 var deepak="insert into chat values (?,?,?)";
+		 con.query(deepak,[data.User,data.other,data.User+`+`+data.other+'.txt'],function(err,result){
+				 if(err) throw err;
+			 });
+// var fname=data.User+`+`+data.other+'.txt';
+			 fs.open('chats/'+data.User+`+`+data.other+'.txt', 'w', function (err, file) {
+        if (err) throw err;
+            console.log('new txt file is created!');
+        });
+				fs.close();
+
+
    		var q="insert into `"+data.User+"` values (?)";
    		con.query(q,data.other,function(err,result){
    			if(err) throw err;
