@@ -12,20 +12,20 @@
   <script>hljs.initHighlightingOnLoad();</script>-->
   <style type="text/css">
   html *{
-    font-size: 18px; 
+    font-size: 18px;
   }
   .btn-arrow-right   {
    position: relative;
    padding-right: 20px;
    padding-left: 25px;
- } 
+ }
  .scroll-menu{
    min-width: 220px;
    max-height: 40vh;
    overflow: auto;
  }
  .btn-arrow-right:before,
- .btn-arrow-right:after   { 
+ .btn-arrow-right:after   {
    content: "";
    position: absolute;
    top: 5px;
@@ -35,7 +35,7 @@
    border: inherit;
    border-left-color: transparent;
    border-bottom-color: transparent;
-   border-radius: 0px 4px 0px 0px;  
+   border-radius: 0px 4px 0px 0px;
    -webkit-border-radius: 0px 4px 0px 0px;
    -moz-border-radius: 0px 4px 0px 0px;
  }
@@ -54,7 +54,7 @@
  .btn-arrow-right:after {
    right: -11px;
    z-index: 1;
- } 
+ }
  #Tabs{
   margin-top: -14px;
   margin-bottom: 0px;
@@ -64,7 +64,7 @@
   float : left;
   position: relative;
   /*top: 15px;   */
-  margin-left: 10px; 
+  margin-left: 10px;
   /*border:0px solid black;*/
   /*font-size: 18;*/
   resize: none;
@@ -76,7 +76,7 @@
 
 .vertical-menu {
   width: 100px;
-  position: absolute; 
+  position: absolute;
   left:75vw;
   margin-left: 10px;
   margin-top:-13px;/* Set a width if you like */
@@ -180,7 +180,7 @@ html {
   /*background-color:red;*/
 }
 #Chat-box{
-  position:absolute;  
+  position:absolute;
   bottom: 0;
   left:83%;
   background-color: #dedbdb;
@@ -230,7 +230,7 @@ html {
     max-width: 9vw;
     width: auto;
 }
-.her{   
+.her{
   clear:left;
   display: block;
   color: black;
@@ -375,7 +375,7 @@ html {
 @import "http://fonts.googleapis.com/css?family=Roboto:300,400,500,700";
 
 .container { margin-top: 20px; }
-.mb20 { margin-bottom: 20px; } 
+.mb20 { margin-bottom: 20px; }
 
 hgroup { padding-left: 15px; border-bottom: 1px solid #ccc; }
 hgroup h1 { font: 500 normal 1.625em "Roboto",Arial,Verdana,sans-serif; color: #2a3644; margin-top: 0; line-height: 1.15; }
@@ -391,7 +391,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 .search-result .col-md-7 { position: relative; }
 .search-result h3 { font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif; margin-top: 0 !important; margin-bottom: 10px !important; }
 .search-result h3 > a, .search-result i { color: #248dc1 !important; }
-.search-result p { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; } 
+.search-result p { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; }
 .search-result span.plus { position: absolute; right: 0; top: 126px; }
 .search-result span.plus a { background-color: #248dc1; padding: 5px 5px 3px 5px; }
 .search-result span.plus a:hover { background-color: #414141; }
@@ -424,7 +424,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
       <div class="container">
         <div class="mb20">
           <h1 class="leader">Search Results</h1>
-          <h2 class="leadx">Results found for the search for <strong id='SearchedText'>''</strong></h2>               
+          <h2 class="leadx">Results found for the search for <strong id='SearchedText'>''</strong></h2>
         </div>
 
         <section>
@@ -544,7 +544,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
+        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">CodeAssist</a>
     </div>
@@ -589,7 +589,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
      </center>
    </div>
    <div class="col-sm-4" ></div>
- </div>  
+ </div>
  <div class="container-fluid">
    <div class="row">
     <div class="col-sm-4"></div>
@@ -665,6 +665,25 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 </script>-->
 <!-- Tabs Over -->
 <!-- Main Area -->
+<div id="deepakjnv880" style="background-color: white;width:60%;height: 10%;margin-top: 10px;margin-left: 10px;margin-right: 7px;font-size:15px">
+  upload you source code here:
+  <input type="file" style="font-size:15px" name="fileToUpload" id="fileToUpload" onchange="deepakjnv()">
+</div>
+<script>
+function deepakjnv(){
+  var a=document.getElementById('fileToUpload').files[0];
+if (a) {
+    var reader = new FileReader();
+    reader.readAsText(a, "UTF-8");
+    reader.onload = function (e) {
+        document.getElementById("Workspace").value = reader.result;
+    }
+    reader.onerror = function (e) {
+        document.getElementById("Workspace").value = "error reading file";
+    }
+}
+}
+</script>
 <div>
   <textarea class="form-control" rows="20" id="Workspace" style="width:60%; margin-right: 7px;"></textarea>
   <div class="form-control" id="response" style="width: 15.5%;height:223px; background: #456; color:white; font-size: 1.2em; display: inline-block; text-align: center;" readonly>Hey <%= Name %>!<br>How can I Help You?</div>
@@ -688,7 +707,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
         <li class="list-group-item active" id="Compile" style="cursor: pointer;">Compile</li>
       </ul>
       <b>In This Room</b>
-      <span class="table table-responsive" >          
+      <span class="table table-responsive" >
         <table class="table">
           <tbody id="users_in_room">
           </tbody>
