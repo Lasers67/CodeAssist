@@ -482,6 +482,15 @@ io.on('connection',function(socket){
    		});
    });
    socket.on('AddFriend',function(data){
+   	var deepak="insert into chat values (?,?,?)";
+		 con.query(deepak,[data.User,data.other,data.User+`+`+data.other+'.txt'],function(err,result){
+				 if(err) throw err;
+			 });
+			 fs.open('chats/'+data.User+`+`+data.other+'.txt', 'w', function (err, file) {
+        if (err) throw err;
+            console.log('new txt file is created!');
+        });
+				// fs.close();
    		var q="insert into `"+data.User+"` values (?)";
    		con.query(q,data.other,function(err,result){
    			if(err) throw err;
