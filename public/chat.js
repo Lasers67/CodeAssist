@@ -4,14 +4,27 @@ var code=document.getElementById('Code-space');
 var sidebar=document.getElementById('sidebar');
 var Chatting=document.getElementById('ChattingArea');
 //Emit
+function deepakjnv880(ID,Apple){
+$(function() {
+       $('#deepak'+ID).width($('#deepak'+ID).prop('scrollWidth'));
+       $('#deepak'+ID).height($('#deepak'+ID).prop('scrollHeight'));
+       var chatEl = document.getElementById(Apple+"Box");
+       chatEl.scrollTop = chatEl.scrollHeight;
+       ID=ID-1;
+     });
+}
+var i=0;
 function function1(data,ID,Apple) {
- 	 var li = document.createElement("input");
+	i=i+1;
+ 	 var li = document.createElement("textarea");
  	 li.type="text";
-	 li.id=ID;
+	 li.className=ID;
+	 li.id="deepak"+i;
 	 li.value=data.Message;
 	 li.readOnly=true;
  	 var ele=document.getElementById(Apple+"Box");
  	 ele.appendChild(li);
+ 	 deepakjnv880(i,Apple);
 	}
 var receiver='aa';
 function fun(data,ID)
@@ -93,9 +106,12 @@ function create_chatbox(Name)
 		Chat_bottom.style.width='16vw';
 		// Chat_bottom.style.border='1px solid black';
 		Chat_bottom.style.color='black';
-		var New_Message=document.createElement("input");
+		var New_Message=document.createElement("textarea");
 		New_Message.type="text";
 		New_Message.style.width='190px';
+		New_Message.style.height='39px';
+		New_Message.style.borderRadius= '5px';
+		New_Message.style.resize= 'none';
 		New_Message.placeholder="Message";
 		Chat_bottom.appendChild(New_Message);
 		var SEND=document.createElement("button");
@@ -127,7 +143,7 @@ function create_chatbox(Name)
 		var  Chat_area=document.createElement('div');
 		Chat_area.style.backgroundColor="white";
 		Chat_area.style.position='fixed';
-		Chat_area.style.height='330px';
+		Chat_area.style.height='290px';
 		Chat_area.style.width='16vw';	
 		Chat_area.id=Name+'Box';
 		Chat_area.style.overflow="auto";
