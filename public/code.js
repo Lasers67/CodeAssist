@@ -1,7 +1,8 @@
 var Code=document.getElementById('Workspace');
+Code.style.fontSize='18px';
 var editor = ace.edit("Workspace",{
-      minLines:30,
-      maxLines:30,
+      minLines:21,
+      maxLines:21,
     wrap: true,
         autoScrollEditorIntoView: true
     });
