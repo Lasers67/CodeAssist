@@ -4,6 +4,7 @@
   <title>CodeAssist: <%= Name %> </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -73,7 +74,6 @@
   width: 75vw;
   /*z-index: -1;*/
 }
-
 .vertical-menu {
   width: 100px;
   position: absolute; 
@@ -416,6 +416,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 </head>
 <body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js" type="text/javascript" charset="utf-8"></script>
   <!-- Search results-->
   <div id="myModal" class="modal">
     <!-- Modal content -->
@@ -656,17 +657,8 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
     </div>
   </div>
 </div>
-<!--<script type="text/javascript">
-  //****************************************** set all outline None*****************************
-  var a=document.getElementById('apple');
-  a.onclick=function(){
-    this.style.outline="none";
-  };
-</script>-->
-<!-- Tabs Over -->
-<!-- Main Area -->
-<div>
-  <textarea class="form-control" rows="20" id="Workspace" style="width:60%; margin-right: 7px;"></textarea>
+  <div id="Workspace" style="width:60%; margin-right: 7px;"></div>
+  <!-- <textarea class="form-control" rows="20" id="Workspace" style="width:60%; margin-right: 7px;"></textarea> -->
   <div class="form-control" id="response" style="width: 15.5%;height:223px; background: #456; color:white; font-size: 1.2em; display: inline-block; text-align: center;" readonly>Hey <%= Name %>!<br>How can I Help You?</div>
   <!-- <div style="border-radius:50%; border: 1px solid #333;">
     <img src="profile.jpg" >

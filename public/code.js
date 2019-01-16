@@ -1,4 +1,14 @@
 var Code=document.getElementById('Workspace');
+var editor = ace.edit("Workspace",{
+      minLines:30,
+      maxLines:30,
+    wrap: true,
+        autoScrollEditorIntoView: true
+    });
+    console.log(editor.getValue());
+    editor.setValue("Hello");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/python");
 var user=document.getElementById('name');
 // Code.contentEditable=true;
 var Tabs=document.getElementById('tabs');
@@ -77,11 +87,11 @@ socket.on('connect',function(){
 //receive character from server
 socket.on('server_character',function(content){
 		if(content.Room===current)
-			Code.value=content.buffer;
+			editor.setValue(content.buffer);
 });
 Code.addEventListener('keyup',function(){
 	if(codingTogetherFlag==true){
-		var workCode=Code.value;
+		var workCode=editor.getValue();
 		socket.emit('client_character',{buffer:workCode, Room:current});
 	}
 });
@@ -137,7 +147,7 @@ function codeTogether(data){
 function saveCode(){
 	var dat={
 		fileName:current,
-		code:Code.value
+		code:editor.getValue()
 	};
 	socket.emit('saveFile',dat);
 };
@@ -149,7 +159,7 @@ setInterval(saveCode, 10000);
 function submitCode()
 {
 	var dat={
-		source:Code.value,
+		source:editor.getValue(),
 		testcases:testCases.value,
 		lang:language,
 		UserName:user.innerText
@@ -189,7 +199,7 @@ socket.on('codeTogether',function(data){
 		var A=document.getElementById(data.fileName+"1");
 		if(A==null){
 		leave_room.style.display='block';
-					Code.value=data.code;
+					editor.setValue(data.code);
 					var list1=document.createElement('li');
 					var ref1=document.createElement('a');
 					ref1.innerHTML=data.fileName;
@@ -255,11 +265,11 @@ socket.on('codeTogether',function(data){
 	}
 });
 socket.on("takefilename",function(data){
-	Code.value=data;
+	editor.setValue(data);
 });
 function autolanguagedetection()
 {
-	var input = Code.value;
+	var input = editor.getValue();
 	Algorithmia.client("simlsSH3xPkksEwSuBmAmXYlMHh1")
     .algo("PetiteProgrammer/ProgrammingLanguageIdentification/0.1.3")
     .pipe(input)
