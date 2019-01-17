@@ -9,7 +9,7 @@ var editor = ace.edit("Workspace",{
     console.log(editor.getValue());
     editor.setValue("Hello");
     editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/python");
+    editor.session.setMode("ace/mode/text");
 var user=document.getElementById('name');
 // Code.contentEditable=true;
 var Tabs=document.getElementById('tabs');
@@ -65,6 +65,75 @@ function LangChange(lang){
 	var x=document.getElementById(lang.id).innerHTML;
 	language=lang.id;
 	document.getElementById('LangButton').innerHTML=x+'<span class="caret"></span>';
+	if(x=="Python2.7")
+	{
+		editor.session.setMode("ace/mode/python");
+	}
+	else if(x=="C" || x=="C++")
+	{
+		editor.session.setMode("ace/mode/c_cpp");
+	}
+	else if(x=="Java")
+	{
+		editor.session.setMode("ace/mode/java");
+	}
+	else if(x=="Perl")
+	{
+		editor.session.setMode("ace/mode/perl");
+	}
+	else if(x=="PHP")
+	{
+		editor.session.setMode("ace/mode/php");
+	}
+	else if(x=="Ruby")
+	{
+		editor.session.setMode("ace/mode/ruby");
+	}
+	else if(x=="C#")
+	{
+		editor.session.setMode("ace/mode/csharp");
+	}
+	else if(x=="MySQL")
+	{
+		editor.session.setMode("ace/mode/mysql");
+	}
+	else if(x=="Haskell")
+	{
+		editor.session.setMode("ace/mode/haskell");
+	}
+	else if(x=="Bash")
+	{
+		editor.session.setMode("ace/mode/batchfile");
+	}
+	else if(x=="Scala")
+	{
+		editor.session.setMode("ace/mode/scala");
+	}
+	else if(x=="Lua")
+	{
+		editor.session.setMode("ace/mode/lua");
+	}
+	else if(x=="JavaScript")
+	{
+		editor.session.setMode("ace/mode/javascript");
+	}
+	else if(x=="R")
+	{
+		editor.session.setMode("ace/mode/r");
+	}
+	else if(x=="Objective-C")
+	{
+		editor.session.setMode("ace/mode/objectivec");
+	}
+	else if(x=="Visual Basic")
+	{
+		editor.session.setMode("ace/mode/visualforce");
+	}
+	else if(x=="Swift")
+	{
+		editor.session.setMode("ace/mode/swift");
+	}
+
 }
 function CodeTogetherLangChange(lang){
 	var x=document.getElementById(lang.id).innerHTML;
@@ -287,6 +356,7 @@ function autolanguagedetection()
         }	
         else if(output.result[0][0]=='c'){
         	ID='1';
+        	output.result[0][0]='c_cpp';
         }
         else if(output.result[0][0]=='lua'){
         	ID='18';
@@ -295,18 +365,19 @@ function autolanguagedetection()
         }
         else if(output.result[0][0]=='objective-c'){
         	ID='32';
+        	output.result[0][0]='objectivec';
         }
         else if(output.result[0][0]=='sql'){
         	ID='10';
-        }
-        else if(output.result[0][0]=='css'){
-
+        	output.result[0][0]='mysql';
         }
         else if(output.result[0][0]=='c++'){
         	ID='2';
+        	output.result[0][0]='c_cpp';
         }
         else if(output.result[0][0]=='swift'){
         	ID='51';
+
         }
         else if(output.result[0][0]=='bash'){
         	ID='14';
@@ -319,6 +390,7 @@ function autolanguagedetection()
         }
         else if(output.result[0][0]=='c#'){
         	ID='9';
+        	output.result[0][0]='csharp';
         }
         else if(output.result[0][0]=='scala'){
         	ID='15';
@@ -334,12 +406,15 @@ function autolanguagedetection()
         }
          else if(output.result[0][0]=='vb'){
          	ID='37';
+         	output.result[0][0]='visualforce';
         }
+        editor.session.setMode("ace/mode/".concat(output.result[0][0]));
         if(ID!='0')
         {
         	var to_change=document.getElementById(ID);
         	LangChange(to_change);
         }
+
         submitCode();
     });
 }
