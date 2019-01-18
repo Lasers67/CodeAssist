@@ -4,7 +4,6 @@
   <title>CodeAssist: <%= Name %> </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -13,20 +12,31 @@
   <script>hljs.initHighlightingOnLoad();</script>-->
   <style type="text/css">
   html *{
-    font-size: 18px; 
+    font-size: 18px;
   }
+  #upload1{
+position: relative;
+overflow: hidden;
+}
+#upload2 {
+position: absolute;
+font-size: 50px;
+opacity: 0;
+right: 0;
+top: 0;
+}
   .btn-arrow-right   {
    position: relative;
    padding-right: 20px;
    padding-left: 25px;
- } 
+ }
  .scroll-menu{
    min-width: 220px;
    max-height: 40vh;
    overflow: auto;
  }
  .btn-arrow-right:before,
- .btn-arrow-right:after   { 
+ .btn-arrow-right:after   {
    content: "";
    position: absolute;
    top: 5px;
@@ -36,7 +46,7 @@
    border: inherit;
    border-left-color: transparent;
    border-bottom-color: transparent;
-   border-radius: 0px 4px 0px 0px;  
+   border-radius: 0px 4px 0px 0px;
    -webkit-border-radius: 0px 4px 0px 0px;
    -moz-border-radius: 0px 4px 0px 0px;
  }
@@ -55,7 +65,7 @@
  .btn-arrow-right:after {
    right: -11px;
    z-index: 1;
- } 
+ }
  #Tabs{
   margin-top: -14px;
   margin-bottom: 0px;
@@ -65,7 +75,7 @@
   float : left;
   position: relative;
   /*top: 15px;   */
-  margin-left: 10px; 
+  margin-left: 10px;
   /*border:0px solid black;*/
   /*font-size: 18;*/
   resize: none;
@@ -76,7 +86,7 @@
 }
 .vertical-menu {
   width: 100px;
-  position: absolute; 
+  position: absolute;
   left:75vw;
   margin-left: 10px;
   margin-top:-13px;/* Set a width if you like */
@@ -180,7 +190,7 @@ html {
   /*background-color:red;*/
 }
 #Chat-box{
-  position:absolute;  
+  position:absolute;
   bottom: 0;
   left:83%;
   background-color: #dedbdb;
@@ -230,7 +240,7 @@ html {
     max-width: 9vw;
     width: auto;
 }
-.her{   
+.her{
   clear:left;
   display: block;
   color: black;
@@ -375,7 +385,7 @@ html {
 @import "http://fonts.googleapis.com/css?family=Roboto:300,400,500,700";
 
 .container { margin-top: 20px; }
-.mb20 { margin-bottom: 20px; } 
+.mb20 { margin-bottom: 20px; }
 
 hgroup { padding-left: 15px; border-bottom: 1px solid #ccc; }
 hgroup h1 { font: 500 normal 1.625em "Roboto",Arial,Verdana,sans-serif; color: #2a3644; margin-top: 0; line-height: 1.15; }
@@ -391,7 +401,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 .search-result .col-md-7 { position: relative; }
 .search-result h3 { font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif; margin-top: 0 !important; margin-bottom: 10px !important; }
 .search-result h3 > a, .search-result i { color: #248dc1 !important; }
-.search-result p { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; } 
+.search-result p { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; }
 .search-result span.plus { position: absolute; right: 0; top: 126px; }
 .search-result span.plus a { background-color: #248dc1; padding: 5px 5px 3px 5px; }
 .search-result span.plus a:hover { background-color: #414141; }
@@ -425,7 +435,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
       <div class="container">
         <div class="mb20">
           <h1 class="leader">Search Results</h1>
-          <h2 class="leadx">Results found for the search for <strong id='SearchedText'>''</strong></h2>               
+          <h2 class="leadx">Results found for the search for <strong id='SearchedText'>''</strong></h2>
         </div>
 
         <section>
@@ -545,7 +555,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
+        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">CodeAssist</a>
     </div>
@@ -590,7 +600,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
      </center>
    </div>
    <div class="col-sm-4" ></div>
- </div>  
+ </div>
  <div class="container-fluid">
    <div class="row">
     <div class="col-sm-4"></div>
@@ -659,11 +669,45 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 </div>
   <div id="Workspace" style="width:60%; margin-right: 7px;"></div>
   <!-- <textarea class="form-control" rows="20" id="Workspace" style="width:60%; margin-right: 7px;"></textarea> -->
-  <div class="form-control" id="response" style="width: 15.5%;height:223px; background: #456; color:white; font-size: 1.2em; display: inline-block; text-align: center;" readonly>Hey <%= Name %>!<br>How can I Help You?</div>
+  <div class="form-control" id="response" style="width: 15.5%;height:180px; background: #456; color:white; font-size: 1.2em; display: inline-block; text-align: center;" readonly>Hey <%= Name %>!<br>How can I Help You?</div>
   <!-- <div style="border-radius:50%; border: 1px solid #333;">
     <img src="profile.jpg" >
   </div> -->
   <textarea class="form-control" id="bot_input" style="width: 15.5%;height:223px; font-size: 1.2em;" placeholder="Hello Bot!"></textarea>
+  <div style="height:2%;width:60%;margin-left: 7px; margin-right: 7px;">
+  <div id="upload1" class="file btn btn-default">
+   Upload
+  <input id="upload2" type="file" name="file" onchange="uploading()">
+  </div>
+  <div id="uploadedfilename" style="margin-top: 5px;font-size: 15px;height: 100%;width: 90%;float:right;background:white;left:0px" >
+  </div>
+  </div>
+<script>
+function uploading(){
+var fullPath = document.getElementById('upload2').value;
+if (fullPath) {
+var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+// alert(startIndex)
+var filename = fullPath.substring(startIndex);
+if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+filename = filename.substring(1);
+}
+var a=document.getElementById('upload2').files[0];
+document.getElementById('uploadedfilename').innerHTML=filename;
+}
+if (a) {
+var reader = new FileReader();
+reader.readAsText(a, "UTF-8");
+reader.onload = function (e) {
+// alert(reader.result);
+editor.setValue(reader.result);
+}
+reader.onerror = function (e) {
+  editor.setValue("error reading file");
+}
+}
+}
+</script>
 </div>
 
 <script type="text/javascript">
@@ -680,7 +724,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
         <li class="list-group-item active" id="Compile" style="cursor: pointer;">Compile</li>
       </ul>
       <b>In This Room</b>
-      <span class="table table-responsive" >          
+      <span class="table table-responsive" >
         <table class="table">
           <tbody id="users_in_room">
           </tbody>
