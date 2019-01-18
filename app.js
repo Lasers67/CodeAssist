@@ -6,16 +6,19 @@ var mysql=require('mysql');
 var socket=require('socket.io');
 var fs=require('fs');
 var utf8=require('utf8');
+var async=require('async');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"******",
+	password:"shshwtgrg",
 	database:"Test"
 });
 con.connect(function(err){
 	if(err) throw err;
 	console.log("Server Started!");
 });
+
+
 var app=express();
 app.use(express.static('public'));
 http.createServer();
@@ -329,71 +332,89 @@ io.on('connection',function(socket){
    });
    socket.on('testCode',function(data){
 		var x=data.source;
-		x=x.replace(/\n/g,'%0A');
-		x=x.replace(/"/g,'\\"');
-		//console.log(x);
-		var y=data.testcases;
-		y=y.replace(/\n/g,'%0A');
-		var z=data.lang;
-		exec("curl -sX POST api.hackerrank.com/checker/submission.json -d \"source="+x+"&lang="+z+"&testcases=['"+y+"']&api_key=hackerrank|2252156-2145|f983468b215ca61b1185e513e8379c676967af34\" -x 10.8.0.1:8080 -H \"charset:utf-8\"",function(error,stdout,stderr){
+		var buff = new Buffer(x);
+		x=buff.toString('base64');
+		var y=data.lang;
+		var z=data.testcases;
+		buff = new Buffer(z);
+		z=buff.toString('base64');
+		exec("curl -sX POST \"https://api.judge0.com/submissions/?base64_encoded=true&wait=true\" -H \"Content-Type: application/json\" -d '{\"source_code\":\""+x+"\",\"language_id\":"+y+",\"stdin\":\""+z+"\"}'",function(error,stdout,stderr){
 			if(error){
 				console.log(error);
 			}
 			var out='';
 			var json=JSON.parse(stdout);
-			if(json.result.stdout==null){
-				if(json.result.compilemessage!=null)
-					out=(json.result.compilemessage);
-				if(json.result.stderr!=null)
-					out+=(json.result.stderr);
-				out=utf8.decode(out);
+			console.log(json);
+			if(json.stderr!=null){
+				buff = new Buffer(json.stderr,'base64');
+				out+=buff.toString('utf-8');
+				out+='\n';
+			}
+			if(json.compile_output!=null){
+				buff = new Buffer(json.compile_output,'base64');
+				out+=buff.toString('utf-8');
+				out+='\n';
+			}
+			if(json.message!=null){
+				buff = new Buffer(json.message,'base64');
+				out+=buff.toString('utf-8');
+				out+='\n';
+			}
+			if(out===''){
+				buff = new Buffer(json.stdout,'base64');
+				out = buff.toString('utf-8');
+				out+='\n';
+			}
+			else{
+				console.log(out);
 				var compErr=out.toLowerCase();
 				var i=compErr.indexOf("error");
 				compErr=compErr.substr(i);
 				i=compErr.indexOf("\n");
 				compErr=compErr.substr(0,i);
-				x=z;
+				console.log(compErr);
+				x=y;
 				var lang="0";
-				if(x==="1")
+				if(x==="4")
 					lang="C";
-				else if(x==="2")
-					lang="C++";
-				else if(x==="3")
-					lang="Java";
-				else if(x==="5")
-					lang="Python2.7";
-				else if(x==="6")
-					lang="Perl";
-				else if(x==="7")
-					lang="PHP";
-				else if(x==="8")
-					lang="Ruby";
-				else if(x==="9")
-					lang="C#";
 				else if(x==="10")
-					lang="MySQL";
-				else if(x==="12")
+					lang="C++";
+				else if(x==="27")
+					lang="Java";
+				else if(x==="36")
+					lang="Python2.7";
+				// else if(x==="6")
+				// 	lang="Perl";
+				// else if(x==="7")
+				// 	lang="PHP";
+				else if(x==="38")
+					lang="Ruby";
+				else if(x==="16")
+					lang="C#";
+				// else if(x==="10")
+				// 	lang="MySQL";
+				else if(x==="23")
 					lang="Haskell";
-				else if(x==="14")
+				else if(x==="1")
 					lang="Bash";
-				else if(x==="15")
-					lang="Scala";
-				else if(x==="18")
-					lang="Lua";
-				else if(x==="20")
+				// else if(x==="15")
+				// 	lang="Scala";
+				// else if(x==="18")
+				// 	lang="Lua";
+				else if(x==="29")
 					lang="JavaScript";
-				else if(x==="24")
-					lang="R";
-				else if(x==="32")
-					lang="Objective-C";
-				else if(x==="37")
-					lang="Visual Basic";
-				else if(x==="51")
-					lang="Swift";
-				compErr=utf8.decode(compErr);
+				// else if(x==="24")
+				// 	lang="R";
+				// else if(x==="32")
+				// 	lang="Objective-C";
+				// else if(x==="37")
+				// 	lang="Visual Basic";
+				// else if(x==="51")
+				// 	lang="Swift";
 				console.log(compErr);
 				exec("python test.py "+compErr,function(err,stdout,stderr){
 					var link=stdout.toString();
+					link=link.substr(7);
 					console.log('link:');
 					console.log(link);
 					var q="select FriendName from `"+data.UserName+"` where FriendName in (select Name from user where Online=1)";
@@ -401,35 +422,44 @@ io.on('connection',function(socket){
 						if(err) throw err;
 						var j=JSON.parse(JSON.stringify(result));
 						var jarr=[];
-						j.forEach(function(item){
-							q="select Rating from `"+item.FriendName+"Tags` where Language=?";
-							con.query(q,[lang],function(err,result){
-								if(err)	throw err;
-								if(result.length===0);
+						async.forEachOf(j,function(item,i,inner_callback){
+							q="select Rating from `"+item.FriendName+"Tags` where Language='"+lang+"'";
+							console.log(item.FriendName);
+							console.log(q);
+							con.query(q,function(err,result){
+								console.log("Inside!");
+								if(err){
+									inner_callback(err);
+								}
+								if(result.length===0){
+									inner_callback(null);
+								}
 								else{
 									var sj=JSON.parse(JSON.stringify(result));
 									console.log(sj);
 									var jobj={
-										name:item.Name,
+										name:item.FriendName,
 										rating:sj[0].Rating
 									};
 									jarr.push(jobj);
+									inner_callback(null);
 								}
 							});
+						},function(err){
+							if(err){
+								console.log(err);
+							}
+							else{
+								var sendData={
+									arr:jarr,
+									url:link
+								};
+								users[data.UserName].emit('compileErrorResolve',sendData);
+							}
 						});
-						console.log(link);
-						link=link.substr(7);
-						//console.log(jarr);
-						var sendData={
-							arr:jarr,
-							url:link
-						};
-						users[data.UserName].emit('compileErrorResolve',sendData);
 					});
 				});
 			}
-			else
-				out=json.result.stdout;
 			users[data.UserName].emit('testCode',out);
 		});
 		users[data.UserName].emit('pleaseWait');
