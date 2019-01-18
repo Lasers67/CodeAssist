@@ -10,7 +10,7 @@ var async=require('async');
 var con=mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"shshwtgrg",
+	password:"******",
 	database:"Test"
 });
 con.connect(function(err){
