@@ -18,6 +18,7 @@ con.connect(function(err){
 	console.log("Server Started!");
 });
 
+const bcrypt = require('bcrypt');
 
 var app=express();
 app.use(express.static('public'));
@@ -37,8 +38,11 @@ app.post('/signup',urlencodeParser,function(req,res){
 				res.render('signup',{Name:req.query.Name,Password:req.query.Password,RePassword:req.query.RePassword,Email:req.query.Email});
 			else
 			{
-				var sql="INSERT INTO user(Name,Password,Email) VALUES (?,?,?)";
-				con.query(sql,[req.body.Name,req.body.Password,req.body.Email],function(err,result){
+				bcrypt.genSalt(9, function(err, salt) {
+        bcrypt.hash(req.body.Password, salt, function(err, hash) {
+
+				var sql="INSERT INTO user(Name,Password,salt,Email) VALUES (?,?,?,?)";
+				con.query(sql,[req.body.Name,hash,salt,req.body.Email],function(err,result){
 					if(err) throw err;
 					console.log("Inserted New Value into user");
 					fs.writeFileSync(__dirname+'/codes/'+req.body.Name+'.txt','');
@@ -51,6 +55,8 @@ app.post('/signup',urlencodeParser,function(req,res){
 						});
 					});
 				});
+			});
+			});
 			}
 		});
 	}
@@ -70,13 +76,16 @@ app.post('/signin',urlencodeParser,function(req,res){
 		var name=req.body.Username;
 		var string = JSON.stringify(result);
 		var json=JSON.parse(string);
-		if(req.body.Pass==json[0].Password)
-		{
-			res.redirect('/?Name='+req.body.Username);
-		}
-		else{
-			res.render('signup',{Name:req.query.Username,Pass:req.query.Pass});		
-		}
+		var salt=json[0].salt;
+		bcrypt.hash(req.body.Pass, salt, function(err, hash) {
+	        	if(hash==json[0].Password)
+	        	{
+	        		res.redirect('/?Name='+req.body.Username);
+	        	}
+	        	else{
+	        		res.render('signup',{Name:req.query.Username,Pass:req.query.Pass});
+	        	}
+		});
 	});
 });
 var io=socket(server);
@@ -126,7 +135,7 @@ io.on('connection',function(socket){
 	//console.log(Object.keys(users));
 	socket.on('chat',function(data){
 		var text=data.Message;
-		var d = new Date();	
+		var d = new Date();
 		var str='\n['+data.UserName+':-'+d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+","+d.getHours()+':'+d.getMinutes()+']'+text+'*--x--*';
 		console.log(str);
 		con.query('Select FileName from chat where (User1=? and User2= ?)or(User1=? and User2=?)',[data.to,data.UserName,data.UserName,data.to],function(err,result){
@@ -201,7 +210,7 @@ io.on('connection',function(socket){
 		users[room.from].join(room.Room);
 		// var a=io.of('/').in(room.Room).sockets;
 		// console.log(a);
-		var clients = io.sockets.adapter.rooms[room.Room].sockets;   
+		var clients = io.sockets.adapter.rooms[room.Room].sockets;
 
 		//to get the number of clients
 		var numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
@@ -220,7 +229,7 @@ io.on('connection',function(socket){
 	}
 	});
 	socket.on('users_inside_this_room',function(data){
-		var clients = io.sockets.adapter.rooms[data].sockets;   
+		var clients = io.sockets.adapter.rooms[data].sockets;
 
 		//to get the number of clients
 		var numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
@@ -247,7 +256,7 @@ io.on('connection',function(socket){
 		        clients.forEach(function (socket_id) {
 		            io.sockets.sockets[socket_id].leave(socket.name);
 		        });
-		        
+
 		    }
 		});
 		socket.broadcast.emit('kick_tab',socket.name);
@@ -292,7 +301,7 @@ io.on('connection',function(socket){
    });
    socket.on('left',function(data){
    		users[data.leaving].leave(data.room);
-   		var clients = io.sockets.adapter.rooms[data.room].sockets;   
+   		var clients = io.sockets.adapter.rooms[data.room].sockets;
 		//to get the number of clients
 		var numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
 		var A=[];
@@ -310,7 +319,7 @@ io.on('connection',function(socket){
    socket.on('kicking',function(data){
    		users[data.kicked_person].emit('got_kicked',data.from);
    		users[data.kicked_person].leave(data.from);
-		var clients = io.sockets.adapter.rooms[data.from].sockets;   
+		var clients = io.sockets.adapter.rooms[data.from].sockets;
 		//to get the number of clients
 		var numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
 		var A=[];
@@ -326,9 +335,9 @@ io.on('connection',function(socket){
 			leaving:data.kicked_person
 		};
 		users[dat.room].emit('CodeTogetherEnd',dat);
-		io.to(data.from).emit('users_inside_this_room',A); 
+		io.to(data.from).emit('users_inside_this_room',A);
 
- 		
+
    });
    socket.on('testCode',function(data){
 		var x=data.source;
