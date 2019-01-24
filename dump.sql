@@ -329,6 +329,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `Name` varchar(255) NOT NULL,
   `Password` varchar(255) DEFAULT NULL,
+  `salt` varchar(255) DEFAULT NULL,
   `Email` varchar(255) DEFAULT NULL,
   `SessionID` varchar(255) DEFAULT NULL,
   `Online` int(11) DEFAULT NULL,
@@ -343,7 +344,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('App','2345','aaa','VbbnkZkBvo_B4bJMAAAB',1,'Male'),('Lasers67','Lasers67','abcd@xyz.com','psMG58QWtDemIErEAAAA',0,NULL),('Mehul Raj Kumawat','Mehul','Mehul@iitmandi.ac.in','fkjxLX_PI3KzWPe3AAAE',0,NULL),('Palak Gupta','Palak889','Palak@Gupta.com','ACmuMQKeSmo1XKO7AAAH',0,NULL),('Pratyush','Pratyush100','Pratyushgauravgo@gmail.com','NF3scdzMMg6gNngcAAAD',1,'Male'),('Shashwat','Sg@iitmandi','shshwt.grg@gmail.com','QRbo70JLLpTxgLRbAAAC',0,'Male');
+INSERT INTO `user` VALUES ('App','2345','deepak','aaa','VbbnkZkBvo_B4bJMAAAB',1,'Male'),('Lasers67','Lasers67','deepak','abcd@xyz.com','psMG58QWtDemIErEAAAA',0,NULL),('Mehul Raj Kumawat','Mehul','deepak','Mehul@iitmandi.ac.in','fkjxLX_PI3KzWPe3AAAE',0,NULL),('Palak Gupta','Palak889','deepak','Palak@Gupta.com','ACmuMQKeSmo1XKO7AAAH',0,NULL),('Pratyush','Pratyush100','deepak','Pratyushgauravgo@gmail.com','NF3scdzMMg6gNngcAAAD',1,'Male'),('Shashwat','Sg@iitmandi','deepak','shshwt.grg@gmail.com','QRbo70JLLpTxgLRbAAAC',0,'Male');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
